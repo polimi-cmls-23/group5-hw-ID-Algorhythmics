@@ -8,7 +8,7 @@
 </template>
 <script>
 import * as JoyCon from './components/joycon/index.js';
-import {connectedJoyCons, JoyConLeft} from "joy-con-webhid/src";
+import {connectedJoyCons, JoyConLeft} from "./components/joycon";
 
 const MIDI_NOTE_ON_CH_1 = 0x90;
 const MIDI_NOTE_OFF_CH_1 = 0x80;
