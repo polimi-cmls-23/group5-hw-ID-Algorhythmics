@@ -153,7 +153,7 @@ export default {
                 document.getElementById("start").style.top = "10%";
                 setTimeout(()=>{
                     document.getElementById("start").style.opacity = '1';
-                },500)
+                },300)
             }, 3400);
         }
     }
