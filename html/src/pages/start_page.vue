@@ -151,6 +151,9 @@ export default {
                 console.log("done");
                 document.getElementById("title").style.border = "solid 5px white";
                 document.getElementById("start").style.top = "10%";
+                setTimeout(()=>{
+                    document.getElementById("start").style.opacity = '1';
+                },500)
             }, 3400);
         }
     }
@@ -196,9 +199,15 @@ h1 {
     text-align: center;
     position: relative;
     top: -50%;
+    opacity: 0;
     transition: 1s top ease-out;
     p{
+        display: block;
+        cursor: pointer;
         margin:10px 0;
+        &:hover{
+            color: red;
+        }
     }
 }
 }
