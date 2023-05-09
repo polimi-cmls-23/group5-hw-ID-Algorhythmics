@@ -2,7 +2,12 @@
     <div class="container" @click="start">
         <div class="align" id="align">
             <h1 id="title">***** *****</h1>
-            <p id="start">click to start</p>
+            <div id="start">
+                <p @click="go">Start</p>
+                <p @click="go">Relax</p>
+                <p @click="go">Debug</p>
+            </div>
+
         </div>
     </div>
 </template>
@@ -111,6 +116,9 @@ export default {
         me.intro()
     },
     methods:{
+        go(){
+
+        },
         start(){
             if (complete === 3) {
                 document.getElementById("align").style.top = "40%";
@@ -125,7 +133,6 @@ export default {
             complete = 1;
             setTimeout(function () {
                 complete = 2;
-                console.log("start");
                 myFuncUpper(8, 0);
                 myFuncUpper(5, 1);
                 myFuncUpper(12, 2);
@@ -190,6 +197,9 @@ h1 {
     position: relative;
     top: -50%;
     transition: 1s top ease-out;
+    p{
+        margin:10px 0;
+    }
 }
 }
 
