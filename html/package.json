@@ -1,5 +1,5 @@
 {
-  "name": "TabMaker",
+  "name": "Joy",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
@@ -9,6 +9,8 @@
   "dependencies": {
     "@kyvg/vue3-notification": "^2.8.0",
     "joy-con-webhid": "^0.5.0",
+    "meyda": "^5.6.0",
+    "three": "0.131.3",
     "vue": "^3.2.38",
     "vue-router": "^4.1.6"
   },

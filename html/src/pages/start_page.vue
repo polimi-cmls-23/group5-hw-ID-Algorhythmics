@@ -3,9 +3,9 @@
         <div class="align" id="align">
             <h1 id="title">***** *****</h1>
             <div id="start">
-                <p @click="go">Start</p>
-                <p @click="go">Relax</p>
-                <p @click="go">Debug</p>
+                <p @click="go('start')">Start</p>
+                <p @click="go('relax')">Relax</p>
+                <p @click="go('debug')">Debug</p>
             </div>
 
         </div>
@@ -117,15 +117,13 @@ export default {
     },
     methods:{
         go(){
-
-        },
-        start(){
+            let me = this;
             if (complete === 3) {
                 document.getElementById("align").style.top = "40%";
                 document.getElementById("align").style.opacity = "0%";
                 setTimeout(function () {
                     //put the start location here
-                    //location = "";
+                    me.$router.push({ path: '/game/debug' })
                 }, 1200);
             }
         },

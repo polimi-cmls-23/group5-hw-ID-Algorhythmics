@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Notifications from '@kyvg/vue3-notification'
 import Debug from './pages/debug.vue'
+import Stft from './pages/stft.vue'
 import Start from './pages/start_page.vue'
 import DefaultPage from './default.vue'
 
@@ -20,6 +21,10 @@ const routes = [
             {
                 path: 'debug',
                 component: Debug,
+            },
+            {
+                path: 'stft',
+                component: Stft,
             }
         ],
     },
