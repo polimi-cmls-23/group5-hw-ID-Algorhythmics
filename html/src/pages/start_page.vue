@@ -4,6 +4,7 @@
             <h1 id="title">***** *****</h1>
             <div id="start">
                 <p @click="go('start')">Start</p>
+                <p @click="go('stft')">STFT</p>
                 <p @click="go('relax')">Relax</p>
                 <p @click="go('debug')">Debug</p>
             </div>
@@ -116,14 +117,14 @@ export default {
         me.intro()
     },
     methods:{
-        go(){
+        go(name){
             let me = this;
             if (complete === 3) {
                 document.getElementById("align").style.top = "40%";
                 document.getElementById("align").style.opacity = "0%";
                 setTimeout(function () {
                     //put the start location here
-                    me.$router.push({ path: '/game/debug' })
+                    me.$router.push({ path: `/game/${name}` })
                 }, 1200);
             }
         },
