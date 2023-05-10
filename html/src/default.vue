@@ -21,5 +21,9 @@ export default {
         width: 100%;
         /*height: 100%;*/
         height: 100vh;
+        /*background: black;*/
+        font-family: "Source Code Pro", monospace;
+        background: #000;
+        color:#fff;
     }
 </style>

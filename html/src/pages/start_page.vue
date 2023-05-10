@@ -165,6 +165,7 @@ export default {
     background-color: black;
     color: white;
     font-family: "Source Code Pro", monospace;
+
 }
 #title{
     background: black;
