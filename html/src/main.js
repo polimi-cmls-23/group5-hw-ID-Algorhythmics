@@ -4,7 +4,8 @@ import Notifications from '@kyvg/vue3-notification'
 import Debug from './pages/debug.vue'
 import Relax from './pages/dino.vue'
 import Stft from './pages/stft.vue'
-import Start from './pages/start_page.vue'
+import Home from './pages/home.vue'
+import Start from './pages/start.vue'
 import DefaultPage from './default.vue'
 
 import './assets/reset.css'
@@ -14,14 +15,14 @@ const routes = [
     {
         path: '/',
         name:'start',
-        component: Start,
+        component: Home,
     },
     {
         path: '/game/',
         children: [
             {
                 path: 'start',
-                component: Debug,
+                component: Start,
             },
             {
                 path: 'stft',

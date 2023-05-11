@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import * as JoyCon from "./components/joycon/index.js";
+import {connectedJoyCons} from "./components/joycon";
 export default {
     name: "default.vue",
     computed: {
@@ -14,7 +16,33 @@ export default {
             return this.$route.name;
         }
     },
+    provide() {
+        return {
+            connect: this.connect
+        }
+    },
     methods:{
+        async connect(){
+            let me = this
+            await JoyCon.connectJoyCon();
+            me.$notify("Joy-Con connected");
+            me.watchStatus()
+        },
+        watchStatus(){
+            setInterval(async () => {
+                for (const joyCon of connectedJoyCons.values()) {
+                    if (joyCon.eventListenerAttached) {
+                        continue;
+                    }
+                    joyCon.eventListenerAttached = true;
+                    await joyCon.disableVibration();
+                    joyCon.addEventListener('hidinput', (event) => {
+                        // me.updateBothControls(joyCon, event.detail);
+                        // me.visualize(joyCon, event.detail);
+                    });
+                }
+            }, 2000);
+        },
       back(){
           let me = this
           me.$router.go(-1)
@@ -26,9 +54,7 @@ export default {
 <style scoped>
     #app{
         width: 100%;
-        /*height: 100%;*/
         height: 100vh;
-        /*background: black;*/
         font-family: "Source Code Pro", monospace;
         background: #000;
         color:#fff;

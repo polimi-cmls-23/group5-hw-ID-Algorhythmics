@@ -1,7 +1,7 @@
 <template>
     <div class="container" >
         <div class="align" id="align">
-            <h1 id="title">***** *****</h1>
+            <h1 id="title" @click="bind">***** *****</h1>
             <div id="start">
                 <p @click="go('start')">Start</p>
                 <p @click="go('stft')">STFT</p>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 let characters_up = [
     "A",
     "B",
@@ -116,7 +117,12 @@ export default {
         let me = this;
         me.intro()
     },
+    inject: ['connect'],
     methods:{
+        async bind(){
+            let me = this
+            me.connect()
+        },
         go(name){
             let me = this;
             if (complete === 3) {
@@ -210,6 +216,9 @@ h1 {
         }
     }
 }
+}
+#title{
+    cursor: pointer;
 }
 
 </style>
