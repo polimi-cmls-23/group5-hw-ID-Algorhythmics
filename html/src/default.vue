@@ -1,6 +1,7 @@
 <template>
     <div id="app">
-        <img v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/arrow.svg" alt="back" />
+        <img @click="back" v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/arrow.svg" alt="back" />
+        <notifications />
         <router-view class="view"/>
     </div>
 </template>
@@ -12,6 +13,12 @@ export default {
         currentRouteName() {
             return this.$route.name;
         }
+    },
+    methods:{
+      back(){
+          let me = this
+          me.$router.go(-1)
+      }
     }
 }
 </script>
