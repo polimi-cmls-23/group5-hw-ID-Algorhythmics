@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Notifications from '@kyvg/vue3-notification'
 import Debug from './pages/debug.vue'
 import Relax from './pages/dino.vue'
@@ -13,8 +13,8 @@ import './assets/global.css'
 const routes = [
     {
         path: '/',
+        name:'start',
         component: Start,
-        props: { back: false }
     },
     {
         path: '/game/',
@@ -39,11 +39,11 @@ const routes = [
     },
 ]
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes, // short for `routes: routes`
 })
 
-const app = createApp(DefaultPage)
+const app = createApp(DefaultPage,)
 // const app = createApp(App)
 app.use(router)
 app.use(Notifications)

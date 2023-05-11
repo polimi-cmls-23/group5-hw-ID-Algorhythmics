@@ -38,7 +38,6 @@ import {
 } from "three";
 
 export default {
-
     name: "stft.vue",
     mounted() {
         let me = this

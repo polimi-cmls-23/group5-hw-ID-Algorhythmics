@@ -1,22 +1,22 @@
 <template>
     <div id="app">
-        <button id="back">back</button>
+        <img v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/arrow.svg" alt="back" />
         <router-view class="view"/>
     </div>
 </template>
 
 <script>
 export default {
-    name: "default.vue"
+    name: "default.vue",
+    computed: {
+        currentRouteName() {
+            return this.$route.name;
+        }
+    }
 }
 </script>
 
 <style scoped>
-    #back{
-        position: absolute;
-        top:0;
-        left: 0;
-    }
     #app{
         width: 100%;
         /*height: 100%;*/
@@ -25,5 +25,15 @@ export default {
         font-family: "Source Code Pro", monospace;
         background: #000;
         color:#fff;
+    }
+    .arrow-back{
+        transform: rotate(90deg);
+        width: 20px;
+        position: absolute;
+        top:10px;
+        left:10px;
+        fill: #FFFFFF;
+        z-index:10;
+        cursor: pointer;
     }
 </style>

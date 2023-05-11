@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @click="start">
+    <div class="container" >
         <div class="align" id="align">
             <h1 id="title">***** *****</h1>
             <div id="start">
