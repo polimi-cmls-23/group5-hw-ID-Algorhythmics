@@ -1,71 +1,71 @@
 <template>
     <div class="container">
-    <div>
-        <input id="show-visualize" type="checkbox" checked="true" />
-        <label for="show-visualize">Visualize Joycons</label>
-        <input id="show-debug" type="checkbox" />
-        <label for="show-debug">Show debug info</label>
-    </div>
-
-    <figure>
-        <div id="joycon-l" class="joycon productId8198">
-            <div id="joystick-left" class="joystick"></div>
-            <div class="buttons">
-                <button id="up"></button>
-                <button id="left"></button>
-                <button id="down"></button>
-                <button id="right"></button>
+        <!--    <div>-->
+        <!--        <input id="show-visualize" type="checkbox" checked="true" />-->
+        <!--        <label for="show-visualize">Visualize Joycons</label>-->
+        <!--        <input id="show-debug" type="checkbox" />-->
+        <!--        <label for="show-debug">Show debug info</label>-->
+        <!--    </div>-->
+        <figure>
+            <div id="joycon-l" class="joycon productId8198">
+                <div id="joystick-left" class="joystick"></div>
+                <div class="buttons">
+                    <button id="up"></button>
+                    <button id="left"></button>
+                    <button id="down"></button>
+                    <button id="right"></button>
+                </div>
+                <span id="minus"></span>
+                <i id="capture"></i>
+                <strong class="back-buttons" id="l"></strong>
             </div>
-            <span id="minus"></span>
-            <i id="capture"></i>
-            <strong class="back-buttons" id="l"></strong>
-        </div>
-        <div id="joycon-r" class="joycon productId8199">
-            <div id="joystick-right" class="joystick"></div>
-            <div class="buttons">
-                <button id="x"></button>
-                <button id="y"></button>
-                <button id="b"></button>
-                <button id="a"></button>
+            <div id="joycon-r" class="joycon productId8199">
+                <div id="joystick-right" class="joystick"></div>
+                <div class="buttons">
+                    <button id="x"></button>
+                    <button id="y"></button>
+                    <button id="b"></button>
+                    <button id="a"></button>
+                </div>
+                <span id="plus"></span>
+                <i id="home"></i>
+                <strong class="back-buttons" id="r"></strong>
             </div>
-            <span id="plus"></span>
-            <i id="home"></i>
-            <strong class="back-buttons" id="r"></strong>
-        </div>
-    </figure>
+        </figure>
 
-    <div id="debug">
-        <div id="debug-left">
-            <pre></pre>
-            <p>Acceleration</p>
-            <meter id="acc-x" min="-1" max="1"></meter>
-            <meter id="acc-y" min="-1" max="1"></meter>
-            <meter id="acc-z" min="-1" max="1"></meter>
-            <br />
-            <p>Gyroscope</p>
-            <meter id="gyr-x" min="-1" max="1"></meter>
-            <meter id="gyr-y" min="-1" max="1"></meter>
-            <meter id="gyr-z" min="-1" max="1"></meter>
-        </div>
+        <div id="debug">
+            <div id="debug-left">
+                <pre></pre>
+                <p>Acceleration</p>
+                <meter id="acc-x" min="-1" max="1"></meter>
+                <meter id="acc-y" min="-1" max="1"></meter>
+                <meter id="acc-z" min="-1" max="1"></meter>
+                <br/>
+                <p>Gyroscope</p>
+                <meter id="gyr-x" min="-1" max="1"></meter>
+                <meter id="gyr-y" min="-1" max="1"></meter>
+                <meter id="gyr-z" min="-1" max="1"></meter>
+            </div>
 
-        <div id="debug-right">
-            <pre></pre>
-            <p>Acceleration</p>
-            <meter id="acc-x" min="-1" max="1"></meter>
-            <meter id="acc-y" min="-1" max="1"></meter>
-            <meter id="acc-z" min="-1" max="1"></meter>
-            <br />
-            <p>Gyroscope</p>
-            <meter id="gyr-x" min="-1" max="1"></meter>
-            <meter id="gyr-y" min="-1" max="1"></meter>
-            <meter id="gyr-z" min="-1" max="1"></meter>
+            <div id="debug-right">
+                <pre></pre>
+                <p>Acceleration</p>
+                <meter id="acc-x" min="-1" max="1"></meter>
+                <meter id="acc-y" min="-1" max="1"></meter>
+                <meter id="acc-z" min="-1" max="1"></meter>
+                <br/>
+                <p>Gyroscope</p>
+                <meter id="gyr-x" min="-1" max="1"></meter>
+                <meter id="gyr-y" min="-1" max="1"></meter>
+                <meter id="gyr-z" min="-1" max="1"></meter>
+            </div>
         </div>
-    </div>
     </div>
 </template>
 
 <script>
-import { connectJoyCon, connectedJoyCons, JoyConLeft } from '../components/joycon';
+import {connectJoyCon, connectedJoyCons, JoyConLeft} from '../components/joycon';
+
 export default {
     name: "start.vue",
     mounted() {
@@ -92,8 +92,8 @@ export default {
         const MIDI_VELOCITY_MIN = 0;
         const MIDI_CC_CH_1 = 0xb0;
 
-// Returns a function that converts a boolean value to a note-on or note-off
-// message.
+        // Returns a function that converts a boolean value to a note-on or note-off
+        // message.
         const noteOnOff = (note) => {
             return (readValue) => [
                 readValue ? MIDI_NOTE_ON_CH_1 : MIDI_NOTE_OFF_CH_1,
@@ -102,7 +102,7 @@ export default {
             ];
         };
 
-// Returns a function that converts a boolean value to a CC message.
+        // Returns a function that converts a boolean value to a CC message.
         const buttonCCForControl = (control) => {
             return (readValue) => [
                 MIDI_CC_CH_1,
@@ -111,7 +111,7 @@ export default {
             ];
         };
 
-// Returns a function that convents a float in the range 0-1 to a CC message.
+        // Returns a function that convents a float in the range 0-1 to a CC message.
         const analogCCForControl = (control) => {
             return (readValue) => [
                 MIDI_CC_CH_1,
@@ -416,108 +416,106 @@ export default {
                 actualOrientationQuaternion: orientationQuaternion,
             } = packet;
 
-            if (showVisualize.checked) {
-                if (joyCon instanceof JoyConLeft) {
-                    rootStyle.setProperty('--left-alpha', `${orientation.alpha}deg`);
-                    rootStyle.setProperty('--left-beta', `${orientation.beta}deg`);
-                    rootStyle.setProperty('--left-gamma', `${orientation.gamma}deg`);
-                } else {
-                    rootStyle.setProperty('--right-alpha', `${orientation.alpha}deg`);
-                    rootStyle.setProperty('--right-beta', `${orientation.beta}deg`);
-                    rootStyle.setProperty('--right-gamma', `${orientation.gamma}deg`);
-                }
-
-                if (joyCon instanceof JoyConLeft) {
-                    const joystick = packet.analogStickLeft;
-                    const joystickMultiplier = 10;
-                    document.querySelector('#joystick-left').style.transform = `translateX(${
-                        joystick.horizontal * joystickMultiplier
-                    }px) translateY(${joystick.vertical * joystickMultiplier}px)`;
-
-                    document.querySelector('#up').classList.toggle('highlight', buttons.up);
-                    document
-                        .querySelector('#down')
-                        .classList.toggle('highlight', buttons.down);
-                    document
-                        .querySelector('#left')
-                        .classList.toggle('highlight', buttons.left);
-                    document
-                        .querySelector('#right')
-                        .classList.toggle('highlight', buttons.right);
-                    document
-                        .querySelector('#capture')
-                        .classList.toggle('highlight', buttons.capture);
-                    document
-                        .querySelector('#l')
-                        .classList.toggle('highlight', buttons.l || buttons.zl);
-                    document
-                        .querySelector('#l')
-                        .classList.toggle('highlight', buttons.l || buttons.zl);
-                    document
-                        .querySelector('#minus')
-                        .classList.toggle('highlight', buttons.minus);
-                    document
-                        .querySelector('#joystick-left')
-                        .classList.toggle('highlight', buttons.leftStick);
-                } else {
-                    const joystick = packet.analogStickRight;
-                    const joystickMultiplier = 10;
-                    document.querySelector('#joystick-right').style.transform = `translateX(${
-                        joystick.horizontal * joystickMultiplier
-                    }px) translateY(${joystick.vertical * joystickMultiplier}px)`;
-
-                    document.querySelector('#a').classList.toggle('highlight', buttons.a);
-                    document.querySelector('#b').classList.toggle('highlight', buttons.b);
-                    document.querySelector('#x').classList.toggle('highlight', buttons.x);
-                    document.querySelector('#y').classList.toggle('highlight', buttons.y);
-                    document
-                        .querySelector('#home')
-                        .classList.toggle('highlight', buttons.home);
-                    document
-                        .querySelector('#r')
-                        .classList.toggle('highlight', buttons.r || buttons.zr);
-                    document
-                        .querySelector('#r')
-                        .classList.toggle('highlight', buttons.r || buttons.zr);
-                    document
-                        .querySelector('#plus')
-                        .classList.toggle('highlight', buttons.plus);
-                    document
-                        .querySelector('#joystick-right')
-                        .classList.toggle('highlight', buttons.rightStick);
-                }
+            if (joyCon instanceof JoyConLeft) {
+                rootStyle.setProperty('--left-alpha', `${orientation.alpha}deg`);
+                rootStyle.setProperty('--left-beta', `${orientation.beta}deg`);
+                rootStyle.setProperty('--left-gamma', `${orientation.gamma}deg`);
+            } else {
+                rootStyle.setProperty('--right-alpha', `${orientation.alpha}deg`);
+                rootStyle.setProperty('--right-beta', `${orientation.beta}deg`);
+                rootStyle.setProperty('--right-gamma', `${orientation.gamma}deg`);
             }
 
-            if (showDebug.checked) {
-                const controller = joyCon instanceof JoyConLeft ? debugLeft : debugRight;
-                controller.querySelector('pre').textContent =
-                    JSON.stringify(orientation, null, 2) +
-                    '\n' +
-                    JSON.stringify(orientationQuaternion, null, 2) +
-                    '\n' +
-                    JSON.stringify(gyroscope, null, 2) +
-                    '\n' +
-                    JSON.stringify(accelerometer, null, 2) +
-                    '\n';
-                const meterMultiplier = 300;
-                controller.querySelector('#acc-x').value =
-                    accelerometer.x * meterMultiplier;
-                controller.querySelector('#acc-y').value =
-                    accelerometer.y * meterMultiplier;
-                controller.querySelector('#acc-z').value =
-                    accelerometer.z * meterMultiplier;
+            if (joyCon instanceof JoyConLeft) {
+                const joystick = packet.analogStickLeft;
+                const joystickMultiplier = 10;
+                document.querySelector('#joystick-left').style.transform = `translateX(${
+                    joystick.horizontal * joystickMultiplier
+                }px) translateY(${joystick.vertical * joystickMultiplier}px)`;
 
-                const gyroscopeMultiplier = 300;
-                controller.querySelector('#gyr-x').value =
-                    gyroscope.rps.x * gyroscopeMultiplier;
-                controller.querySelector('#gyr-y').value =
-                    gyroscope.rps.y * gyroscopeMultiplier;
-                controller.querySelector('#gyr-z').value =
-                    gyroscope.rps.z * gyroscopeMultiplier;
+                document.querySelector('#up').classList.toggle('highlight', buttons.up);
+                document
+                    .querySelector('#down')
+                    .classList.toggle('highlight', buttons.down);
+                document
+                    .querySelector('#left')
+                    .classList.toggle('highlight', buttons.left);
+                document
+                    .querySelector('#right')
+                    .classList.toggle('highlight', buttons.right);
+                document
+                    .querySelector('#capture')
+                    .classList.toggle('highlight', buttons.capture);
+                document
+                    .querySelector('#l')
+                    .classList.toggle('highlight', buttons.l || buttons.zl);
+                document
+                    .querySelector('#l')
+                    .classList.toggle('highlight', buttons.l || buttons.zl);
+                document
+                    .querySelector('#minus')
+                    .classList.toggle('highlight', buttons.minus);
+                document
+                    .querySelector('#joystick-left')
+                    .classList.toggle('highlight', buttons.leftStick);
+            } else {
+                const joystick = packet.analogStickRight;
+                const joystickMultiplier = 10;
+                document.querySelector('#joystick-right').style.transform = `translateX(${
+                    joystick.horizontal * joystickMultiplier
+                }px) translateY(${joystick.vertical * joystickMultiplier}px)`;
+
+                document.querySelector('#a').classList.toggle('highlight', buttons.a);
+                document.querySelector('#b').classList.toggle('highlight', buttons.b);
+                document.querySelector('#x').classList.toggle('highlight', buttons.x);
+                document.querySelector('#y').classList.toggle('highlight', buttons.y);
+                document
+                    .querySelector('#home')
+                    .classList.toggle('highlight', buttons.home);
+                document
+                    .querySelector('#r')
+                    .classList.toggle('highlight', buttons.r || buttons.zr);
+                document
+                    .querySelector('#r')
+                    .classList.toggle('highlight', buttons.r || buttons.zr);
+                document
+                    .querySelector('#plus')
+                    .classList.toggle('highlight', buttons.plus);
+                document
+                    .querySelector('#joystick-right')
+                    .classList.toggle('highlight', buttons.rightStick);
             }
+
+            // if (showDebug.checked) {
+            //     const controller = joyCon instanceof JoyConLeft ? debugLeft : debugRight;
+            //     controller.querySelector('pre').textContent =
+            //         JSON.stringify(orientation, null, 2) +
+            //         '\n' +
+            //         JSON.stringify(orientationQuaternion, null, 2) +
+            //         '\n' +
+            //         JSON.stringify(gyroscope, null, 2) +
+            //         '\n' +
+            //         JSON.stringify(accelerometer, null, 2) +
+            //         '\n';
+            //     const meterMultiplier = 300;
+            //     controller.querySelector('#acc-x').value =
+            //         accelerometer.x * meterMultiplier;
+            //     controller.querySelector('#acc-y').value =
+            //         accelerometer.y * meterMultiplier;
+            //     controller.querySelector('#acc-z').value =
+            //         accelerometer.z * meterMultiplier;
+            //
+            //     const gyroscopeMultiplier = 300;
+            //     controller.querySelector('#gyr-x').value =
+            //         gyroscope.rps.x * gyroscopeMultiplier;
+            //     controller.querySelector('#gyr-y').value =
+            //         gyroscope.rps.y * gyroscopeMultiplier;
+            //     controller.querySelector('#gyr-z').value =
+            //         gyroscope.rps.z * gyroscopeMultiplier;
+            // }
         };
 
-// Joy-Cons may sleep until touched, so attach the listener dynamically.
+        // Joy-Cons may sleep until touched, so attach the listener dynamically.
         setInterval(async () => {
             for (const joyCon of connectedJoyCons.values()) {
                 if (joyCon.eventListenerAttached) {
@@ -532,14 +530,13 @@ export default {
             }
         }, 2000);
 
-        showDebug.addEventListener('input', (e) => {
-            document.querySelector('#debug').style.display = e.target.checked
-                ? 'flex'
-                : 'none';
-        });
+        // showDebug.addEventListener('input', (e) => {
+        //     document.querySelector('#debug').style.display = e.target.checked
+        //         ? 'flex'
+        //         : 'none';
+        // });
     }
 }
-
 
 
 </script>
@@ -557,25 +554,11 @@ export default {
     --right-joy-con-color: #ff493e;
 }
 
-/*html {*/
-/*    max-width: 75ch;*/
-/*    padding: 2ch;*/
-/*    margin: auto;*/
-/*}*/
-
-/*body {*/
-/*    height: 100%;*/
-/*    margin: 0;*/
-/*    padding: 1rem;*/
-/*    font-family: system-ui, sans-serif;*/
-/*    font-size: 100%;*/
-/*}*/
-
-ol {
+.container ol {
     padding-inline-start: 22px;
 }
 
-a {
+.container a {
     color: var(--right-joy-con-color);
 }
 
@@ -626,6 +609,7 @@ ul {
 #joycon-l .highlight {
     outline: solid 2px var(--right-joy-con-color);
 }
+
 #l.highlight:after {
     border-left-color: var(--right-joy-con-color);
 }
@@ -639,6 +623,7 @@ ul {
 #joycon-r .highlight {
     outline: solid 2px;
 }
+
 #r.highlight:after {
     border-left-color: var(--left-joy-con-color);
 }
@@ -649,19 +634,18 @@ figure {
 
 #joycon-l {
     transform-style: preserve-3d;
-    transform: rotateZ(var(--left-alpha)) rotateX(var(--left-beta))
-    rotateY(var(--left-gamma));
+    transform: rotateZ(var(--left-alpha)) rotateX(var(--left-beta)) rotateY(var(--left-gamma));
 }
 
 #joycon-r {
     transform-style: preserve-3d;
-    transform: rotateZ(var(--right-alpha)) rotateX(var(--right-beta))
-    rotateY(var(--right-gamma));
+    transform: rotateZ(var(--right-alpha)) rotateX(var(--right-beta)) rotateY(var(--right-gamma));
 }
 
 [data-z] {
     transform: rotateX(15deg) rotateY(-30deg);
 }
+
 .joycon {
     width: 75px;
     height: 220px;
@@ -671,11 +655,13 @@ figure {
     border-bottom: 10px solid rgba(0, 0, 0, 0.1);
     position: relative;
 }
+
 .joycon:nth-child(1) {
     background-color: #00b2dc;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
 }
+
 .joycon:nth-child(2) {
     background-color: #ff493e;
     border-top-right-radius: 50px;
@@ -693,6 +679,7 @@ figure {
     box-shadow: 0px 3px 0px rgba(0, 0, 0, 0.3);
     position: absolute;
 }
+
 .joystick:after {
     content: '';
     width: 27px;
@@ -705,10 +692,12 @@ figure {
     top: 50%;
     left: 50%;
 }
+
 .joycon:nth-child(1) .joystick {
     top: 40px;
     left: 20px;
 }
+
 .joycon:nth-child(2) .joystick {
     top: 110px;
     left: 20px;
@@ -722,6 +711,7 @@ figure {
     left: 50%;
     transform: translateX(-50%);
 }
+
 .joycon button {
     font-family: Arial;
     width: 17px;
@@ -737,32 +727,41 @@ figure {
     box-sizing: border-box;
     font-size: 8pt;
 }
+
 .joycon:nth-child(1) .buttons {
     top: 100px;
 }
+
 .joycon:nth-child(2) .buttons {
     top: 30px;
 }
+
 .joycon:nth-child(1) button {
     color: #252525;
 }
+
 .joycon:nth-child(2) button {
     color: #bbb;
 }
+
 .joycon button:nth-child(1) {
     left: 19px;
 }
+
 .joycon button:nth-child(2) {
     top: 19px;
 }
+
 .joycon button:nth-child(3) {
     left: 19px;
     bottom: 0;
 }
+
 .joycon button:nth-child(4) {
     top: 19px;
     right: 0;
 }
+
 .joycon button:before {
     content: '';
     width: 100%;
@@ -774,33 +773,43 @@ figure {
     left: 0;
     top: 0;
 }
+
 .joycon:nth-child(1) button:nth-child(1):after {
     content: '▲';
 }
+
 .joycon:nth-child(1) button:nth-child(2):after {
     content: '◀';
 }
+
 .joycon:nth-child(1) button:nth-child(3):after {
     content: '▼';
 }
+
 .joycon:nth-child(1) button:nth-child(4):after {
     content: '►';
 }
+
 .joycon:nth-child(2) button:nth-child(1):after {
     content: 'X';
 }
+
 .joycon:nth-child(2) button:nth-child(2):after {
     content: 'Y';
 }
+
 .joycon:nth-child(2) button:nth-child(3):after {
     content: 'B';
 }
+
 .joycon:nth-child(2) button:nth-child(4):after {
     content: 'A';
 }
+
 button:active {
     box-shadow: none;
 }
+
 button:focus {
     outline: 0;
 }
@@ -814,12 +823,15 @@ button:focus {
     background: #333;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
 }
+
 .joycon:nth-child(1) span {
     right: 8px;
 }
+
 .joycon:nth-child(2) span {
     left: 8px;
 }
+
 .joycon:nth-child(2) span:after {
     content: '';
     width: 4px;
@@ -841,9 +853,11 @@ button:focus {
     position: absolute;
     top: 6%;
 }
+
 .joycon:nth-child(1):before {
     right: -5px;
 }
+
 .joycon:nth-child(2):before {
     left: -5px;
 }
@@ -858,11 +872,13 @@ button:focus {
     border: 4px solid transparent;
     border-left: 4px solid #333;
 }
+
 .joycon:nth-child(1) .back-buttons:after {
     transform: rotate(45deg);
     top: 10px;
     left: -10px;
 }
+
 .joycon:nth-child(2) .back-buttons:after {
     transform: rotate(140deg);
     top: 8px;
@@ -877,10 +893,12 @@ button:focus {
     position: absolute;
     top: 170px;
 }
+
 .joycon:nth-child(1) i {
     right: 15px;
     border-radius: 2px;
 }
+
 .joycon:nth-child(1) i:after {
     content: '';
     width: 65%;
@@ -894,6 +912,7 @@ button:focus {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     box-sizing: border-box;
 }
+
 .joycon:nth-child(2) i {
     left: 15px;
     border-radius: 50%;
@@ -911,4 +930,8 @@ figure {
     height: auto;
 }
 
+.container{
+    position: relative;
+    top:60px;
+}
 </style>
