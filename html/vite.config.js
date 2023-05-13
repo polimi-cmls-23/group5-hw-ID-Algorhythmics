@@ -5,6 +5,9 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  devServer: {
+    proxy: 'http://localhost:8081'
+  },
   plugins: [vue()],
   resolve: {
     alias: {

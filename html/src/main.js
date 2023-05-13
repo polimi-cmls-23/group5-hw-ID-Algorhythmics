@@ -6,6 +6,7 @@ import Stft from './pages/stft.vue'
 import Home from './pages/home.vue'
 import Start from './pages/start.vue'
 import DefaultPage from './default.vue'
+import {OSCInit} from "./osc.js";
 
 import './assets/reset.css'
 import './assets/global.css'
@@ -40,8 +41,12 @@ const router = createRouter({
 })
 
 const app = createApp(DefaultPage,)
+app.config.globalProperties.OSC = OSCInit();
 // const app = createApp(App)
 app.use(router)
 app.use(Notifications)
 // test
 app.mount('#app')
+
+
+

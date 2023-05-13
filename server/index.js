@@ -18,7 +18,6 @@ udpPort.on("message", function (oscMsg, timeTag, info) {
 // Open the socket.
 udpPort.open();
 
-
 // When the port is read, send an OSC message to, say, SuperCollider
 udpPort.on("ready", function () {
     setTimeout(()=>{
@@ -29,3 +28,5 @@ udpPort.on("ready", function () {
     },0)
 
 });
+
+

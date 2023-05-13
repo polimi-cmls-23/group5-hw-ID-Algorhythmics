@@ -7,6 +7,7 @@
     </div>
 </template>
 <script>
+
 import * as JoyCon from './components/joycon/index.js';
 import {connectedJoyCons, JoyConLeft} from "./components/joycon";
 
