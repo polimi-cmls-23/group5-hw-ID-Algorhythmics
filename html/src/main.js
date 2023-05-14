@@ -1,11 +1,13 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import Notifications from '@kyvg/vue3-notification'
+
 import Relax from './pages/dino.vue'
 import Stft from './pages/stft.vue'
 import Home from './pages/home.vue'
 import Start from './pages/start.vue'
 import DefaultPage from './default.vue'
+
 import {OSCInit} from "./osc.js";
 
 import './assets/reset.css'
@@ -21,15 +23,15 @@ const routes = [
         path: '/game/',
         children: [
             {
-                path: 'start',
+                path: 'Custom Hotkey',
                 component: Start,
             },
             {
-                path: 'stft',
+                path: 'Game Training',
                 component: Stft,
             },
             {
-                path: 'relax',
+                path: 'Play your own style',
                 component: Relax,
             }
         ],
