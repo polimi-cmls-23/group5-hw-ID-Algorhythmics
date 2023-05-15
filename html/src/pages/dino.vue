@@ -1,8 +1,6 @@
 <template>
-    <div class="container">
+    <div class="container dark-mode">
         <div class="interstitial-wrapper">
-            <button type="button" hidden id="fullscreen-toggle" title="Full screen toggle">Fullscreen</button>
-            <button type="button" id="dark-mode-toggle" title="Dark mode toggle">Theme</button>
         </div>
         <div id="offline-resources">
             <img id="offline-resources-1x" src="../assets/offline-sprite-1x.png">
@@ -989,6 +987,7 @@ export default {
                         }
                         // todo keep & change text
                         this.canvasCtx.font = '20px Arial';
+                        this.canvasCtx.fillStyle = 'white';
                         this.canvasCtx.fillText('Joy-Con3', this.xPos, this.yPos);
                         this.canvasCtx.drawImage(
                             Runner.imageSprite,
@@ -1799,88 +1798,6 @@ export default {
                     );
                 },
             };
-        })();
-
-        (function () {
-            function supportsFullscreen() {
-                return ['requestFullscreen', 'mozRequestFullScreen', 'webkitRequestFullscreen', 'msRequestFullscreen'].filter(function(method) {
-                    return method in document.body;
-                }).length > 0;
-            }
-
-            var fullscreenBtn = document.getElementById('fullscreen-toggle');
-            if (!supportsFullscreen()) {
-                fullscreenBtn.style.display = 'none';
-                return;
-            }
-
-            if ((!window.matchMedia('(display-mode: fullscreen)').matches) &&
-                (!window.matchMedia('(display-mode: standalone)').matches)) {
-                fullscreenBtn.hidden = false;
-            }
-
-            function launchIntoFullscreen(element) {
-                if(element.requestFullscreen) {
-                    element.requestFullscreen();
-                } else if(element.mozRequestFullScreen) {
-                    element.mozRequestFullScreen();
-                } else if(element.webkitRequestFullscreen) {
-                    element.webkitRequestFullscreen();
-                } else if(element.msRequestFullscreen) {
-                    element.msRequestFullscreen();
-                }
-            }
-
-            function exitFullscreen() {
-                if(document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if(document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if(document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                }
-            }
-
-            fullscreenBtn.addEventListener('click', function() {
-                var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-                var canvas = document.getElementsByTagName('canvas')[0];
-                if (fullscreenElement) {
-                    exitFullscreen();
-                    return;
-                }
-                launchIntoFullscreen(canvas);
-            });
-
-            var darkModeToggleBtn = document.getElementById('dark-mode-toggle');
-            let theme = localStorage.getItem('theme');
-
-            if (theme === 'dark') enableDarkMode();
-
-            darkModeToggleBtn.addEventListener('click', function () {
-                theme = localStorage.getItem('theme');
-                if (theme === 'dark') {
-                    disableDarkMode();
-                } else {
-                    enableDarkMode();
-                }
-            });
-
-            function enableDarkMode() {
-                localStorage.setItem('theme', 'dark');
-                document.body.classList.add('dark-mode');
-            }
-
-            function disableDarkMode() {
-                localStorage.setItem('theme', 'light');
-                document.body.classList.remove('dark-mode');
-            }
-
-            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
-                e.matches ? enableDarkMode() : disableDarkMode();
-            });
-            window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? enableDarkMode()
-                : disableDarkMode();
         })();
 
         let devices = [];
