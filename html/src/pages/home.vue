@@ -3,10 +3,9 @@
         <div class="align" id="align">
             <h1 id="title" @click="bind">***** *****</h1>
             <div id="start">
-                <p @click="go('start')">Start</p>
-                <p @click="go('stft')">STFT</p>
-                <p @click="go('relax')">Relax</p>
-                <p @click="go('debug')">Debug</p>
+                <p @click="go('hotkeys')">Custom Hotkeys</p>
+                <p @click="go('game')">Game Training</p>
+                <p @click="go('stft')">Play your own style</p>
             </div>
 
         </div>

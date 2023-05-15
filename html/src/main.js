@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import Notifications from '@kyvg/vue3-notification'
 
-import Relax from './pages/dino.vue'
+import Dino from './pages/dino.vue'
 import Stft from './pages/stft.vue'
 import Home from './pages/home.vue'
 import Start from './pages/start.vue'
@@ -23,16 +23,16 @@ const routes = [
         path: '/game/',
         children: [
             {
-                path: 'Custom Hotkey',
+                path: 'hotkeys',
                 component: Start,
             },
             {
-                path: 'Game Training',
-                component: Stft,
+                path: 'game',
+                component: Dino,
             },
             {
-                path: 'Play your own style',
-                component: Relax,
+                path: 'stft',
+                component: Stft,
             }
         ],
     },

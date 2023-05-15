@@ -6,6 +6,7 @@
         <!--        <input id="show-debug" type="checkbox" />-->
         <!--        <label for="show-debug">Show debug info</label>-->
         <!--    </div>-->
+        <h1 class="container-title">Visualization</h1>
         <figure>
             <div id="joycon-l" class="joycon productId8198">
                 <div id="joystick-left" class="joystick"></div>
@@ -32,7 +33,6 @@
                 <strong class="back-buttons" id="r"></strong>
             </div>
         </figure>
-
         <div id="debug">
             <div id="debug-left">
                 <pre></pre>
@@ -60,6 +60,11 @@
                 <meter id="gyr-z" min="-1" max="1"></meter>
             </div>
         </div>
+        <div>
+            <h1 class="container-title">Custom Keymap</h1>
+            <p>Message is: {{ form.A }}</p>
+            <input v-model="form.A" placeholder="edit me" />
+        </div>
     </div>
 </template>
 
@@ -68,6 +73,13 @@ import {connectJoyCon, connectedJoyCons, JoyConLeft} from '../components/joycon'
 
 export default {
     name: "start.vue",
+    data(){
+        return {
+            form:{
+                A:''
+            }
+        }
+    },
     mounted() {
 
         const debugLeft = document.querySelector('#debug-left');
@@ -923,15 +935,23 @@ button:focus {
 
 figure {
     margin: 0;
-    /*transform: translate(-50%, -50%);*/
-    /*position: absolute;*/
-    /*left: 50%;*/
+    transform: translate(-50%, 0);
+    position: absolute;
+    left: 50%;
     /*top: 50%;*/
     height: auto;
 }
 
 .container{
     position: relative;
-    top:60px;
+    padding: 30px;
+    /*top:60px;*/
+}
+.container-title{
+    text-align: center;
+    margin-bottom: 30px;
+}
+input{
+    border-color:#fff;
 }
 </style>

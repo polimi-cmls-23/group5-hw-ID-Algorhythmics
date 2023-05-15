@@ -27,7 +27,7 @@ wss.on("connection", function (socket) {
 
     socketPort.on("message", function (oscMsg) {
         console.log("An OSC Message was received!", oscMsg);
-        // send
+        // forward to super collider
         // socketPort.send({
         //     address: "/message",
         //     args: "hello from nodejs"
