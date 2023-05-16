@@ -41,6 +41,12 @@
                             <option v-for="item in beatOptions">{{item}}</option>
                         </select>
                     </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">Shake</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in beatOptions">{{item}}</option>
+                        </select>
+                    </div>
                 </fieldset>
             </form>
             <h2 class="pure-u-1-1 form-title center">Right Controller</h2>
@@ -72,6 +78,12 @@
                     </div>
                     <div class="pure-control-group">
                         <label for="aligned-name">Twist</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in noteOptions">{{item}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">Shake</label>
                         <select class="custom-select select pure-u-1-4">
                             <option v-for="item in noteOptions">{{item}}</option>
                         </select>
