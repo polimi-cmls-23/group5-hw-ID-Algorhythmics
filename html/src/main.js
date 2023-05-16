@@ -12,6 +12,7 @@ import {OSCInit} from "./osc.js";
 
 import './assets/reset.css'
 import './assets/global.css'
+import './assets/pure-min.css'
 
 const routes = [
     {

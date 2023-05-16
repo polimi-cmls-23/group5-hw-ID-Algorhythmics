@@ -1,13 +1,85 @@
 <template>
-    <div class="container">
+    <div class="container pure-g">
         <!--    <div>-->
         <!--        <input id="show-visualize" type="checkbox" checked="true" />-->
         <!--        <label for="show-visualize">Visualize Joycons</label>-->
         <!--        <input id="show-debug" type="checkbox" />-->
         <!--        <label for="show-debug">Show debug info</label>-->
         <!--    </div>-->
-        <h1 class="container-title">Visualization</h1>
-        <figure>
+        <h1 class="container-title pure-u-1-1">Custom Hotkeys</h1>
+        <div class="form-container pure-u-1-2">
+            <h2 class="pure-u-1-1 form-title center">Left Controller</h2>
+            <form class="pure-form pure-form-aligned center">
+                <fieldset>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">Up</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in beatOptions">{{item}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">Down</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in beatOptions">{{item}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">Left</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in beatOptions">{{item}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">Right</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in beatOptions">{{item}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">Twist</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in beatOptions">{{item}}</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </form>
+            <h2 class="pure-u-1-1 form-title center">Right Controller</h2>
+            <form class="pure-form pure-form-aligned center">
+                <fieldset>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">A</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in noteOptions">{{item}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">B</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in noteOptions">{{item}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">X</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in noteOptions">{{item}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">Y</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in noteOptions">{{item}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="aligned-name">Twist</label>
+                        <select class="custom-select select pure-u-1-4">
+                            <option v-for="item in noteOptions">{{item}}</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <figure class="pure-u-1-3">
             <div id="joycon-l" class="joycon productId8198">
                 <div id="joystick-left" class="joystick"></div>
                 <div class="buttons">
@@ -60,11 +132,6 @@
                 <meter id="gyr-z" min="-1" max="1"></meter>
             </div>
         </div>
-        <div>
-            <h1 class="container-title">Custom Keymap</h1>
-            <p>Message is: {{ form.A }}</p>
-            <input v-model="form.A" placeholder="edit me" />
-        </div>
     </div>
 </template>
 
@@ -75,8 +142,24 @@ export default {
     name: "start.vue",
     data(){
         return {
+            noteOptions:['C','D','E','F','G','A','B'],
+            beatOptions:['Kick','Snare','Hi-hat'],
             form:{
-                A:''
+                // right
+                A:'',
+                B:'',
+                X:'',
+                Y:'',
+                R:'',
+                ZR:'',
+                // left
+                Up:'',
+                Down:'',
+                Left:'',
+                Right:'',
+                L:'',
+                ZL:'',
+
             }
         }
     },
@@ -555,6 +638,11 @@ export default {
 
 <style scoped>
 .container {
+    position: relative;
+    border:1px solid white;
+    width: 900px;
+    margin:0 auto;
+    top:20px;
     color-scheme: dark light;
     --left-alpha: 0deg;
     --left-beta: 0deg;
@@ -935,16 +1023,16 @@ button:focus {
 
 figure {
     margin: 0;
-    transform: translate(-50%, 0);
-    position: absolute;
-    left: 50%;
+    /*transform: translate(-50%, 0);*/
+    /*position: absolute;*/
+    /*left: 50%;*/
     /*top: 50%;*/
     height: auto;
 }
 
 .container{
     position: relative;
-    padding: 30px;
+    padding: 20px;
     /*top:60px;*/
 }
 .container-title{
@@ -953,5 +1041,11 @@ figure {
 }
 input{
     border-color:#fff;
+}
+.center{
+    text-align: center;
+}
+.custom-select{
+    color: black;
 }
 </style>
