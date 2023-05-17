@@ -14,37 +14,37 @@
                     <fieldset>
                         <div class="pure-control-group">
                             <label for="aligned-name">Up</label>
-                            <select class="custom-select select">
+                            <select class="custom-select select" v-model="form.Up">
                                 <option v-for="item in beatOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Down</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.Down">
                                 <option v-for="item in beatOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Left</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.Left">
                                 <option v-for="item in beatOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Right</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.Right">
                                 <option v-for="item in beatOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Twist</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.LeftTwist">
                                 <option v-for="item in beatOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Shake</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.LeftShake">
                                 <option v-for="item in beatOptions">{{item}}</option>
                             </select>
                         </div>
@@ -84,44 +84,44 @@
 
                         <div class="pure-control-group">
                             <label for="aligned-name">A</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.A">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">B</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.B">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">X</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.X">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Y</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.Y">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Twist</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.RightTwist">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Shake</label>
-                            <select class="custom-select select ">
+                            <select class="custom-select select" v-model="form.RightShake">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>
                     </fieldset>
                 </form>
-<!--                <button class="pure-button">Submit</button>-->
             </div>
+            <button class="pure-button submit" @click="submit">Submit</button>
             <div id="debug">
                 <div id="debug-left">
                     <pre></pre>
@@ -171,6 +171,8 @@ export default {
                 Y:'',
                 R:'',
                 ZR:'',
+                LeftTwist:'',
+                LeftShake:'',
                 // left
                 Up:'',
                 Down:'',
@@ -178,12 +180,12 @@ export default {
                 Right:'',
                 L:'',
                 ZL:'',
-
+                RightTwist:'',
+                RightShake:'',
             }
         }
     },
     mounted() {
-
         const debugLeft = document.querySelector('#debug-left');
         const debugRight = document.querySelector('#debug-right');
         const showVisualize = document.querySelector('#show-visualize');
@@ -649,6 +651,11 @@ export default {
         //         ? 'flex'
         //         : 'none';
         // });
+    },
+    methods:{
+        submit(){
+
+        }
     }
 }
 
@@ -672,7 +679,7 @@ export default {
 }
 .sub-container{
     /*display: inline-block;*/
-    width: 700px;
+    width: 720px;
     padding: 30px;
     margin:30px auto;
     border:1px solid white;
@@ -680,16 +687,6 @@ export default {
 
 .container ol {
     padding-inline-start: 22px;
-}
-
-
-figure {
-    margin: 0;
-    /*transform: translate(-50%, 0);*/
-    /*position: absolute;*/
-    /*left: 50%;*/
-    /*top: 50%;*/
-    height: auto;
 }
 
 .container{
@@ -712,6 +709,8 @@ input{
 }
 .joycon-view{
     width: 250px;
+    margin: 0 0 0 20px;
+    height: auto;
 }
 .clearfix::after {
     content: "";
@@ -739,5 +738,10 @@ input{
 }
 .pure-form-aligned .pure-control-group label{
     width: 3em;
+}
+.submit{
+    display: block;
+    margin:0 auto;
+    width: 90px;
 }
 </style>
