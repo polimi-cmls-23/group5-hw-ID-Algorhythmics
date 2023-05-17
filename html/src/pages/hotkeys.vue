@@ -640,9 +640,7 @@ export default {
     methods:{
         refreshConfig(){
             let me = this
-            if(!!me.$utils.isStorageExist()){
-                me.form = me.$utils.readFromStorage()
-            }
+            me.form = me.$utils.readConfig()
         },
         submit(){
             let me = this
