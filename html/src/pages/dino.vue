@@ -30,7 +30,8 @@ export default {
     data(){
         return {
             hotkeys:{},
-            notes:[]
+            notes:[],
+            obstacleCount:0
         }
     },
     created() {
@@ -1932,7 +1933,11 @@ export default {
         },
         getRandomNote(){
             let me = this;
-            return me.notes[Math.floor(Math.random() * me.notes.length)]
+            me.obstacleCount++
+            if(me.obstacleCount%2!==0){
+                return me.notes[Math.floor(Math.random() * me.notes.length)]
+            }
+            return ''
         }
     }
 }
