@@ -653,7 +653,7 @@ export default {
 
 </script>
 
-<style type="less" scoped>
+<style lang="less" scoped>
 @import "./start/joycon.css";
 .container {
     position: relative;

@@ -2,6 +2,14 @@
     <div class="container dark-mode">
         <div class="interstitial-wrapper">
         </div>
+        <details class="controller instruction">
+            <summary>Instructions</summary>
+            <ol>
+                <li>Pair up Joy-Con controllers.</li>
+                <li>Press any button to start the game.</li>
+                <li>Jump whenever an obstacle appears by pressing the relative hotkey.</li>
+            </ol>
+        </details>
         <div id="offline-resources">
             <img id="offline-resources-1x" src="../assets/offline-sprite-1x.png">
             <img id="offline-resources-2x" src="../assets/offline-sprite-2x.png">
@@ -15,10 +23,23 @@
 </template>
 
 <script>
+import {readConfig} from "@/components/utils";
 const  JoyCon = await import('../components/joycon/index');
 export default {
     name: "dino.vue",
+    data(){
+        return {
+            hotkeys:{},
+            notes:[]
+        }
+    },
+    created() {
+        let me = this
+        me.hotkeys = readConfig()
+        me.notes = me.getNotes(me.hotkeys)
+    },
     mounted() {
+        let me = this;
         (function () {
             var lastTime = 0;
             var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -949,6 +970,7 @@ export default {
                         }
                         this.width = this.typeConfig.width * this.size;
                         this.xPos = this.dimensions.WIDTH - this.width;
+                        this.note = me.getRandomNote();
                         if (Array.isArray(this.typeConfig.yPos)) {
                             var yPosConfig = IS_MOBILE
                                 ? this.typeConfig.yPosMobile
@@ -986,9 +1008,9 @@ export default {
                             sourceX += sourceWidth * this.currentFrame;
                         }
                         // todo keep & change text
-                        this.canvasCtx.font = '20px Arial';
+                        this.canvasCtx.font = '16px Arial';
                         this.canvasCtx.fillStyle = 'white';
-                        this.canvasCtx.fillText('Joy-Con3', this.xPos, this.yPos);
+                        this.canvasCtx.fillText(this.note, this.xPos, this.yPos-5);
                         this.canvasCtx.drawImage(
                             Runner.imageSprite,
                             sourceX,
@@ -1903,11 +1925,20 @@ export default {
 
         new Runner('.interstitial-wrapper');
 
+    },
+    methods:{
+        getNotes(obj){
+            return [... new Set(Object.values(obj))]
+        },
+        getRandomNote(){
+            let me = this;
+            return me.notes[Math.floor(Math.random() * me.notes.length)]
+        }
     }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .container {
     color-scheme: dark light;
     --primary-bg: rgb(255, 255, 255);
@@ -1984,5 +2015,13 @@ summary {
 .container{
     background-color: var(--primary-bg);
 }
-
+.instruction {
+    font-size: 16px;
+    ol{
+        max-width: 50ch;
+    }
+    li{
+        list-style-type: decimal;
+    }
+}
 </style>
