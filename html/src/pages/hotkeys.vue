@@ -156,36 +156,21 @@
 
 <script>
 import {connectJoyCon, connectedJoyCons, JoyConLeft} from '../components/joycon';
-
+import {noteOptions,beatOptions,defaultHotkeys} from '../components/hotkey';
 export default {
     name: "start.vue",
     data(){
         return {
-            noteOptions:['C','D','E','F','G','A','B'],
-            beatOptions:['Kick','Snare','Hi-hat'],
+            noteOptions,
+            beatOptions,
             form:{
-                // right
-                A:'',
-                B:'',
-                X:'',
-                Y:'',
-                R:'',
-                ZR:'',
-                LeftTwist:'',
-                LeftShake:'',
-                // left
-                Up:'',
-                Down:'',
-                Left:'',
-                Right:'',
-                L:'',
-                ZL:'',
-                RightTwist:'',
-                RightShake:'',
+                ...defaultHotkeys
             }
         }
     },
     mounted() {
+        let me = this
+        me.refreshConfig()
         const debugLeft = document.querySelector('#debug-left');
         const debugRight = document.querySelector('#debug-right');
         const showVisualize = document.querySelector('#show-visualize');
@@ -653,8 +638,16 @@ export default {
         // });
     },
     methods:{
+        refreshConfig(){
+            let me = this
+            if(!!me.$utils.isStorageExist()){
+                me.form = me.$utils.readFromStorage()
+            }
+        },
         submit(){
-
+            let me = this
+            me.$utils.save2Storage(me.form)
+            me.$notify("Save Succeed");
         }
     }
 }
