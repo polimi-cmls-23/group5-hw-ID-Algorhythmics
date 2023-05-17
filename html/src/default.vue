@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div class="container">
         <img @click="back" v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/arrow.svg" alt="back" />
         <notifications />
         <router-view class="view"/>
@@ -52,9 +52,13 @@ export default {
 </script>
 
 <style scoped>
-    #app{
+    body,html{
+        background: #000;
+        height: 100%;
+    }
+    .container{
         width: 100%;
-        height: 100vh;
+        min-height: 100vh;
         font-family: "Source Code Pro", monospace;
         background: #000;
         color:#fff;

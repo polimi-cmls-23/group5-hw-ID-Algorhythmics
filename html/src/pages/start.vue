@@ -1,149 +1,156 @@
 <template>
-    <div class="container pure-g">
-        <!--    <div>-->
-        <!--        <input id="show-visualize" type="checkbox" checked="true" />-->
-        <!--        <label for="show-visualize">Visualize Joycons</label>-->
-        <!--        <input id="show-debug" type="checkbox" />-->
-        <!--        <label for="show-debug">Show debug info</label>-->
-        <!--    </div>-->
-        <h1 class="container-title pure-u-1-1">Custom Hotkeys</h1>
-        <div class="form-container pure-u-1-2">
-            <h2 class="pure-u-1-1 form-title center">Left Controller</h2>
-            <form class="pure-form pure-form-aligned center">
-                <fieldset>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">Up</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in beatOptions">{{item}}</option>
-                        </select>
+    <div class="container">
+        <div class="sub-container clearfix">
+            <!--    <div>-->
+            <!--        <input id="show-visualize" type="checkbox" checked="true" />-->
+            <!--        <label for="show-visualize">Visualize Joycons</label>-->
+            <!--        <input id="show-debug" type="checkbox" />-->
+            <!--        <label for="show-debug">Show debug info</label>-->
+            <!--    </div>-->
+            <h1 class="container-title">Custom Hotkeys</h1>
+            <div class="left-container">
+                <h2 class="form-title center">Left Controller</h2>
+                <form class="pure-form pure-form-aligned center">
+                    <fieldset>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Up</label>
+                            <select class="custom-select select">
+                                <option v-for="item in beatOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Down</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in beatOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Left</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in beatOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Right</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in beatOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Twist</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in beatOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Shake</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in beatOptions">{{item}}</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <figure class="joycon-view">
+                <div id="joycon-l" class="joycon productId8198">
+                    <div id="joystick-left" class="joystick"></div>
+                    <div class="buttons">
+                        <button id="up"></button>
+                        <button id="left"></button>
+                        <button id="down"></button>
+                        <button id="right"></button>
                     </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">Down</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in beatOptions">{{item}}</option>
-                        </select>
-                    </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">Left</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in beatOptions">{{item}}</option>
-                        </select>
-                    </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">Right</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in beatOptions">{{item}}</option>
-                        </select>
-                    </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">Twist</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in beatOptions">{{item}}</option>
-                        </select>
-                    </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">Shake</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in beatOptions">{{item}}</option>
-                        </select>
-                    </div>
-                </fieldset>
-            </form>
-            <h2 class="pure-u-1-1 form-title center">Right Controller</h2>
-            <form class="pure-form pure-form-aligned center">
-                <fieldset>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">A</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in noteOptions">{{item}}</option>
-                        </select>
-                    </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">B</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in noteOptions">{{item}}</option>
-                        </select>
-                    </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">X</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in noteOptions">{{item}}</option>
-                        </select>
-                    </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">Y</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in noteOptions">{{item}}</option>
-                        </select>
-                    </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">Twist</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in noteOptions">{{item}}</option>
-                        </select>
-                    </div>
-                    <div class="pure-control-group">
-                        <label for="aligned-name">Shake</label>
-                        <select class="custom-select select pure-u-1-4">
-                            <option v-for="item in noteOptions">{{item}}</option>
-                        </select>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-        <figure class="pure-u-1-3">
-            <div id="joycon-l" class="joycon productId8198">
-                <div id="joystick-left" class="joystick"></div>
-                <div class="buttons">
-                    <button id="up"></button>
-                    <button id="left"></button>
-                    <button id="down"></button>
-                    <button id="right"></button>
+                    <span id="minus"></span>
+                    <i id="capture"></i>
+                    <strong class="back-buttons" id="l"></strong>
                 </div>
-                <span id="minus"></span>
-                <i id="capture"></i>
-                <strong class="back-buttons" id="l"></strong>
-            </div>
-            <div id="joycon-r" class="joycon productId8199">
-                <div id="joystick-right" class="joystick"></div>
-                <div class="buttons">
-                    <button id="x"></button>
-                    <button id="y"></button>
-                    <button id="b"></button>
-                    <button id="a"></button>
+                <div id="joycon-r" class="joycon productId8199">
+                    <div id="joystick-right" class="joystick"></div>
+                    <div class="buttons">
+                        <button id="x"></button>
+                        <button id="y"></button>
+                        <button id="b"></button>
+                        <button id="a"></button>
+                    </div>
+                    <span id="plus"></span>
+                    <i id="home"></i>
+                    <strong class="back-buttons" id="r"></strong>
                 </div>
-                <span id="plus"></span>
-                <i id="home"></i>
-                <strong class="back-buttons" id="r"></strong>
-            </div>
-        </figure>
-        <div id="debug">
-            <div id="debug-left">
-                <pre></pre>
-                <p>Acceleration</p>
-                <meter id="acc-x" min="-1" max="1"></meter>
-                <meter id="acc-y" min="-1" max="1"></meter>
-                <meter id="acc-z" min="-1" max="1"></meter>
-                <br/>
-                <p>Gyroscope</p>
-                <meter id="gyr-x" min="-1" max="1"></meter>
-                <meter id="gyr-y" min="-1" max="1"></meter>
-                <meter id="gyr-z" min="-1" max="1"></meter>
-            </div>
+            </figure>
+            <div class="right-container">
+                <h2 class="form-title center">Right Controller</h2>
+                <form class="pure-form pure-form-aligned center">
+                    <fieldset>
 
-            <div id="debug-right">
-                <pre></pre>
-                <p>Acceleration</p>
-                <meter id="acc-x" min="-1" max="1"></meter>
-                <meter id="acc-y" min="-1" max="1"></meter>
-                <meter id="acc-z" min="-1" max="1"></meter>
-                <br/>
-                <p>Gyroscope</p>
-                <meter id="gyr-x" min="-1" max="1"></meter>
-                <meter id="gyr-y" min="-1" max="1"></meter>
-                <meter id="gyr-z" min="-1" max="1"></meter>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">A</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">B</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">X</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Y</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Twist</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Shake</label>
+                            <select class="custom-select select ">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </form>
+<!--                <button class="pure-button">Submit</button>-->
+            </div>
+            <div id="debug">
+                <div id="debug-left">
+                    <pre></pre>
+                    <p>Acceleration</p>
+                    <meter id="acc-x" min="-1" max="1"></meter>
+                    <meter id="acc-y" min="-1" max="1"></meter>
+                    <meter id="acc-z" min="-1" max="1"></meter>
+                    <br/>
+                    <p>Gyroscope</p>
+                    <meter id="gyr-x" min="-1" max="1"></meter>
+                    <meter id="gyr-y" min="-1" max="1"></meter>
+                    <meter id="gyr-z" min="-1" max="1"></meter>
+                </div>
+
+                <div id="debug-right">
+                    <pre></pre>
+                    <p>Acceleration</p>
+                    <meter id="acc-x" min="-1" max="1"></meter>
+                    <meter id="acc-y" min="-1" max="1"></meter>
+                    <meter id="acc-z" min="-1" max="1"></meter>
+                    <br/>
+                    <p>Gyroscope</p>
+                    <meter id="gyr-x" min="-1" max="1"></meter>
+                    <meter id="gyr-y" min="-1" max="1"></meter>
+                    <meter id="gyr-z" min="-1" max="1"></meter>
+                </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -648,13 +655,11 @@ export default {
 
 </script>
 
-<style scoped>
+<style type="less" scoped>
+@import "./start/joycon.css";
 .container {
     position: relative;
-    border:1px solid white;
-    width: 900px;
-    margin:0 auto;
-    top:20px;
+    /*top:20px;*/
     color-scheme: dark light;
     --left-alpha: 0deg;
     --left-beta: 0deg;
@@ -665,373 +670,18 @@ export default {
     --left-joy-con-color: #00b2dc;
     --right-joy-con-color: #ff493e;
 }
+.sub-container{
+    /*display: inline-block;*/
+    width: 700px;
+    padding: 30px;
+    margin:30px auto;
+    border:1px solid white;
+}
 
 .container ol {
     padding-inline-start: 22px;
 }
 
-.container a {
-    color: var(--right-joy-con-color);
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-}
-
-.joycon.rumble {
-    animation: shake 0.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-    transform: translate3d(0, 0, 0);
-}
-
-@keyframes shake {
-    10%,
-    90% {
-        transform: translate3d(-1px, 0, 0);
-    }
-
-    20%,
-    80% {
-        transform: translate3d(2px, 0, 0);
-    }
-
-    30%,
-    50%,
-    70% {
-        transform: translate3d(-4px, 0, 0);
-    }
-
-    40%,
-    60% {
-        transform: translate3d(4px, 0, 0);
-    }
-}
-
-#debug {
-    display: none;
-    gap: 50px;
-}
-
-#left.highlight,
-#right.highlight,
-#up.highlight,
-#down.highlight,
-#capture.highlight,
-#minus.highlight,
-#joycon-l .highlight {
-    outline: solid 2px var(--right-joy-con-color);
-}
-
-#l.highlight:after {
-    border-left-color: var(--right-joy-con-color);
-}
-
-#x.highlight,
-#y.highlight,
-#a.highlight,
-#b.highlight,
-#home.highlight,
-#plus.highlight,
-#joycon-r .highlight {
-    outline: solid 2px;
-}
-
-#r.highlight:after {
-    border-left-color: var(--left-joy-con-color);
-}
-
-figure {
-    perspective: 1000px;
-}
-
-#joycon-l {
-    transform-style: preserve-3d;
-    transform: rotateZ(var(--left-alpha)) rotateX(var(--left-beta)) rotateY(var(--left-gamma));
-}
-
-#joycon-r {
-    transform-style: preserve-3d;
-    transform: rotateZ(var(--right-alpha)) rotateX(var(--right-beta)) rotateY(var(--right-gamma));
-}
-
-[data-z] {
-    transform: rotateX(15deg) rotateY(-30deg);
-}
-
-.joycon {
-    width: 75px;
-    height: 220px;
-    display: inline-block;
-    margin: 0 25px;
-    border-top: 5px solid rgba(255, 255, 255, 0.4);
-    border-bottom: 10px solid rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.joycon:nth-child(1) {
-    background-color: #00b2dc;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-}
-
-.joycon:nth-child(2) {
-    background-color: #ff493e;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-}
-
-/* Joysticks */
-.joystick {
-    width: 35px;
-    height: 35px;
-    background: linear-gradient(to top right, #333, #60686b);
-    border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.4);
-    box-sizing: border-box;
-    box-shadow: 0px 3px 0px rgba(0, 0, 0, 0.3);
-    position: absolute;
-}
-
-.joystick:after {
-    content: '';
-    width: 27px;
-    height: 27px;
-    position: absolute;
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    border-radius: 50%;
-    box-sizing: border-box;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-}
-
-.joycon:nth-child(1) .joystick {
-    top: 40px;
-    left: 20px;
-}
-
-.joycon:nth-child(2) .joystick {
-    top: 110px;
-    left: 20px;
-}
-
-/* Buttons */
-.buttons {
-    width: 55px;
-    height: 55px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.joycon button {
-    font-family: Arial;
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    position: absolute;
-    border: none;
-    text-align: center;
-    background: linear-gradient(to top right, #222, #666);
-    padding: 0;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.8);
-    box-sizing: border-box;
-    font-size: 8pt;
-}
-
-.joycon:nth-child(1) .buttons {
-    top: 100px;
-}
-
-.joycon:nth-child(2) .buttons {
-    top: 30px;
-}
-
-.joycon:nth-child(1) button {
-    color: #252525;
-}
-
-.joycon:nth-child(2) button {
-    color: #bbb;
-}
-
-.joycon button:nth-child(1) {
-    left: 19px;
-}
-
-.joycon button:nth-child(2) {
-    top: 19px;
-}
-
-.joycon button:nth-child(3) {
-    left: 19px;
-    bottom: 0;
-}
-
-.joycon button:nth-child(4) {
-    top: 19px;
-    right: 0;
-}
-
-.joycon button:before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    border-top: 2px solid rgba(255, 255, 255, 0.3);
-    transform: rotate(40deg);
-    border-radius: 50%;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.joycon:nth-child(1) button:nth-child(1):after {
-    content: '▲';
-}
-
-.joycon:nth-child(1) button:nth-child(2):after {
-    content: '◀';
-}
-
-.joycon:nth-child(1) button:nth-child(3):after {
-    content: '▼';
-}
-
-.joycon:nth-child(1) button:nth-child(4):after {
-    content: '►';
-}
-
-.joycon:nth-child(2) button:nth-child(1):after {
-    content: 'X';
-}
-
-.joycon:nth-child(2) button:nth-child(2):after {
-    content: 'Y';
-}
-
-.joycon:nth-child(2) button:nth-child(3):after {
-    content: 'B';
-}
-
-.joycon:nth-child(2) button:nth-child(4):after {
-    content: 'A';
-}
-
-button:active {
-    box-shadow: none;
-}
-
-button:focus {
-    outline: 0;
-}
-
-/* Start & Select */
-.joycon span {
-    position: absolute;
-    top: 15px;
-    width: 13px;
-    height: 4px;
-    background: #333;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
-}
-
-.joycon:nth-child(1) span {
-    right: 8px;
-}
-
-.joycon:nth-child(2) span {
-    left: 8px;
-}
-
-.joycon:nth-child(2) span:after {
-    content: '';
-    width: 4px;
-    height: 13px;
-    background: #333;
-    transform: translateX(-50%);
-    position: absolute;
-    left: 50%;
-    top: -4px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
-}
-
-/* Sliders */
-.joycon:before {
-    content: '';
-    width: 5px;
-    height: 90%;
-    background: #333;
-    position: absolute;
-    top: 6%;
-}
-
-.joycon:nth-child(1):before {
-    right: -5px;
-}
-
-.joycon:nth-child(2):before {
-    left: -5px;
-}
-
-/* Triggers */
-.back-buttons:after {
-    content: '';
-    position: absolute;
-    width: 140px;
-    height: 90px;
-    border-radius: 50px;
-    border: 4px solid transparent;
-    border-left: 4px solid #333;
-}
-
-.joycon:nth-child(1) .back-buttons:after {
-    transform: rotate(45deg);
-    top: 10px;
-    left: -10px;
-}
-
-.joycon:nth-child(2) .back-buttons:after {
-    transform: rotate(140deg);
-    top: 8px;
-    right: -7.5px;
-}
-
-/* Home & Capture */
-.joycon i {
-    width: 15px;
-    height: 15px;
-    background: #333;
-    position: absolute;
-    top: 170px;
-}
-
-.joycon:nth-child(1) i {
-    right: 15px;
-    border-radius: 2px;
-}
-
-.joycon:nth-child(1) i:after {
-    content: '';
-    width: 65%;
-    height: 65%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    border-top: 1px solid rgba(0, 0, 0, 0.6);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    box-sizing: border-box;
-}
-
-.joycon:nth-child(2) i {
-    left: 15px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    margin: -3px;
-    box-shadow: 0px 0px 1px #000;
-}
 
 figure {
     margin: 0;
@@ -1059,5 +709,35 @@ input{
 }
 .custom-select{
     color: black;
+}
+.joycon-view{
+    width: 250px;
+}
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.left-container,.joycon-view,.right-container{
+    float: left;
+}
+.left-container{
+    display: inline-block;
+}
+.right-container{
+    /*width: 270px;*/
+    display: inline-block;
+}
+.select{
+    width: 120px;
+}
+.txt-left{
+    text-align: left;
+}
+.txt-right{
+    text-align: right;
+}
+.pure-form-aligned .pure-control-group label{
+    width: 3em;
 }
 </style>
