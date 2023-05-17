@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <img @click="back" v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/arrow.svg" alt="back" />
+        <img @click="connect" v-if="'start'!==currentRouteName" class="gamepad" src="./assets/gamepad.svg" alt="gamepad" />
         <notifications />
         <router-view class="view"/>
     </div>
@@ -11,6 +12,11 @@ import * as JoyCon from "./components/joycon/index.js";
 import {connectedJoyCons} from "./components/joycon";
 export default {
     name: "default.vue",
+    data(){
+        return {
+            CBKs:[]
+        }
+    },
     computed: {
         currentRouteName() {
             return this.$route.name;
@@ -18,25 +24,34 @@ export default {
     },
     provide() {
         return {
-            connect: this.connect
+            connect: this.connect,
+            addCBK:this.addCBK
         }
     },
     methods:{
         async connect(){
             let me = this
-            await JoyCon.connectJoyCon();
-            me.$notify("Joy-Con connected");
+            let r = await JoyCon.connectJoyCon();
             me.watchStatus()
         },
+        addCBK(func){
+            let me = this;
+            me.CBKs.push(func)
+        },
         watchStatus(){
+            let me = this
             setInterval(async () => {
                 for (const joyCon of connectedJoyCons.values()) {
                     if (joyCon.eventListenerAttached) {
                         continue;
                     }
+                    me.$notify("Joy-Con connected");
                     joyCon.eventListenerAttached = true;
                     await joyCon.disableVibration();
                     joyCon.addEventListener('hidinput', (event) => {
+                        me.CBKs.forEach((func)=>{
+                            func && func(joyCon, event.detail)
+                        })
                         // me.updateBothControls(joyCon, event.detail);
                         // me.visualize(joyCon, event.detail);
                     });
@@ -69,6 +84,15 @@ export default {
         position: absolute;
         top:10px;
         left:10px;
+        fill: #FFFFFF;
+        z-index:10;
+        cursor: pointer;
+    }
+    .gamepad{
+        width: 30px;
+        position: absolute;
+        top:10px;
+        left:50px;
         fill: #FFFFFF;
         z-index:10;
         cursor: pointer;

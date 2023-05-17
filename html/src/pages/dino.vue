@@ -24,9 +24,12 @@
 
 <script>
 import {readConfig} from "@/components/utils";
-const  JoyCon = await import('../components/joycon/index');
+import {JoyConLeft} from "@/components/joycon";
+import {leftControls,rightControls} from "@/components/control"
+
 export default {
     name: "dino.vue",
+    inject: ['addCBK'],
     data(){
         return {
             hotkeys:{},
@@ -69,7 +72,6 @@ export default {
         let that = null;
 
         (function () {
-            'use strict';
             var currentScore = 0;
 
             var AudioContext = window.AudioContext || window.webkitAudioContext || false;
@@ -1861,32 +1863,44 @@ export default {
             });
         };
 
-        (async function() {
-            if (!('hid' in navigator)) {
+        if (!('hid' in navigator)) {
+            return;
+        }
+
+        const threshold = 0.03;
+
+        let debounceKeyDown;
+        let debounceKeyUp;
+        let whetherJump = (joyCon, packet) => {
+            let me = this
+            if (!packet || !packet.actualOrientation) {
                 return;
             }
-
-
-            const button = document.querySelector('#controller');
-
-            const threshold = 0.03;
-
-            let debounceKeyDown;
-            let debounceKeyUp;
-            const shouldJump = (accelerometer) => {
-                if (!accelerometer || !accelerometer.x) {
-                    return;
+            if (joyCon instanceof JoyConLeft) {
+                for (const control of leftControls) {
+                    me.updateControl(control, packet);
                 }
-                if (Math.abs(accelerometer.x) > threshold) {
-                    if (!that.crashed) {
-                        clearTimeout(debounceKeyDown);
-                        debounceKeyDown = setTimeout(() => {
-                            console.log('Jump');
-                            const event = new Event('keydown');
-                            event.keyCode = 32; // Space key
-                            document.dispatchEvent(event);
-                        }, 50);
-                    } /*else if (accelerometer.x < -threshold) {
+            } else {
+                for (const control of rightControls) {
+                    me.updateControl(control, packet);
+                }
+            }
+        }
+        const shouldJump = (accelerometer) => {
+            //
+            if (!accelerometer || !accelerometer.x) {
+                return;
+            }
+            if (Math.abs(accelerometer.x) > threshold) {
+                if (!that.crashed) {
+                    clearTimeout(debounceKeyDown);
+                    debounceKeyDown = setTimeout(() => {
+                        console.log('Jump');
+                        const event = new Event('keydown');
+                        event.keyCode = 32; // Space key
+                        document.dispatchEvent(event);
+                    }, 50);
+                } /*else if (accelerometer.x < -threshold) {
         clearTimeout(debounceKeyUp);
         debounceKeyUp = setTimeout(() => {
           console.log('Cover');
@@ -1895,34 +1909,15 @@ export default {
           document.dispatchEvent(event);
         }, 100);
       }*/
-                } else {
-                    that.restart();
-                }
-            };
+            } else {
+                that.restart();
+            }
+        };
 
-            // button.addEventListener('click', async function() {
-            //     await JoyCon.connectJoyCon();
-            // });
-
-            // setInterval(async () => {
-            //     if (!JoyCon.connectedJoyCons.size) {
-            //         return;
-            //     }
-            //     for (const joyCon of JoyCon.connectedJoyCons.values()) {
-            //         if (joyCon.eventListenerAttached) {
-            //             continue;
-            //         }
-            //         await joyCon.open();
-            //         await joyCon.enableStandardFullMode();
-            //         await joyCon.enableIMUMode();
-            //         joyCon.addEventListener('hidinput', (event) => {
-            //             shouldJump(event.detail.actualAccelerometer);
-            //         });
-            //         joyCon.eventListenerAttached = true;
-            //     }
-            // }, 2000);
-
-        })();
+        me.addCBK(function(joycon, detail) {
+            shouldJump(detail.actualAccelerometer);
+            whetherJump(joycon, detail)
+        })
 
         new Runner('.interstitial-wrapper');
 
@@ -1938,7 +1933,30 @@ export default {
                 return me.notes[Math.floor(Math.random() * me.notes.length)]
             }
             return ''
-        }
+        },
+        updateControl (control, packet, side)  {
+            let me = this
+            me.lastPacket = packet;
+            if (control.threshold === undefined) {
+                control.threshold = 0;
+            }
+            if (control.last_value === undefined) {
+                if (control.init_value === undefined) {
+                    control.init_value = 0;
+                }
+                control.last_value = control.init_value;
+            }
+            const newValue = control.read_value(packet);
+            // console.log(newValue);
+            if (Math.abs(newValue - control.last_value) > control.threshold) {
+                // const msg = control.generate_midi(newValue);
+                // if (msg !== undefined) {
+                //     // sendMidi(msg, control.name);
+                // }
+                // console.log(control.name);
+                control.last_value = newValue;
+            }
+        },
     }
 }
 </script>

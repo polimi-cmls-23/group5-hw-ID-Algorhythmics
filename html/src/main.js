@@ -29,7 +29,7 @@ const routes = [
                 component: Hotkeys,
             },
             {
-                path: 'game',
+                path: 'dino',
                 component: Dino,
             },
             {

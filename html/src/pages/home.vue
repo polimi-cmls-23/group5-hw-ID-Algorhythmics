@@ -4,7 +4,7 @@
             <h1 id="title" @click="bind">***** *****</h1>
             <div id="start">
                 <p @click="go('hotkeys')">Custom Hotkeys</p>
-                <p @click="go('game')">Game Training</p>
+                <p @click="go('dino')">Game Training</p>
                 <p @click="go('stft')">Play your own style</p>
             </div>
 
