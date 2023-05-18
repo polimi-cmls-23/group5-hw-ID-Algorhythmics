@@ -1,7 +1,7 @@
 <template>
     <div class="container" >
         <div class="align" id="align">
-            <h1 id="title" @click="bind">***** *****</h1>
+            <h1 id="title" @click="bind">****</h1>
             <div id="start">
                 <p @click="go('hotkeys')">Custom Hotkeys</p>
                 <p @click="go('dino')">Game Training</p>
@@ -70,7 +70,7 @@ let characters_low = [
     "y",
     "z"
 ];
-let title = ["*", "*", "*", "*", "*", " ", "*", "*", "*", "*", "*"];
+let title = ["*", "*", "*", "*"];
 function update_txt(title) {
     let string = "";
     title.forEach((element) => {
@@ -137,17 +137,11 @@ export default {
             complete = 1;
             setTimeout(function () {
                 complete = 2;
-                myFuncUpper(8, 0);
-                myFuncUpper(5, 1);
-                myFuncUpper(12, 2);
-                myFuncUpper(12, 3);
-                myFuncUpper(15, 4);
-                //space between
-                myFuncLower(23, 6);
-                myFuncLower(15, 7);
-                myFuncLower(18, 8);
-                myFuncLower(12, 9);
-                myFuncLower(4, 10);
+                //YASC
+                myFuncUpper(25, 0);
+                myFuncUpper(1, 1);
+                myFuncUpper(19, 2);
+                myFuncUpper(3, 3);
             }, 1000);
 
             setTimeout(function () {
@@ -217,6 +211,8 @@ h1 {
 }
 }
 #title{
+    padding: 15px 60px;
+    text-align: center;
     cursor: pointer;
 }
 
