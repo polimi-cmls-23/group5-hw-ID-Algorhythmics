@@ -29,18 +29,24 @@ import {leftControls,rightControls} from "@/components/control"
 
 export default {
     name: "dino.vue",
-    inject: ['addCBK'],
+    inject: ['addInputDetailCBK'],
     data(){
         return {
             hotkeys:{},
             notes:[],
-            obstacleCount:0
+            obstacleCount:0,
+        }
+    },
+    watch:{
+        obstacles(v){
+            console.log('obstacles',v)
         }
     },
     created() {
         let me = this
         me.hotkeys = readConfig()
         me.notes = me.getNotes(me.hotkeys)
+        console.log(me.notes)
     },
     mounted() {
         let me = this;
@@ -70,8 +76,6 @@ export default {
         })();
 
         let that = null;
-
-        (function () {
             var currentScore = 0;
 
             var AudioContext = window.AudioContext || window.webkitAudioContext || false;
@@ -1823,7 +1827,7 @@ export default {
                     );
                 },
             };
-        })();
+
 
         let devices = [];
 
@@ -1871,20 +1875,37 @@ export default {
 
         let debounceKeyDown;
         let debounceKeyUp;
-        let whetherJump = (joyCon, packet) => {
-            let me = this
-            if (!packet || !packet.actualOrientation) {
-                return;
+        let whetherJump = (control, status) => {
+           // control.name
+            let note = me.hotkeys[control.name]
+            let jump = false
+            // find nearest notes
+            let obstacles = currentRunner.horizon.obstacles;
+            let obstacleNotes = obstacles.map((v)=>{
+                return v.note
+            })
+            if(!obstacleNotes.length){
+                return
             }
-            if (joyCon instanceof JoyConLeft) {
-                for (const control of leftControls) {
-                    me.updateControl(control, packet);
-                }
-            } else {
-                for (const control of rightControls) {
-                    me.updateControl(control, packet);
-                }
+            let nearestNote = obstacleNotes[0]
+            // defined as '' or match
+            if(nearestNote===''||note===nearestNote){
+                jump = true
             }
+            if(note===undefined){
+                jump=false
+            }
+            if(!jump){
+                return
+            }
+            // jump
+            clearTimeout(debounceKeyDown);
+            debounceKeyDown = setTimeout(() => {
+                console.log('Jump');
+                const event = new Event('keydown');
+                event.keyCode = 32; // Space key
+                document.dispatchEvent(event);
+            }, 50);
         }
         const shouldJump = (accelerometer) => {
             //
@@ -1914,12 +1935,12 @@ export default {
             }
         };
 
-        me.addCBK(function(joycon, detail) {
-            shouldJump(detail.actualAccelerometer);
-            whetherJump(joycon, detail)
+        me.addInputDetailCBK(function(control, status) {
+            // shouldJump(detail.actualAccelerometer);
+            whetherJump(control, status)
         })
 
-        new Runner('.interstitial-wrapper');
+        window.currentRunner = new Runner('.interstitial-wrapper');
 
     },
     methods:{
@@ -1933,29 +1954,6 @@ export default {
                 return me.notes[Math.floor(Math.random() * me.notes.length)]
             }
             return ''
-        },
-        updateControl (control, packet, side)  {
-            let me = this
-            me.lastPacket = packet;
-            if (control.threshold === undefined) {
-                control.threshold = 0;
-            }
-            if (control.last_value === undefined) {
-                if (control.init_value === undefined) {
-                    control.init_value = 0;
-                }
-                control.last_value = control.init_value;
-            }
-            const newValue = control.read_value(packet);
-            // console.log(newValue);
-            if (Math.abs(newValue - control.last_value) > control.threshold) {
-                // const msg = control.generate_midi(newValue);
-                // if (msg !== undefined) {
-                //     // sendMidi(msg, control.name);
-                // }
-                // console.log(control.name);
-                control.last_value = newValue;
-            }
         },
     }
 }

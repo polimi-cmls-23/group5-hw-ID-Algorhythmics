@@ -9,13 +9,20 @@
 
 <script>
 import * as JoyCon from "./components/joycon/index.js";
-import {connectedJoyCons} from "./components/joycon";
+import {connectedJoyCons,JoyConLeft} from "./components/joycon";
+import {leftControls,rightControls} from "@/components/control"
+
 export default {
     name: "default.vue",
     data(){
         return {
-            CBKs:[]
+            inputCBKS:[],
+            inputDetailCBKS:[]
         }
+    },
+    mounted() {
+        let me = this
+        me.watchStatus()
     },
     computed: {
         currentRouteName() {
@@ -25,18 +32,73 @@ export default {
     provide() {
         return {
             connect: this.connect,
-            addCBK:this.addCBK
+            addInputCBK:this.addInputCBK,
+            addInputDetailCBK:this.addInputDetailCBK
         }
     },
     methods:{
+        control(joyCon, packet){
+            let me = this
+            if (!packet || !packet.actualOrientation) {
+                return;
+            }
+            if (joyCon instanceof JoyConLeft) {
+                for (const control of leftControls) {
+                    me.updateControl(control, packet);
+                }
+            } else {
+                for (const control of rightControls) {
+                    me.updateControl(control, packet);
+                }
+            }
+        },
+        updateControl (control, packet, side)  {
+            let me = this
+            me.lastPacket = packet;
+            if (control.threshold === undefined) {
+                control.threshold = 0;
+            }
+            if (control.last_value === undefined) {
+                if (control.init_value === undefined) {
+                    control.init_value = 0;
+                }
+                control.last_value = control.init_value;
+            }
+            const newValue = control.read_value(packet);
+            // console.log(newValue);
+            if (Math.abs(newValue - control.last_value) > control.threshold) {
+                // const msg = control.generate_midi(newValue);
+                // if (msg !== undefined) {
+                // sendMidi(msg, control.name);
+                // }
+
+                // if(!!newValue){
+                //     // press
+                // }else{
+                //     // cancel
+                // }
+                let status = !!newValue?'on':'off';
+                me.inputDetailCBKS.forEach((func)=>{
+                    func && func(control,status)
+                })
+                console.log(control.name,newValue,control.last_value);
+                control.last_value = newValue;
+            }
+        },
         async connect(){
             let me = this
             let r = await JoyCon.connectJoyCon();
-            me.watchStatus()
+            if(!!connectedJoyCons.size){
+                me.$notify("Joy-Con connected");
+            }
         },
-        addCBK(func){
+        addInputCBK(func){
             let me = this;
-            me.CBKs.push(func)
+            me.inputCBKS.push(func)
+        },
+        addInputDetailCBK(func){
+            let me = this;
+            me.inputDetailCBKS.push(func)
         },
         watchStatus(){
             let me = this
@@ -45,11 +107,12 @@ export default {
                     if (joyCon.eventListenerAttached) {
                         continue;
                     }
-                    me.$notify("Joy-Con connected");
                     joyCon.eventListenerAttached = true;
                     await joyCon.disableVibration();
                     joyCon.addEventListener('hidinput', (event) => {
-                        me.CBKs.forEach((func)=>{
+                        me.control(joyCon, event.detail)
+                        // custom event
+                        me.inputCBKS.forEach((func)=>{
                             func && func(joyCon, event.detail)
                         })
                         // me.updateBothControls(joyCon, event.detail);

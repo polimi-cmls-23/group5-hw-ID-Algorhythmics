@@ -11,32 +11,32 @@ const rightControls = [
     // Define buttons first since they're latency critical and the updates are
     // rarer.
     {
-        name: 'b-button',
+        name: 'B',
         read_value: (packet) => packet.buttonStatus.b,
         generate_midi: noteOnOff(0x2c),
     },
     {
-        name: 'a-button',
+        name: 'A',
         read_value: (packet) => packet.buttonStatus.a,
         generate_midi: noteOnOff(0x2d),
     },
     {
-        name: 'x-button',
+        name: 'X',
         read_value: (packet) => packet.buttonStatus.x,
         generate_midi: noteOnOff(0x2e),
     },
     {
-        name: 'y-button',
+        name: 'Y',
         read_value: (packet) => packet.buttonStatus.y,
         generate_midi: noteOnOff(0x2f),
     },
     {
-        name: 'r-button',
+        name: 'R',
         read_value: (packet) => packet.buttonStatus.r,
         generate_midi: noteOnOff(0x30),
     },
     {
-        name: 'zr-button',
+        name: 'ZR',
         read_value: (packet) => packet.buttonStatus.zr,
         generate_midi: noteOnOff(0x31),
     },
@@ -133,34 +133,34 @@ const leftControls = [
     // Define buttons first since they're latency critical and the updates are
     // rarer.
     {
-        name: 'down-button',
+        name: 'Down',
         read_value: (packet) => {
             return packet.buttonStatus.down
         },
         generate_midi: noteOnOff(0x24),
     },
     {
-        name: 'right-button',
+        name: 'Right',
         read_value: (packet) => packet.buttonStatus.right,
         generate_midi: noteOnOff(0x25),
     },
     {
-        name: 'up-button',
+        name: 'Up',
         read_value: (packet) => packet.buttonStatus.up,
         generate_midi: noteOnOff(0x26),
     },
     {
-        name: 'left-button',
+        name: 'Left',
         read_value: (packet) => packet.buttonStatus.left,
         generate_midi: noteOnOff(0x27),
     },
     {
-        name: 'l-button',
+        name: 'L',
         read_value: (packet) => packet.buttonStatus.l,
         generate_midi: noteOnOff(0x28),
     },
     {
-        name: 'zl-button',
+        name: 'ZL',
         read_value: (packet) => packet.buttonStatus.zl,
         generate_midi: noteOnOff(0x29),
     },
