@@ -174,24 +174,14 @@ v.backgroundImage_(i);
 i = Image.open(thisProcess.nowExecutingPath.dirname +/+ "img/logo.png");
 y.backgroundImage_(i);*/
 
-//play and stop buttons
-~button = Button(w, Rect(30, 30, 70, 50));
-~button.states_([
-	["PLAY", Color.black, Color.white],
-	["STOP", Color.white, Color.black] ]);
-~button.font = Font("Monaco", 17);
-/*~button.action_({
-	arg obj;
-	if(obj.value == 1) {
-		TempoClock.default.tempo = 2.1;*/
 
 
-// creates a composite view for the amplitude envelope controls and the relative label
+// creates a composite view
 
-~fluteLabel = StaticText(w, Rect(250, 20, 290, 60)).string_("BEAT-FLUTE").align_(\center).stringColor_(Color.white).font_(Font("Monaco",50));
+~fluteLabel = StaticText(w, Rect(250, 20, 290, 60)).string_("YASC").align_(\center).stringColor_(Color.white).font_(Font("Monaco",50));
 
 b = CompositeView(w, Rect(30, 110, 410, 365));
-v.drawFunc = { // This function draw the orange square around the knobs
+v.drawFunc = {
 	Pen.strokeColor_(Color.fromHexString("#E6E7F2").alpha_(0.5));
 	Pen.width_(3);
 	Pen.strokeRect(Rect(30, 110, 435, 365));
@@ -248,9 +238,6 @@ v.drawFunc = { // This function draw the orange square around the knobs
 ~relAmpLabel = StaticText(b, Rect(190, 45, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
 // creates a composite view for the vibrato depth control and the relative label
-
-//c = CompositeView(w, Rect(30, 250, 260, 100)).background_(Color.new255(120, 120, 120, 210));
-
 ~envLabel = StaticText(b, Rect(20, 140, 260, 30)).string_("VIBRATO CONTROLS").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
 
 // creates the knob, the numerical box and the label for vibrato frequency
@@ -299,9 +286,8 @@ v.drawFunc = { // This function draw the orange square around the knobs
 
 ~vibDepLabel = StaticText(b, Rect(190, 165, 80, 20)).string_("Depth (%)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
-// creates a composite view for the reverb controls
 
-//d = CompositeView(w, Rect(30, 365, 415, 110));
+// creates a composite view for the reverb controls
 
 ~revLabel = StaticText(b, Rect(20, 265, 410, 20)).string_("REVERB CONTROLS").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
 
@@ -365,14 +351,14 @@ v.drawFunc = { // This function draw the orange square around the knobs
 
 ~revPreLabel = StaticText(b, Rect(315, 285, 80, 20)).string_("Pre-Delay (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
+
 //for drum kit
 k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120, 120, 120, 210));
 
 // KICK
 ~kickLabel= StaticText(k, Rect(20, 10, 290, 23)).string_("KICK").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
 
-// creates the knob, the numerical box and the label for kick
-
+// creates the slider, the numerical box and the label for master of kick
 ~masterKickSlider = Slider.new(k, Rect(20, 95, 200, 20)).orientation_(\horizontal).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5));
 ~masterKickSlider.action_({
 	arg obj;
@@ -393,6 +379,7 @@ k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120,
 
 ~masterKickLabel = StaticText(k, Rect(230, 75, 80, 20)).string_("Master").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
+// creates the knob, the numerical box and the label for attack of kick
 ~attKickKnob = Knob(k, Rect(20, 50, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
 ~attKickKnob.action_({
 	arg obj;
@@ -414,6 +401,7 @@ k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120,
 
 ~attKickLabel = StaticText(k, Rect(55, 30, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
+// creates the knob, the numerical box and the label for release of kick
 ~relKickKnob = Knob(k, Rect(125, 50, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
 ~relKickKnob.action_({
 	arg obj;
@@ -434,20 +422,37 @@ k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120,
 
 ~relKickLabel = StaticText(k, Rect(160, 30, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
+//listen default sound of kick
 ~buttonKick = Button(k, Rect(240, 35, 25, 25));
 ~buttonKick.states_([
 	["▶", Color.black, Color.white],
 	["￭", Color.white, Color.black] ]);
 ~buttonKick.font = Font("Monaco", 20);
-/*~button.action_({
-	arg obj;
-	if(obj.value == 1) {
-		TempoClock.default.tempo = 2.1;*/
-
+~buttonKick.action_({
+	arg objK;
+	if(objK.value == 1) {
+		TempoClock.default.tempo = 2.1;
+		a=Pdef(\kick, Pbind(
+			\instrument, "kick",
+			\dur, Pseq([
+				3/4, 1/4,
+				1/2, 1/2,
+				Rest(1/2), 1/2,
+				Rest(1/4), 3/4
+			], 3) * 0.5,
+			\amp, 0.4,
+			\rel, 0.5,
+			\glissf, 0.9
+		));
+		a.play;
+	}
+	{a.stop;};
+});
 
 // SNARE
 ~snareLabel= StaticText(k, Rect(20, 130, 290, 23)).string_("SNARE").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
 
+// creates the slider, the numerical box and the label for master of snare
 ~masterSnareSlider = Slider.new(k, Rect(20, 215, 200, 20)).orientation_(\horizontal).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5));
 ~masterSnareSlider.action_({
 	arg obj;
@@ -480,7 +485,7 @@ k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120,
 		};
 	};*/
 });
-
+// creates the knob, the numerical box and the label for attack of snare
 ~attSnareBox = NumberBox(k, Rect(55, 170, 55, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
 ~attSnareBox.action_({
 	arg obj;
@@ -489,6 +494,7 @@ k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120,
 
 ~attSnareLabel = StaticText(k, Rect(55, 150, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
+// creates the knob, the numerical box and the label for release of snare
 ~relSnareKnob = Knob(k, Rect(125, 170, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
 ~relSnareKnob.action_({
 	arg obj;
@@ -509,20 +515,33 @@ k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120,
 
 ~relSnareLabel = StaticText(k, Rect(160, 150, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
+//listen default sound of snare
 ~buttonSnare = Button(k, Rect(240, 155, 25, 25));
 ~buttonSnare.states_([
 	["▶", Color.black, Color.white],
 	["￭", Color.white, Color.black] ]);
 ~buttonSnare.font = Font("Monaco", 20);
-/*~button.action_({
-	arg obj;
-	if(obj.value == 1) {
-		TempoClock.default.tempo = 2.1;*/
+~buttonSnare.action_({
+	arg objS;
+	if(objS.value == 1) {
+		TempoClock.default.tempo = 2.1;
+		c=Pdef(\snare, Pbind(
+			\instrument, "snare",
+			\dur, Pseq([ Pseq([Pn(1/16, 3), 1/3, Rest(1/3)], 2), Pn(1/12, 3), Pn(1/3, 3) ], 1),
+			\amp, 0.25,
+			\rel, 0.1
+		));
+
+		c.play;
+		}
+		{c.stop;};
+});
 
 
 // HIHAT
 ~hihatLabel= StaticText(k, Rect(20, 250, 290, 23)).string_("HI-HAT").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
 
+// creates the slider, the numerical box and the label for master of hihat
 ~masterHihatSlider = Slider.new(k, Rect(20, 335, 200, 20)).orientation_(\horizontal).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5));
 ~masterHihatSlider.action_({
 	arg obj;
@@ -543,6 +562,7 @@ k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120,
 
 ~masterHihatLabel = StaticText(k, Rect(230, 315, 80, 20)).string_("Master").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
+// creates the knob, the numerical box and the label for attack of hihat
 ~attHihatKnob = Knob(k, Rect(20, 290, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
 ~attHihatKnob.action_({
 	arg obj;
@@ -564,6 +584,7 @@ k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120,
 
 ~attHihatLabel = StaticText(k, Rect(55, 270, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
+// creates the knob, the numerical box and the label for release of hihat
 ~relHihatKnob = Knob(k, Rect(125, 290, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
 ~relHihatKnob.action_({
 	arg obj;
@@ -584,16 +605,27 @@ k = CompositeView(w, Rect(480, 110, 290, 365)); //.background_(Color.new255(120,
 
 ~relHihatLabel = StaticText(k, Rect(160, 270, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
+//listen default sound of hihat
 ~buttonHihat = Button(k, Rect(240, 275, 25, 25));
 ~buttonHihat.states_([
 	["▶", Color.black, Color.white],
 	["￭", Color.white, Color.black] ]);
 ~buttonHihat.font = Font("Monaco", 20);
-
-/*~button.action_({
-	arg obj;
-	if(obj.value == 1) {
-		TempoClock.default.tempo = 2.1;*/
+~buttonHihat.action_({
+	arg objH;
+	if(objH.value == 1) {
+		TempoClock.default.tempo = 2.1;
+		d = Pdef(\hihat, Pbind(
+			\instrument, "hihat",
+			\dur, Pseq([ 1, 1, 1, 1, Prand([1, 1, Pn(0.5, 2)], 4) ], 2) * 0.2,
+			\ffreq, Pwhite(7000, 11000),
+			\rel, 0.1,
+			\amp, 0.5
+		));
+		d.play;
+		}
+		{d.stop;};
+});
 
 
 // VOLUME
