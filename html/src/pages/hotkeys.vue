@@ -37,6 +37,18 @@
                             </select>
                         </div>
                         <div class="pure-control-group">
+                            <label for="aligned-name">L</label>
+                            <select class="custom-select select" v-model="form.L">
+                                <option v-for="item in beatOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">ZL</label>
+                            <select class="custom-select select" v-model="form.ZL">
+                                <option v-for="item in beatOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
                             <label for="aligned-name">Twist</label>
                             <select class="custom-select select" v-model="form.LeftTwist">
                                 <option v-for="item in beatOptions">{{item}}</option>
@@ -103,6 +115,18 @@
                         <div class="pure-control-group">
                             <label for="aligned-name">Y</label>
                             <select class="custom-select select" v-model="form.Y">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">R</label>
+                            <select class="custom-select select" v-model="form.R">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">ZR</label>
+                            <select class="custom-select select" v-model="form.ZR">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>
