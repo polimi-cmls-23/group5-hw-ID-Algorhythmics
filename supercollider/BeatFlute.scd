@@ -157,7 +157,7 @@ Window.closeAll;
 
 // creates the window for the GUI
 
-w = Window("BeatFlute", Rect(
+w = Window("YASC", Rect(
 	( Window.screenBounds.width - 85 ) / 2,
 	( Window.screenBounds.height - 510 ) / 2,
 	550,
@@ -167,14 +167,8 @@ w.onClose_({
 	s.freeAll;
 });
 v = UserView(w, Rect(0, 0, 800, 510));
-i = Image.open(thisProcess.nowExecutingPath.dirname +/+ "img/sfondo.jpg");
+i = Image.open(thisProcess.nowExecutingPath.dirname +/+ "img/background.jpg");
 v.backgroundImage_(i);
-
-/*y = UserView(w, Rect(25, 5, 400, 250));
-i = Image.open(thisProcess.nowExecutingPath.dirname +/+ "img/logo.png");
-y.backgroundImage_(i);*/
-
-
 
 // creates a composite view
 
