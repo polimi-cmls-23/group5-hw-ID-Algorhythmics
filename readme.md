@@ -25,4 +25,4 @@ node index.js
 ```
 2. Open the address shown in console.
 3. Open the files in /supercollider in SuperCollider and run relative codes.
-
+4. Follow the instructions on website and enjoy.
