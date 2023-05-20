@@ -1,32 +1,37 @@
-// Create an osc.js UDP Port listening on port 57121.
+let osc = require("osc"),
+    http = require("http"),
+    WebSocket = require("ws");
 
-let osc = require('osc')
-var udpPort = new osc.UDPPort({
-    localAddress: "0.0.0.0",
-    localPort: 57121,
-    remotePort:57120,
-    remoteAddress:'127.0.0.1',
-    // metadata: true
+// Create an Express server app
+// and serve up a directory of static files.
+let express = require("express");
+let app = express()
+app.get('/', function (req, res) {
+    res.send('Hello World')
+})
+let server = app.listen(8081);
+
+// app.use("/", express.static(__dirname + "/static"));
+
+// Listen for Web Socket requests.
+let wss = new WebSocket.Server({
+    server: server
 });
 
-// Listen for incoming OSC messages.
-udpPort.on("message", function (oscMsg, timeTag, info) {
-    console.log("An OSC message just arrived!", oscMsg);
-    console.log("Remote info is: ", info);
+// Listen for Web Socket connections.
+wss.on("connection", function (socket) {
+    // after get the message => send to SC
+    let socketPort = new osc.WebSocketPort({
+        socket: socket,
+        metadata: true
+    });
+
+    socketPort.on("message", function (oscMsg) {
+        console.log("An OSC Message was received!", oscMsg);
+        // forward to super collider
+        // socketPort.send({
+        //     address: "/message",
+        //     args: "hello from nodejs"
+        // });
+    });
 });
-
-// Open the socket.
-udpPort.open();
-
-// When the port is read, send an OSC message to, say, SuperCollider
-udpPort.on("ready", function () {
-    setTimeout(()=>{
-        udpPort.send({
-            address: "/message",
-            args: "hello from nodejs"
-        });
-    },0)
-
-});
-
-

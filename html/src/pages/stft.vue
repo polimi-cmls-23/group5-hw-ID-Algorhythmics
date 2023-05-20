@@ -1,5 +1,12 @@
 <template>
     <div class="container">
+        <details class="controller instruction">
+            <summary>Instructions</summary>
+            <ol class="detail">
+                <li><button id="start" class="glow-on-hover" type="button">HOVER ME, THEN CLICK</button></li>
+                <li>Select the entire screen and share the system audio</li>
+            </ol>
+        </details>
         <div id="showcase" class="col">
             <canvas></canvas>
             <div id="legend">
@@ -17,7 +24,6 @@
             <div id="mfcc"></div>
         </div>
         <hr>
-        <button id="start" class="glow-on-hover" type="button">HOVER ME, THEN START</button>
     </div>
 </template>
 
@@ -264,7 +270,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 
 canvas {
     width: 100%;
@@ -371,9 +377,9 @@ img {
     background: #111;
     cursor: pointer;
     position: relative;
-    left:50%;
-    margin-left: -110px;
-    margin-top: 20px;
+    //left:50%;
+    //margin-left: -110px;
+    //margin-top: 20px;
     z-index: 0;
     border-radius: 10px;
 }
@@ -424,7 +430,29 @@ img {
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
 }
-.container{
+
+.container {
     background: black;
+}
+
+.instruction {
+    position: absolute;
+    top:10px;
+    left:50%;
+    transform:translate(-50%,0);
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    ol {
+        margin:0 auto;
+        max-width: 50ch;
+    }
+    li {
+        margin:0 auto;
+        list-style-type: decimal;
+    }
+    .detail{
+        margin-top:15px;
+    }
 }
 </style>
