@@ -1907,36 +1907,7 @@ export default {
                 document.dispatchEvent(event);
             }, 50);
         }
-        const shouldJump = (accelerometer) => {
-            //
-            if (!accelerometer || !accelerometer.x) {
-                return;
-            }
-            if (Math.abs(accelerometer.x) > threshold) {
-                if (!that.crashed) {
-                    clearTimeout(debounceKeyDown);
-                    debounceKeyDown = setTimeout(() => {
-                        console.log('Jump');
-                        const event = new Event('keydown');
-                        event.keyCode = 32; // Space key
-                        document.dispatchEvent(event);
-                    }, 50);
-                } /*else if (accelerometer.x < -threshold) {
-        clearTimeout(debounceKeyUp);
-        debounceKeyUp = setTimeout(() => {
-          console.log('Cover');
-          var event = new Event('keyup');
-          event.keyCode = 40; // Arrow down
-          document.dispatchEvent(event);
-        }, 100);
-      }*/
-            } else {
-                that.restart();
-            }
-        };
-
         me.addInputDetailCBK(function(control, status) {
-            // shouldJump(detail.actualAccelerometer);
             whetherJump(control, status)
         })
 

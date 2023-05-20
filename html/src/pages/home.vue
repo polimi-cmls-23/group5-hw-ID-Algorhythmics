@@ -146,7 +146,6 @@ export default {
 
             setTimeout(function () {
                 complete = 3;
-                console.log("done");
                 document.getElementById("title").style.border = "solid 5px white";
                 document.getElementById("start").style.top = "10%";
                 setTimeout(()=>{
