@@ -13,13 +13,23 @@ let server = app.listen(8081);
 
 // app.use("/", express.static(__dirname + "/static"));
 
-// Listen for Web Socket requests.
 let wss = new WebSocket.Server({
     server: server
 });
 
-// Listen for Web Socket connections.
+let udpPort = new osc.UDPPort({
+    localAddress: "0.0.0.0",
+    localPort: 57121,
+    remotePort:57120,
+    remoteAddress:'127.0.0.1',
+    // metadata: true
+});
+let udpPortReady = false;
+udpPort.open();
+// Listen
+const recorder = 'recorder'
 wss.on("connection", function (socket) {
+    console.log("A Web Socket connection has been established!");
     // after get the message => send to SC
     let socketPort = new osc.WebSocketPort({
         socket: socket,
@@ -27,11 +37,26 @@ wss.on("connection", function (socket) {
     });
 
     socketPort.on("message", function (oscMsg) {
-        console.log("An OSC Message was received!", oscMsg);
-        // forward to super collider
-        // socketPort.send({
-        //     address: "/message",
-        //     args: "hello from nodejs"
-        // });
+        // send to SC
+        console.log("received");
+        let str = oscMsg.args[0].value;
+        // console.log("ss", JSON.parse(str).frequency);
+        let obj = JSON.parse(str)
+        let instrument = obj.instrument
+        let address = '/play'
+        if(instrument===recorder){
+            address+=`/${recorder}`
+        }
+        console.log('address send',address)
+        udpPort.send({
+            address: address,
+            args: [{
+                type:'s',
+                value:obj.status
+            },{
+                type:'f',
+                value:obj.frequency
+            }]
+        });
     });
 });

@@ -2,6 +2,7 @@
     <div class="container">
         <img @click="back" v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/arrow.svg" alt="back" />
         <img @click="connect" v-if="'start'!==currentRouteName" class="gamepad" src="./assets/gamepad.svg" alt="gamepad" />
+        <button @click="playNote('','on')">test</button>
         <notifications />
         <router-view class="view"/>
     </div>
@@ -11,7 +12,18 @@
 import * as JoyCon from "./components/joycon/index.js";
 import {connectedJoyCons,JoyConLeft} from "./components/joycon";
 import {leftControls,rightControls} from "@/components/control"
+import osc from "osc/dist/osc-browser.min.js";
 
+let oscPort = new osc.WebSocketPort({
+    url: "ws://localhost:8081",
+    metadata: true
+});
+oscPort.open()
+oscPort.on("ready", function () {
+    console.log('A Web Socket connection has been established')
+});
+let noteOn = 'on';
+let noteOff = 'off'
 export default {
     name: "default.vue",
     data(){
@@ -77,13 +89,37 @@ export default {
                 // }else{
                 //     // cancel
                 // }
-                let status = !!newValue?'on':'off';
+                let status = !!newValue?noteOn:noteOff;
                 me.inputDetailCBKS.forEach((func)=>{
+                    // bind value to
+                    me.playNote(control,status)
                     func && func(control,status)
                 })
                 console.log(control.name,newValue,control.last_value);
                 control.last_value = newValue;
             }
+        },
+        playNote(control,status){
+            let me = this
+            // get frequency
+            // know the action of press
+            // differ left or right controller
+            console.log('send')
+            let str = {
+                instrument:'recorder',
+                frequency:440,
+                status
+            }
+            oscPort.send({
+                address: "/message",
+                args: [
+                    {
+                        type: "s",
+                        value: JSON.stringify(str)
+                    }
+                ]
+            });
+            // oscPort.close()
         },
         async connect(){
             let me = this

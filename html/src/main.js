@@ -9,8 +9,6 @@ import Home from './pages/home.vue'
 import Hotkeys from './pages/hotkeys.vue'
 import DefaultPage from './default.vue'
 
-import {OSCInit} from "./osc.js";
-
 import './assets/reset.css'
 import './assets/global.css'
 import './assets/pure-min.css'
@@ -45,7 +43,6 @@ const router = createRouter({
 })
 
 const app = createApp(DefaultPage,)
-app.config.globalProperties.$OSC = OSCInit();
 app.config.globalProperties.$utils = utils;
 // const app = createApp(App)
 app.use(router)
