@@ -1,7 +1,7 @@
 # YASC
 
-This project is to to develop an interactive beatboxing recorder performance tool, incorporating
-Joy-Con controllers, Node.js for data handling, and SuperCollider for sound synthesis.
+This project is meant to to develop an interactive beatboxing recorder performance tool, incorporating
+Joy-Con controllers, Node.js for data handling and SuperCollider for sound synthesis.
 
 ## Requirements
 + node.js>=v16
