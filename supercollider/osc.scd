@@ -9,22 +9,6 @@ n = NetAddr.new("127.0.0.1", 57120);
 ~on = OSCFunc({ |msg, time, addr, recvPort|
 	var status = msg[1];
 	var freq = msg[2];
-	if()
-	msg[1].postln;
+	if( status == 'on',{a = Synth(\waveguideFlute,[\freq, freq]);},{a.free})
 }, '/play/recorder');
 )
-
-/*(
-m = NetAddr("127.0.0.1", 57121); // loopback
-​
-m.sendMsg("/message", "Hello App 1");
-)
-
-(
-m = NetAddr("127.0.0.1", 57120); // loopback
-​
-m.sendMsg("/message", "Hello App 1");
-)
-
-OSCFunc.trace(true,hideStatusMsg: true);
-OSCFunc.trace(false); */

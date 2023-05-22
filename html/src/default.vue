@@ -2,7 +2,7 @@
     <div class="container">
         <img @click="back" v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/arrow.svg" alt="back" />
         <img @click="connect" v-if="'start'!==currentRouteName" class="gamepad" src="./assets/gamepad.svg" alt="gamepad" />
-        <button @click="playNote('','on')">test</button>
+        <button @click="playNote({name:'A'},'on')">test</button>
         <notifications />
         <router-view class="view"/>
     </div>
@@ -13,6 +13,7 @@ import * as JoyCon from "./components/joycon/index.js";
 import {connectedJoyCons,JoyConLeft} from "./components/joycon";
 import {leftControls,rightControls} from "@/components/control"
 import osc from "osc/dist/osc-browser.min.js";
+import {readConfig} from "@/components/utils";
 
 let oscPort = new osc.WebSocketPort({
     url: "ws://localhost:8081",
@@ -34,6 +35,7 @@ export default {
     },
     mounted() {
         let me = this
+        me.hotkeys = readConfig()
         me.watchStatus()
     },
     computed: {
@@ -49,6 +51,28 @@ export default {
         }
     },
     methods:{
+        getFrequency (note) {
+            var notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'],
+                octave,
+                keyNumber;
+
+            if (note.length === 3) {
+                octave = note.charAt(2);
+            } else {
+                octave = note.charAt(1);
+            }
+
+            keyNumber = notes.indexOf(note.slice(0, -1));
+
+            if (keyNumber < 3) {
+                keyNumber = keyNumber + 12 + ((octave - 1) * 12) + 1;
+            } else {
+                keyNumber = keyNumber + ((octave - 1) * 12) + 1;
+            }
+
+            // Return frequency of note
+            return 440 * Math.pow(2, (keyNumber- 49) / 12);
+        },
         control(joyCon, packet){
             let me = this
             if (!packet || !packet.actualOrientation) {
@@ -105,9 +129,12 @@ export default {
             // know the action of press
             // differ left or right controller
             console.log('send')
+            let name = control.name
+            let note = me.hotkeys[name]
+            let frequency = me.getFrequency(note)
             let str = {
                 instrument:'recorder',
-                frequency:440,
+                frequency:frequency,
                 status
             }
             oscPort.send({

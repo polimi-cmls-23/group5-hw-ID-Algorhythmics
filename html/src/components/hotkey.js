@@ -1,15 +1,15 @@
-let noteOptions = ['C','D','E','F','G','A','B']
+let noteOptions = ['C4','D4','E4','F4','G4','A4','B4','C5','D5','E5']
 let beatOptions = ['C','D','E','F','G','A','B']
 let defaultHotkeys = {
         // right
-        A:'C',
-        B:'D',
-        X:'E',
-        Y:'F',
-        R:'G',
-        ZR:'A',
-        RightTwist:'B',
-        RightShake:'C',
+        A:'C4',
+        B:'D4',
+        X:'E4',
+        Y:'F4',
+        R:'G4',
+        ZR:'A4',
+        RightTwist:'B4',
+        RightShake:'C5',
         // left
     // 'Kick','Snare','Hi-hat'
         Up:'C',
