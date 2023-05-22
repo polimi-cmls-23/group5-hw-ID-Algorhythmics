@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-        <img @click="back" v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/arrow.svg" alt="back" />
+        <img @click="home" v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/home.svg" alt="home" />
         <img @click="connect" v-if="'start'!==currentRouteName" class="gamepad" src="./assets/gamepad.svg" alt="gamepad" />
-        <button @click="playNote({name:'A'},'on')">test</button>
-        <button @click="playNote({name:'A'},'off')">off</button>
+<!--        <button @click="playNote({name:'A'},'on')">test</button>-->
+<!--        <button @click="playNote({name:'A'},'off')">off</button>-->
         <notifications />
         <router-view class="view"/>
     </div>
@@ -188,9 +188,9 @@ export default {
                 }
             }, 2000);
         },
-      back(){
+      home(){
           let me = this
-          me.$router.go(-1)
+          me.$router.push("/")
       }
     }
 }
@@ -209,8 +209,7 @@ export default {
         color:#fff;
     }
     .arrow-back{
-        transform: rotate(90deg);
-        width: 20px;
+        width: 22px;
         position: absolute;
         top:10px;
         left:10px;
