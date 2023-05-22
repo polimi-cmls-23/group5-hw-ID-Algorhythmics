@@ -15,49 +15,49 @@
                         <div class="pure-control-group">
                             <label for="aligned-name">Up</label>
                             <select class="custom-select select" v-model="form.Up">
-                                <option v-for="item in beatOptions">{{item}}</option>
+                                <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Down</label>
                             <select class="custom-select select" v-model="form.Down">
-                                <option v-for="item in beatOptions">{{item}}</option>
+                                <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Left</label>
                             <select class="custom-select select" v-model="form.Left">
-                                <option v-for="item in beatOptions">{{item}}</option>
+                                <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Right</label>
                             <select class="custom-select select" v-model="form.Right">
-                                <option v-for="item in beatOptions">{{item}}</option>
+                                <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">L</label>
                             <select class="custom-select select" v-model="form.L">
-                                <option v-for="item in beatOptions">{{item}}</option>
+                                <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">ZL</label>
                             <select class="custom-select select" v-model="form.ZL">
-                                <option v-for="item in beatOptions">{{item}}</option>
+                                <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Twist</label>
                             <select class="custom-select select" v-model="form.LeftTwist">
-                                <option v-for="item in beatOptions">{{item}}</option>
+                                <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
                             <label for="aligned-name">Shake</label>
                             <select class="custom-select select" v-model="form.LeftShake">
-                                <option v-for="item in beatOptions">{{item}}</option>
+                                <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
                     </fieldset>
@@ -180,13 +180,13 @@
 
 <script>
 import {connectJoyCon, connectedJoyCons, JoyConLeft} from '../components/joycon';
-import {noteOptions,beatOptions,defaultHotkeys} from '../components/hotkey';
+import {noteOptions,leftOperations,defaultHotkeys} from '../components/hotkey';
 export default {
     name: "start.vue",
     data(){
         return {
             noteOptions,
-            beatOptions,
+            leftOperations,
             form:{
                 ...defaultHotkeys
             }

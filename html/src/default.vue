@@ -3,6 +3,7 @@
         <img @click="back" v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/arrow.svg" alt="back" />
         <img @click="connect" v-if="'start'!==currentRouteName" class="gamepad" src="./assets/gamepad.svg" alt="gamepad" />
         <button @click="playNote({name:'A'},'on')">test</button>
+        <button @click="playNote({name:'A'},'off')">off</button>
         <notifications />
         <router-view class="view"/>
     </div>
@@ -131,6 +132,9 @@ export default {
             console.log('send')
             let name = control.name
             let note = me.hotkeys[name]
+            if(!note){
+                console.log("the note doesn't exist")
+            }
             let frequency = me.getFrequency(note)
             let str = {
                 instrument:'recorder',
