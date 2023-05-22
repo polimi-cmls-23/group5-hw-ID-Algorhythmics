@@ -4,47 +4,6 @@ Server.killAll;
 
 s.waitForBoot({
 
-// hi-hat synthDef
-
-SynthDef("hihat",
-	{arg out = 0, amp = 0.5, att = 0.01, rel = 0.2, ffreq = 6000, pan = 0;
-	var env, snd;
-	env = Env.perc(att, rel, amp).kr(doneAction: 2);
-	snd = WhiteNoise.ar;
-	snd = HPF.ar(in: snd, freq: ffreq, mul: env);
-	Out.ar(out, Pan2.ar(snd, pan));
-}).add;
-
-// snare synthDef
-
-SynthDef("snare", {arg out = 0, amp = 0.1, sinfreq = 180, att = 0.01, rel = 0.2, ffreq = 2000, pan = 0;
-	var env, snd1, snd2, sum;
-	env = Env.perc(att, rel, amp).kr(doneAction: 2);
-	snd1 = HPF.ar(
-		in: PinkNoise.ar,
-		freq: ffreq,
-		mul: env
-	);
-	snd2 = SinOsc.ar(freq: sinfreq, mul: env);
-	sum = snd1 + snd2;
-	Out.ar(out, Pan2.ar(sum, pan));
-}).add;
-
-// kick synthDef
-
-SynthDef("kick", {arg out = 0, amp = 0.3, sinfreq = 60, glissf = 0.9, att = 0.01, rel = 0.45, pan = 0;
-	var env, snd, ramp;
-	env = Env.perc(att, rel, amp).kr(doneAction: 2);
-	ramp = XLine.kr(
-		start: sinfreq,
-		end: sinfreq * glissf,
-		dur: rel
-	);
-	snd = SinOsc.ar(freq: ramp, mul: env);
-	snd = Pan2.ar(snd, pan);
-	Out.ar(out, snd);
-}).add;
-
 // flute synthDef
 
 SynthDef("waveguideFlute", {
@@ -115,7 +74,7 @@ w = Window("YASC", Rect(
 	( Window.screenBounds.height - 510 ) / 2,
 	550,
 	190));
-w.front.alwaysOnTop_(true).asView.fixedSize_(Size.new(800, 510));
+w.front.alwaysOnTop_(true).asView.fixedSize_(Size.new(500, 510));
 w.onClose_({
 	s.freeAll;
 });
@@ -125,15 +84,13 @@ v.backgroundImage_(i);
 
 // creates a composite view
 
-~fluteLabel = StaticText(w, Rect(250, 20, 290, 60)).string_("YASC").align_(\center).stringColor_(Color.white).font_(Font("Monaco",50));
+~fluteLabel = StaticText(w, Rect(90, 20, 290, 60)).string_("YASC").align_(\center).stringColor_(Color.white).font_(Font("Monaco",50));
 
 b = CompositeView(w, Rect(30, 110, 410, 365));
 v.drawFunc = {
 	Pen.strokeColor_(Color.fromHexString("#E6E7F2").alpha_(0.5));
 	Pen.width_(3);
 	Pen.strokeRect(Rect(30, 110, 435, 365));
-	Pen.strokeRect(Rect(480, 110, 290, 365));
-	Pen.strokeRect(Rect(320, 110, 145, 270));
 	Pen.fillStroke;
 };
 ~envLabel = StaticText(b, Rect(20, 25, 260, 20)).string_("AMPLITUDE ENVELOPE").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
@@ -272,249 +229,6 @@ v.drawFunc = {
 });
 
 ~revPreLabel = StaticText(b, Rect(315, 285, 80, 20)).string_("Pre-Delay (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-// creates a composite view for the drumkit
-
-k = CompositeView(w, Rect(480, 110, 290, 365));
-
-// KICK
-
-~kickLabel= StaticText(k, Rect(20, 10, 290, 23)).string_("KICK").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
-
-// creates the slider, the numerical box and the label for master of kick
-
-~masterKickSlider = Slider.new(k, Rect(20, 95, 200, 20)).orientation_(\horizontal).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5));
-~masterKickSlider.action_({
-	arg obj;
-	var masterK = obj.value.linlin(0, 1, 0, 100);
-	~masterKickBox.value_(obj.value.linlin(0, 1, 0, 100));
-});
-
-~masterKickBox = NumberBox(k, Rect(230, 95, 35, 20)).clipLo_(0).clipHi_(100).decimals_(0).value_(0);
-~masterKickBox.action_({
-	arg obj;
-	~masterKickSlider.valueAction_(obj.value.linlin(0, 1, 0, 100));
-});
-
-~masterKickLabel = StaticText(k, Rect(230, 75, 80, 20)).string_("Master").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-// creates the knob, the numerical box and the label for attack of kick
-
-~attKickKnob = Knob(k, Rect(20, 50, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
-~attKickKnob.action_({
-	arg obj;
-	var attK = obj.value.linexp(0, 1, 0.001, 10);
-	~attKickBox.value_(obj.value.linexp(0, 1, 0.001, 10));
-});
-
-~attKickBox = NumberBox(k, Rect(55, 50, 55, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
-~attKickBox.action_({
-	arg obj;
-	~attKickKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
-});
-
-~attKickLabel = StaticText(k, Rect(55, 30, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-// creates the knob, the numerical box and the label for release of kick
-
-~relKickKnob = Knob(k, Rect(125, 50, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
-~relKickKnob.action_({
-	arg obj;
-	var relK = obj.value.linexp(0, 1, 0.001, 10);
-	~relKickBox.value_(obj.value.linexp(0, 1, 0.001, 10));
-});
-
-~relKickBox = NumberBox(k, Rect(160, 50, 55, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
-~relKickBox.action_({
-	arg obj;
-	~relKickKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
-});
-
-~relKickLabel = StaticText(k, Rect(160, 30, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-//listen default sound of kick
-
-~buttonKick = Button(k, Rect(240, 35, 25, 25));
-~buttonKick.states_([
-	["▶", Color.black, Color.white],
-	["￭", Color.white, Color.black] ]);
-~buttonKick.font = Font("Monaco", 20);
-~buttonKick.action_({
-	arg objK;
-	if(objK.value == 1) {
-		TempoClock.default.tempo = 2.1;
-		a=Pdef(\kick, Pbind(
-			\instrument, "kick",
-			\dur, Pseq([
-				3/4, 1/4,
-				1/2, 1/2,
-				Rest(1/2), 1/2,
-				Rest(1/4), 3/4
-			], 3) * 0.5,
-			\amp, 0.4,
-			\rel, 0.5,
-			\glissf, 0.9
-		));
-		a.play;
-	}
-	{a.stop;};
-});
-
-// SNARE
-
-~snareLabel= StaticText(k, Rect(20, 130, 290, 23)).string_("SNARE").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
-
-// creates the slider, the numerical box and the label for master of snare
-
-~masterSnareSlider = Slider.new(k, Rect(20, 215, 200, 20)).orientation_(\horizontal).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5));
-~masterSnareSlider.action_({
-	arg obj;
-	var masterS = obj.value.linlin(0, 1, 0, 100);
-	~masterSnareBox.value_(obj.value.linlin(0, 1, 0, 100));
-});
-
-~masterSnareBox = NumberBox(k, Rect(230, 215, 35, 20)).clipLo_(0).clipHi_(100).decimals_(0).value_(0);
-~masterSnareBox.action_({
-	arg obj;
-	~masterSnareSlider.valueAction_(obj.value.linlin(0, 1, 0, 100));
-});
-
-~masterSnareLabel = StaticText(k, Rect(230, 195, 80, 20)).string_("Master").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-~attSnareKnob = Knob(k, Rect(20, 170, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
-~attSnareKnob.action_({
-	arg obj;
-	var attS = obj.value.linexp(0, 1, 0.001, 10);
-	~attSnareBox.value_(obj.value.linexp(0, 1, 0.001, 10));
-});
-
-// creates the knob, the numerical box and the label for attack of snare
-
-~attSnareBox = NumberBox(k, Rect(55, 170, 55, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
-~attSnareBox.action_({
-	arg obj;
-	~attSnareKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
-});
-
-~attSnareLabel = StaticText(k, Rect(55, 150, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-// creates the knob, the numerical box and the label for release of snare
-
-~relSnareKnob = Knob(k, Rect(125, 170, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
-~relSnareKnob.action_({
-	arg obj;
-	var relS = obj.value.linexp(0, 1, 0.001, 10);
-	~relSnareBox.value_(obj.value.linexp(0, 1, 0.001, 10));
-});
-
-~relSnareBox = NumberBox(k, Rect(160, 170, 55, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
-~relSnareBox.action_({
-	arg obj;
-	~relSnareKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
-});
-
-~relSnareLabel = StaticText(k, Rect(160, 150, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-// listen default sound of snare
-
-~buttonSnare = Button(k, Rect(240, 155, 25, 25));
-~buttonSnare.states_([
-	["▶", Color.black, Color.white],
-	["￭", Color.white, Color.black] ]);
-~buttonSnare.font = Font("Monaco", 20);
-~buttonSnare.action_({
-	arg objS;
-	if(objS.value == 1) {
-		TempoClock.default.tempo = 2.1;
-		c=Pdef(\snare, Pbind(
-			\instrument, "snare",
-			\dur, Pseq([ Pseq([Pn(1/16, 3), 1/3, Rest(1/3)], 2), Pn(1/12, 3), Pn(1/3, 3) ], 1),
-			\amp, 0.25,
-			\rel, 0.1
-		));
-
-		c.play;
-		}
-		{c.stop;};
-});
-
-// HIHAT
-
-~hihatLabel= StaticText(k, Rect(20, 250, 290, 23)).string_("HI-HAT").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
-
-// creates the slider, the numerical box and the label for master of hihat
-
-~masterHihatSlider = Slider.new(k, Rect(20, 335, 200, 20)).orientation_(\horizontal).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5));
-~masterHihatSlider.action_({
-	arg obj;
-	var masterS = obj.value.linlin(0, 1, 0, 100);
-	~masterHihatBox.value_(obj.value.linlin(0, 1, 0, 100));
-});
-
-~masterHihatBox = NumberBox(k, Rect(230, 335, 35, 20)).clipLo_(0).clipHi_(100).decimals_(0).value_(0);
-~masterHihatBox.action_({
-	arg obj;
-	~masterHihatSlider.valueAction_(obj.value.linlin(0, 1, 0, 100));
-});
-
-~masterHihatLabel = StaticText(k, Rect(230, 315, 80, 20)).string_("Master").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-// creates the knob, the numerical box and the label for attack of hihat
-
-~attHihatKnob = Knob(k, Rect(20, 290, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
-~attHihatKnob.action_({
-	arg obj;
-	var attS = obj.value.linexp(0, 1, 0.001, 10);
-	~attHihatBox.value_(obj.value.linexp(0, 1, 0.001, 10));
-});
-
-~attHihatBox = NumberBox(k, Rect(55, 290, 55, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
-~attHihatBox.action_({
-	arg obj;
-	~attHihatKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
-});
-
-~attHihatLabel = StaticText(k, Rect(55, 270, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-// creates the knob, the numerical box and the label for release of hihat
-
-~relHihatKnob = Knob(k, Rect(125, 290, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
-~relHihatKnob.action_({
-	arg obj;
-	var relS = obj.value.linexp(0, 1, 0.001, 10);
-	~relHihatBox.value_(obj.value.linexp(0, 1, 0.001, 10));
-});
-
-~relHihatBox = NumberBox(k, Rect(160, 290, 55, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
-~relHihatBox.action_({
-	arg obj;
-	~relHihatKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
-});
-
-~relHihatLabel = StaticText(k, Rect(160, 270, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
-
-//listen default sound of hihat
-
-~buttonHihat = Button(k, Rect(240, 275, 25, 25));
-~buttonHihat.states_([
-	["▶", Color.black, Color.white],
-	["￭", Color.white, Color.black] ]);
-~buttonHihat.font = Font("Monaco", 20);
-~buttonHihat.action_({
-	arg objH;
-	if(objH.value == 1) {
-		TempoClock.default.tempo = 2.1;
-		d = Pdef(\hihat, Pbind(
-			\instrument, "hihat",
-			\dur, Pseq([ 1, 1, 1, 1, Prand([1, 1, Pn(0.5, 2)], 4) ], 2) * 0.2,
-			\ffreq, Pwhite(7000, 11000),
-			\rel, 0.1,
-			\amp, 0.5
-		));
-		d.play;
-		}
-		{d.stop;};
-});
 
 // VOLUME
 
