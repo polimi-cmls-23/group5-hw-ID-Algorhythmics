@@ -7,7 +7,10 @@ n = NetAddr.new("127.0.0.1", 57120);
 // define osc
 
 ~on = OSCFunc({ |msg, time, addr, recvPort|
-	msg.postln;
+	var status = msg[1];
+	var freq = msg[2];
+	if()
+	msg[1].postln;
 }, '/play/recorder');
 )
 

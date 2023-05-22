@@ -1,5 +1,5 @@
 let noteOptions = ['C','D','E','F','G','A','B']
-let beatOptions = ['Kick','Snare','Hi-hat']
+let beatOptions = ['C','D','E','F','G','A','B']
 let defaultHotkeys = {
         // right
         A:'C',
@@ -12,9 +12,9 @@ let defaultHotkeys = {
         RightShake:'C',
         // left
     // 'Kick','Snare','Hi-hat'
-        Up:'Kick',
-        Down:'Snare',
-        Left:'Hi-hat',
+        Up:'C',
+        Down:'D',
+        Left:'E',
         Right:'',
         L:'',
         ZL:'',
