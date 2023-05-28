@@ -694,7 +694,7 @@ export default {
 }
 .sub-container{
     /*display: inline-block;*/
-    width: 720px;
+    width: 900px;
     padding: 30px;
     margin:30px auto;
     border:1px solid white;
@@ -737,6 +737,9 @@ input{
 }
 .left-container{
     display: inline-block;
+    .select{
+        width: 300px;
+    }
 }
 .right-container{
     /*width: 270px;*/
@@ -756,7 +759,8 @@ input{
 }
 .submit{
     display: block;
-    margin:0 auto;
     width: 90px;
+    position: relative;
+    left: 470px;
 }
 </style>
