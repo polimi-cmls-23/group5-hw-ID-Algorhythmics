@@ -2,8 +2,8 @@
     <div class="container">
         <img @click="home" v-if="'start'!==currentRouteName" class="arrow-back" src="./assets/home.svg" alt="home" />
         <img @click="connect" v-if="'start'!==currentRouteName" class="gamepad" src="./assets/gamepad.svg" alt="gamepad" />
-<!--        <button @click="playNote({name:'A'},'on')">test</button>-->
-<!--        <button @click="playNote({name:'A'},'off')">off</button>-->
+        <button @click="sendOSC({name:'Up'},'on','left')">control</button>
+        <button @click="sendOSC({name:'Down'},'off','left')">off</button>
         <notifications />
         <router-view class="view"/>
     </div>
@@ -15,6 +15,7 @@ import {connectedJoyCons,JoyConLeft} from "./components/joycon";
 import {leftControls,rightControls} from "@/components/control"
 import osc from "osc/dist/osc-browser.min.js";
 import {readConfig} from "@/components/utils";
+import {leftOperationsMap} from "@/components/hotkey";
 
 let oscPort = new osc.WebSocketPort({
     url: "ws://localhost:8081",
@@ -25,7 +26,10 @@ oscPort.on("ready", function () {
     console.log('A Web Socket connection has been established')
 });
 let noteOn = 'on';
-let noteOff = 'off'
+let noteOff = 'off';
+let leftControl = 'left';
+let rightControl = 'right';
+
 export default {
     name: "default.vue",
     data(){
@@ -81,11 +85,11 @@ export default {
             }
             if (joyCon instanceof JoyConLeft) {
                 for (const control of leftControls) {
-                    me.updateControl(control, packet);
+                    me.updateControl(control, packet,'left');
                 }
             } else {
                 for (const control of rightControls) {
-                    me.updateControl(control, packet);
+                    me.updateControl(control, packet,'right');
                 }
             }
         },
@@ -117,19 +121,15 @@ export default {
                 let status = !!newValue?noteOn:noteOff;
                 me.inputDetailCBKS.forEach((func)=>{
                     // bind value to
-                    me.playNote(control,status)
+                    me.sendOSC(control,status,side)
                     func && func(control,status)
                 })
                 console.log(control.name,newValue,control.last_value);
                 control.last_value = newValue;
             }
         },
-        playNote(control,status){
+        rightControlOSC(control, status){
             let me = this
-            // get frequency
-            // know the action of press
-            // differ left or right controller
-            console.log('send')
             let name = control.name
             let note = me.hotkeys[name]
             if(!note){
@@ -150,6 +150,70 @@ export default {
                     }
                 ]
             });
+        },
+        leftControlOSC(control,status){
+            let operationMap = {
+                upAmplitude : {name:'upAmplitude',value:+1},
+                downAmplitude : {name:'downAmplitude',value:-1},
+                upAttack : {name:'upAttack',value:+1},
+                downAttack : {name:'downAttack',value:-1},
+                upRelease : {name:'upRelease',value:+1},
+                downRelease : {name:'downRelease',value:-1},
+                upFrequency : {name:'upFrequency',value:+1},
+                downFrequency : {name:'downFrequency',value:-1},
+                upDepth : {name:'upDepth',value:+1},
+                downDepth : {name:'downDepth',value:-1},
+                upMix : {name:'upMix',value:+1},
+                downMix : {name:'downMix',value:-1},
+                upReverbTime : {name:'upMix',value:+1},
+                downReverbTime : {name:'downReverbTime',value:-1},
+                upPreDelay : {name:'upPreDelay',value:+1},
+                downPreDelay : {name:'downPreDelay',value:-1}
+            }
+            let me = this
+            let name = control.name
+            let controlName = me.hotkeys[name]
+            // find corresponding key & value
+            let operation = ''
+            let operationValue = ''
+            for (const k in operationMap) {
+                if(leftOperationsMap[k]===controlName){
+                    operation=operationMap[k].name
+                    operationValue = operationMap[k].value
+                }
+            }
+            if(!operation){
+                return
+            }
+            let str = {
+                operation,
+                value:operationValue
+            }
+            oscPort.send({
+                address: "/message",
+                args: [
+                    {
+                        type: "s",
+                        value: JSON.stringify(str)
+                    }
+                ]
+            });
+        },
+        sendOSC(control,status,side){
+            let me = this
+            // get frequency
+            // know the action of press
+            // differ left or right controller
+            // diff left and right
+            // left => operations
+            // right => notes
+            if(side===leftControl){
+                me.leftControlOSC(control,status)
+            }
+            if(side===rightControl){
+                me.rightControlOSC(control,status)
+            }
+
             // oscPort.close()
         },
         async connect(){

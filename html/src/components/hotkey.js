@@ -40,4 +40,4 @@ let defaultHotkeys = {
         LeftTwist:'',
         LeftShake:'',
 }
-export {defaultHotkeys,noteOptions,leftOperations}
+export {defaultHotkeys,noteOptions,leftOperations,leftOperationsMap}
