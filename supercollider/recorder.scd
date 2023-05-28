@@ -1,6 +1,6 @@
 (
 
-Server.killAll;
+s.freeAll;
 
 s.waitForBoot({
 

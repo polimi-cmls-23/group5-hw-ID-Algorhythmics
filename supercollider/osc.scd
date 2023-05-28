@@ -21,26 +21,27 @@ n = NetAddr.new("127.0.0.1", 57120);
 		~volumeSlider.value_(~volumeSlider.value+=value);
 	});
 	if(operation=='upAttack'||operation=='downAttack',{
-
+		~attAmpBox.value_(~attAmpBox.value+=value)
+		// set knob value & checkbox value
 	});
 	if(operation=='upRelease'||operation=='downRelease',{
-
+		~relAmpBox.value_(~relAmpBox.value+=value)
 	});
 	if(operation=='upFrequency'||operation=='downFrequency',{
+		~vibFreBox.value_(~vibFreBox.value+=value)
 
 	});
 	if(operation=='upDepth'||operation=='downDepth',{
-
+		~vibDepBox.value_(~vibDepBox.value+=value)
 	});
 	if(operation=='upMix'||operation=='downMix',{
-
+		~revMixBox.value_(~revMixBox.value+=value)
 	});
 	if(operation=='upReverbTime'||operation=='downReverbTime',{
-
+		~revTimeBox.value_(~revTimeBox.value+=value)
 	});
 	if(operation=='upPreDelay'||operation=='downPreDelay',{
-
+		~revPreBox.value_(~revPreBox.value+=value)
 	});
 }, '/control');
 )
-
