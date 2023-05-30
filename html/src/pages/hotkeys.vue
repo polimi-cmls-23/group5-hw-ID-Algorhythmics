@@ -200,7 +200,7 @@ export default {
         // const debugRight = document.querySelector('#debug-right');
         // const showVisualize = document.querySelector('#show-visualize');
         // const showDebug = document.querySelector('#show-debug');
-        const rootStyle = document.querySelector('.container').style;
+        const rootStyle = document.querySelector('.sub-container').style;
         const visualize = (joyCon, packet) => {
             if (!packet || !packet.actualOrientation) {
                 return;
@@ -311,7 +311,7 @@ export default {
             //     controller.querySelector('#gyr-z').value =
             //         gyroscope.rps.z * gyroscopeMultiplier;
             // }
-        };visualize
+        };
         me.addInputCBK(function(joyCon, detail) {
             visualize(joyCon, detail);
         })
