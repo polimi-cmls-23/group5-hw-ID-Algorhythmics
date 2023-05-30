@@ -4,7 +4,12 @@ s.freeAll;
 
 s.waitForBoot({
 
-// flute synthDef
+	// default params for OSC control
+	~control_volume = 0.5;
+	~control_att = 0.1;
+	~control_release = 0.2;
+	~control_vibFre = 5;
+	~control_vibDep = 30;
 
 SynthDef("waveguideFlute", {
 	arg scl = 0.2, freq = 440, bend = 0, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 2, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
@@ -107,6 +112,7 @@ v.drawFunc = {
 ~attAmpBox = NumberBox(b, Rect(55, 65, 80, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
 ~attAmpBox.action_({
 	arg obj;
+	~control_att = obj.value;
 	~attAmpKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
 });
 
@@ -124,6 +130,7 @@ v.drawFunc = {
 ~relAmpBox = NumberBox(b, Rect(190, 65, 80, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.2);
 ~relAmpBox.action_({
 	arg obj;
+	~control_release = obj.value;
 	~relAmpKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
 });
 
@@ -144,6 +151,7 @@ v.drawFunc = {
 ~vibFreBox = NumberBox(b, Rect(55, 185, 80, 30)).clipLo_(0.1).clipHi_(6).decimals_(1).value_(5);
 ~vibFreBox.action_({
 	arg obj;
+	~control_vibFre = obj.value;
 	~vibFreKnob.valueAction_(obj.value.linlin(0.1, 6, 0, 1));
 });
 
@@ -161,6 +169,7 @@ v.drawFunc = {
 ~vibDepBox = NumberBox(b, Rect(190, 185, 80, 30)).clipLo_(0).clipHi_(100).decimals_(0).value_(30);
 ~vibDepBox.action_({
 	arg obj;
+	~control_vibDep = obj.value;
 	~vibDepKnob.valueAction_(obj.value.linlin(0, 100, 0, 1));
 });
 

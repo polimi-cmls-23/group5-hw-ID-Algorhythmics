@@ -6,11 +6,27 @@ NetAddr.localAddr
 
 n = NetAddr.new("127.0.0.1", 57120);
 // define osc
-
+~synthDict = ();
 ~on = OSCFunc({ |msg, time, addr, recvPort|
 	var status = msg[1];
 	var freq = msg[2];
-	if( status == 'on',{a = Synth(\waveguideFlute,[\freq, freq]);},{a.free})
+	// ~volumeSlider.value.postln;
+	if( status == 'on',{
+		var synth = Synth(\waveguideFlute,[
+			\freq, freq,
+			\atk,~control_att,
+			\rel, ~control_release,
+			\vdep,~control_vibDep,
+			\vfr,~control_vibFre,
+		]);
+		~synthDict.put(freq, synth);
+	},{
+		var synth = ~synthDict.at(freq);
+		synth.free;
+		~synthDict.removeAt(freq);
+		// freq.postln;
+
+	})
 }, '/play/recorder');
 
 
@@ -22,7 +38,6 @@ n = NetAddr.new("127.0.0.1", 57120);
 	});
 	if(operation=='upAttack'||operation=='downAttack',{
 		~attAmpBox.value_(~attAmpBox.value+=value)
-		// set knob value & checkbox value
 	});
 	if(operation=='upRelease'||operation=='downRelease',{
 		~relAmpBox.value_(~relAmpBox.value+=value)
@@ -45,3 +60,6 @@ n = NetAddr.new("127.0.0.1", 57120);
 	});
 }, '/control');
 )
+// for debug
+/*OSCFunc.trace(false);
+s.dumpOSC(0);*/
