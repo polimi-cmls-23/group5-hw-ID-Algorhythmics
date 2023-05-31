@@ -119,12 +119,12 @@ export default {
                 //     // cancel
                 // }
                 let status = !!newValue?noteOn:noteOff;
+                me.sendOSC(control,status,side)
                 me.inputDetailCBKS.forEach((func)=>{
                     // bind value to
-                    me.sendOSC(control,status,side)
                     func && func(control,status)
                 })
-                console.log(control.name,newValue,control.last_value);
+                // console.log(control.name,newValue,control.last_value);
                 control.last_value = newValue;
             }
         },
@@ -132,8 +132,10 @@ export default {
             let me = this
             let name = control.name
             let note = me.hotkeys[name]
+
             if(!note){
-                console.log("the note doesn't exist")
+                // console.log("the note doesn't exist")
+                return
             }
             let frequency = me.getFrequency(note)
             let str = {
@@ -150,25 +152,29 @@ export default {
                     }
                 ]
             });
+            console.log("send OSC",name,frequency)
         },
         leftControlOSC(control,status){
+            if(status===noteOff){
+                return
+            }
             let operationMap = {
-                upAmplitude : {name:'upAmplitude',value:+1},
-                downAmplitude : {name:'downAmplitude',value:-1},
-                upAttack : {name:'upAttack',value:+1},
-                downAttack : {name:'downAttack',value:-1},
-                upRelease : {name:'upRelease',value:+1},
-                downRelease : {name:'downRelease',value:-1},
+                upAmplitude : {name:'upAmplitude',value:+0.1},
+                downAmplitude : {name:'downAmplitude',value:-0.1},
+                upAttack : {name:'upAttack',value:+0.1},
+                downAttack : {name:'downAttack',value:-0.1},
+                upRelease : {name:'upRelease',value:+0.1},
+                downRelease : {name:'downRelease',value:-0.1},
                 upFrequency : {name:'upFrequency',value:+1},
                 downFrequency : {name:'downFrequency',value:-1},
                 upDepth : {name:'upDepth',value:+1},
                 downDepth : {name:'downDepth',value:-1},
                 upMix : {name:'upMix',value:+1},
                 downMix : {name:'downMix',value:-1},
-                upReverbTime : {name:'upMix',value:+1},
-                downReverbTime : {name:'downReverbTime',value:-1},
-                upPreDelay : {name:'upPreDelay',value:+1},
-                downPreDelay : {name:'downPreDelay',value:-1}
+                upReverbTime : {name:'upMix',value:+0.1},
+                downReverbTime : {name:'downReverbTime',value:-0.1},
+                upPreDelay : {name:'upPreDelay',value:+0.1},
+                downPreDelay : {name:'downPreDelay',value:-0.1}
             }
             let me = this
             let name = control.name
