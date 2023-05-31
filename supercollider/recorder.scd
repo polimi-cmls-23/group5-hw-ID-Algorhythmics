@@ -70,7 +70,7 @@ n = NetAddr.new("127.0.0.1", 57120);
 
 	if((operation=='upMix')||(operation=='downMix'),{
 		var temp = ~revMixBox.value+value;
-		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
+		~revMixKnob.valueAction_(temp.linlin(0, 100, 0, 1));
 		~revMixBox.value_(temp)
 	});
 			//
