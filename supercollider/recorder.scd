@@ -1,8 +1,89 @@
 (
 
+)
+
+(
+
 s.freeAll;
 
 s.waitForBoot({
+// retrieve the current IP and port
+~on.free;
+~control.free;
+
+n = NetAddr.new("127.0.0.1", 57120);
+// define osc
+~synthDict = ();
+~on = OSCFunc({ |msg, time, addr, recvPort|
+	var status = msg[1];
+	var freq = msg[2];
+	// ~volumeSlider.value.postln;
+	if( status == 'on',{
+		var synth = Synth(\waveguideFlute,[
+			\freq, freq,
+			\atk,~control_att,
+			\rel, ~control_release,
+			\vdep,~control_vibDep,
+			\vfr,~control_vibFre,
+		]);
+		~synthDict.put(freq, synth);
+	},{
+		var synth = ~synthDict.at(freq);
+		synth.free;
+		~synthDict.removeAt(freq);
+		// freq.postln;
+
+	})
+}, '/play/recorder');
+
+~control = OSCFunc({ |msg, time, addr, recvPort|
+	var operation = msg[1];
+	var value = msg[2];
+		operation.postln;
+
+	defer {
+	if((operation=='upAmplitude')||(operation=='downAmplitude'),{
+		~volumeSlider.value_(~volumeSlider.value+value);
+	});
+	if((operation=='upAttack')||(operation=='downAttack'),{
+		var temp = ~attAmpBox.value+value;
+		~attAmpKnob.valueAction_(temp.explin(0.001, 10, 0, 1));
+		~attAmpBox.value_(temp);
+	});
+	//
+	if((operation=='upRelease')||(operation=='downRelease'),{
+		var temp = ~relAmpBox.value+value;
+		~relAmpKnob.valueAction_(temp.linlin(0, 100, 0, 1));
+		~relAmpBox.value_(temp);
+	});
+	if((operation=='upFrequency')||(operation=='downFrequency'),{
+		var temp = ~vibDepBox.value+value;
+		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
+		~vibDepBox.value_(temp);
+	});
+	if((operation=='upDepth')||(operation=='downDepth'),{
+		var temp = ~vibDepBox.value+value;
+		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
+		~vibDepBox.value_(temp)
+	});
+	if((operation=='upMix')||(operation=='downMix'),{
+		var temp = ~vibDepBox.value+value;
+		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
+		~vibDepBox.value_(temp)
+	});
+	if((operation=='upReverbTime')||(operation=='downReverbTime'),{
+		var temp = ~vibDepBox.value+value;
+		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
+		~vibDepBox.value_(temp)
+	});
+	if((operation=='upPreDelay')||(operation=='downPreDelay'),{
+		var temp = ~vibDepBox.value+value;
+		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
+		~vibDepBox.value_(temp)
+	});
+	}
+
+}, '/control');
 
 	// default params for OSC control
 	~control_volume = 0.5;
@@ -254,3 +335,4 @@ ServerMeterView.new(s, b, 350@10, 0, 2);
 })
 
 )
+~volumeSlider.value
