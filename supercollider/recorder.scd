@@ -1,9 +1,5 @@
 (
 
-)
-
-(
-
 s.freeAll;
 
 s.waitForBoot({
@@ -12,19 +8,30 @@ s.waitForBoot({
 ~control.free;
 
 n = NetAddr.new("127.0.0.1", 57120);
+
+// default params for OSC control
+~control_volume = 0.5;
+~control_att = 0.1;
+~control_release = 0.2;
+~control_vibFre = 5;
+~control_vibDep = 30;
 // define osc
 ~synthDict = ();
 ~on = OSCFunc({ |msg, time, addr, recvPort|
 	var status = msg[1];
 	var freq = msg[2];
 	// ~volumeSlider.value.postln;
+	/*~control_release.postln;
+	~control_att.postln;*/
+	~control_att.postln;
 	if( status == 'on',{
-		var synth = Synth(\waveguideFlute,[
+		var synth = Synth.new(\waveguideFlute,[
 			\freq, freq,
 			\atk,~control_att,
 			\rel, ~control_release,
 			\vdep,~control_vibDep,
 			\vfr,~control_vibFre,
+			\amp,~control_volume,
 		]);
 		~synthDict.put(freq, synth);
 	},{
@@ -43,57 +50,53 @@ n = NetAddr.new("127.0.0.1", 57120);
 
 	defer {
 	if((operation=='upAmplitude')||(operation=='downAmplitude'),{
-		~volumeSlider.value_(~volumeSlider.value+value);
+		var temp = ~volumeSlider.value+value;
+		~volumeSlider.value_(temp);
+		~control_volume = temp;
 	});
 	if((operation=='upAttack')||(operation=='downAttack'),{
 		var temp = ~attAmpBox.value+value;
 		~attAmpKnob.valueAction_(temp.explin(0.001, 10, 0, 1));
 		~attAmpBox.value_(temp);
+		~control_att = temp;
 	});
-
 	if((operation=='upRelease')||(operation=='downRelease'),{
 		var temp = ~relAmpBox.value+value;
 		~relAmpKnob.valueAction_(temp.linlin(0.001, 10, 0, 1));
 		~relAmpBox.value_(temp);
+		~control_release = temp;
 	});
-
 	if((operation=='upFrequency')||(operation=='downFrequency'),{
 		var temp = ~vibFreBox.value+value;
 		~vibFreKnob.valueAction_(temp.linlin(0.1, 6, 0, 1));
 		~vibFreBox.value_(temp);
+		~control_vibFre = temp;
 	});
 	if((operation=='upDepth')||(operation=='downDepth'),{
 		var temp = ~vibDepBox.value+value;
 		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
-		~vibDepBox.value_(temp)
+		~vibDepBox.value_(temp);
+		~control_vibDep = temp;
 	});
-
 	if((operation=='upMix')||(operation=='downMix'),{
 		var temp = ~revMixBox.value+value;
 		~revMixKnob.valueAction_(temp.linlin(0, 100, 0, 1));
-		~revMixBox.value_(temp)
+		~revMixBox.value_(temp);
 	});
-			//
 	if((operation=='upReverbTime')||(operation=='downReverbTime'),{
 		var temp = ~revTimeBox.value+value;
 		~revTimeKnob.valueAction_(temp.linlin(0.001, 10, 0, 1));
-		~revTimeBox.value_(temp)
+		~revTimeBox.value_(temp);
 	});
 	if((operation=='upPreDelay')||(operation=='downPreDelay'),{
 		var temp = ~revPreBox.value+value;
 		~revPreKnob.valueAction_(temp.linlin(0.001, 3, 0, 1));
-		~revPreBox.value_(temp)
+		~revPreBox.value_(temp);
 	});
 	}
 
 }, '/control');
 
-	// default params for OSC control
-	~control_volume = 0.5;
-	~control_att = 0.1;
-	~control_release = 0.2;
-	~control_vibFre = 5;
-	~control_vibDep = 30;
 
 SynthDef("waveguideFlute", {
 	arg scl = 0.2, freq = 440, bend = 0, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 2, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
@@ -149,7 +152,6 @@ SynthDef(\reverb, {
 ~audioBus = Bus.audio(s, 2);
 
 // reverb setup
-
 ~reverbBus = Bus.audio(s, 2);
 ~reverbSynth = Synth.new(\reverb, [\in, ~reverbBus]);
 ~reverbSynth.register;
@@ -190,6 +192,7 @@ v.drawFunc = {
 ~attAmpKnob.action_({
 	arg obj;
 	var atk = obj.value.linexp(0, 1, 0.001, 10);
+	~control_att = obj.value;
 	~attAmpBox.value_(obj.value.linexp(0, 1, 0.001, 10));
 });
 
@@ -208,6 +211,7 @@ v.drawFunc = {
 ~relAmpKnob.action_({
 	arg obj;
 	var rel = obj.value.linexp(0, 1, 0.001, 10);
+	~control_release = obj.value.linexp(0, 1, 0.001, 10);
 	~relAmpBox.value_(obj.value.linexp(0, 1, 0.001, 10));
 });
 
@@ -328,14 +332,13 @@ v.drawFunc = {
 ~volumeLabel= StaticText(b, Rect(335, 230, 290, 23)).string_("VOLUME").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
 
 ~volumeSlider = Slider.new(b, Rect(315, 25, 30, 200)).orientation_(\vertical).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5)).value_(0.5);
-/*~volSlider.action_({
-	arg obj;
-	~control_amp = obj.value;
-});*/
 
 ServerMeterView.new(s, b, 350@10, 0, 2);
 
+~volumeSlider.action_({
+	arg obj;
+	~control_volume= obj.value;
+});
 })
 
 )
-~volumeSlider.value
