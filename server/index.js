@@ -7,11 +7,22 @@ let osc = require("osc"),
 let express = require("express");
 let app = express()
 
+const path = require('path');
+const parentDir = path.dirname(__dirname);
+
 app.use(express.static('./html/dist'))
-app.get('/', (req, res) => {
-    res.sendFile('./html/dist/index.html');
+app.get('/game/hotkeys', (req, res) => {
+    res.sendFile(parentDir + '/html/dist/index.html');
 })
-// app.use("/", express.static("../html/dist"));
+app.get('/game/dino', (req, res) => {
+    res.sendFile(parentDir + '/html/dist/index.html');
+})
+app.get('/game/stft', (req, res) => {
+    res.sendFile(parentDir+ '/html/dist/index.html');
+})
+app.get('/', (req, res) => {
+    res.sendFile(parentDir+ '/html/dist/index.html');
+})
 
 let server = app.listen(8081);
 
