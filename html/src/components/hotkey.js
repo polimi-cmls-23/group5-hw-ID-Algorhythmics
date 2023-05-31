@@ -1,4 +1,4 @@
-let noteOptions = ['C4','D4','E4','F4','G4','A4','B4','C5','D5','E5']
+let noteOptions = ["D4","A3","F#3","B3","C#4","C4","F#4","A4","B4","G4","E4","F4","C5","D5","E5"].sort()
 let leftOperationsMap ={
         upAmplitude : '↑amplitude',
         downAmplitude:'↓amplitude',
