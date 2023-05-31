@@ -6,12 +6,14 @@ let osc = require("osc"),
 // and serve up a directory of static files.
 let express = require("express");
 let app = express()
-app.get('/', function (req, res) {
-    res.send('Hello World')
-})
-let server = app.listen(8081);
 
-// app.use("/", express.static(__dirname + "/static"));
+app.use(express.static('./html/dist'))
+app.get('/', (req, res) => {
+    res.sendFile('./html/dist/index.html');
+})
+// app.use("/", express.static("../html/dist"));
+
+let server = app.listen(8081);
 
 let wss = new WebSocket.Server({
     server: server
