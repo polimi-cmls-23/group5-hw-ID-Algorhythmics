@@ -50,36 +50,39 @@ n = NetAddr.new("127.0.0.1", 57120);
 		~attAmpKnob.valueAction_(temp.explin(0.001, 10, 0, 1));
 		~attAmpBox.value_(temp);
 	});
-	//
+
 	if((operation=='upRelease')||(operation=='downRelease'),{
 		var temp = ~relAmpBox.value+value;
-		~relAmpKnob.valueAction_(temp.linlin(0, 100, 0, 1));
+		~relAmpKnob.valueAction_(temp.linlin(0.001, 10, 0, 1));
 		~relAmpBox.value_(temp);
 	});
+
 	if((operation=='upFrequency')||(operation=='downFrequency'),{
-		var temp = ~vibDepBox.value+value;
-		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
-		~vibDepBox.value_(temp);
+		var temp = ~vibFreBox.value+value;
+		~vibFreKnob.valueAction_(temp.linlin(0.1, 6, 0, 1));
+		~vibFreBox.value_(temp);
 	});
 	if((operation=='upDepth')||(operation=='downDepth'),{
 		var temp = ~vibDepBox.value+value;
 		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
 		~vibDepBox.value_(temp)
 	});
+
 	if((operation=='upMix')||(operation=='downMix'),{
-		var temp = ~vibDepBox.value+value;
+		var temp = ~revMixBox.value+value;
 		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
-		~vibDepBox.value_(temp)
+		~revMixBox.value_(temp)
 	});
+			//
 	if((operation=='upReverbTime')||(operation=='downReverbTime'),{
-		var temp = ~vibDepBox.value+value;
-		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
-		~vibDepBox.value_(temp)
+		var temp = ~revTimeBox.value+value;
+		~revTimeKnob.valueAction_(temp.linlin(0.001, 10, 0, 1));
+		~revTimeBox.value_(temp)
 	});
 	if((operation=='upPreDelay')||(operation=='downPreDelay'),{
-		var temp = ~vibDepBox.value+value;
-		~vibDepKnob.valueAction_(temp.linlin(0, 100, 0, 1));
-		~vibDepBox.value_(temp)
+		var temp = ~revPreBox.value+value;
+		~revPreKnob.valueAction_(temp.linlin(0.001, 3, 0, 1));
+		~revPreBox.value_(temp)
 	});
 	}
 
