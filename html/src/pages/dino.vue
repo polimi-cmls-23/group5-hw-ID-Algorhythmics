@@ -421,7 +421,7 @@ export default {
                     if (!this.started && !this.crashed) {
                         this.playingIntro = true;
                         this.tRex.playingIntro = true;
-                        document.styleSheets[0].insertRule(
+                        document.styleSheets[1].insertRule(
                             '@-webkit-keyframes intro { ' +
                             'from { width:' +
                             Trex.config.WIDTH +

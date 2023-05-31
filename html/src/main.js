@@ -10,7 +10,6 @@ import Hotkeys from './pages/hotkeys.vue'
 import DefaultPage from './default.vue'
 
 import './assets/reset.css'
-import './assets/global.css'
 import './assets/pure-min.css'
 
 const routes = [
