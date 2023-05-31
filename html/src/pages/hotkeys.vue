@@ -315,19 +315,6 @@ export default {
         me.addInputCBK(function(joyCon, detail) {
             visualize(joyCon, detail);
         })
-        // Joy-Cons may sleep until touched, so attach the listener dynamically.
-        setInterval(async () => {
-            for (const joyCon of connectedJoyCons.values()) {
-                if (joyCon.eventListenerAttached) {
-                    continue;
-                }
-                joyCon.eventListenerAttached = true;
-                await joyCon.disableVibration();
-                joyCon.addEventListener('hidinput', (event) => {
-                    visualize(joyCon, event.detail);
-                });
-            }
-        }, 2000);
 
         // showDebug.addEventListener('input', (e) => {
         //     document.querySelector('#debug').style.display = e.target.checked
