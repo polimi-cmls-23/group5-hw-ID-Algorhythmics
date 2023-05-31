@@ -183,7 +183,7 @@ import {connectJoyCon, connectedJoyCons, JoyConLeft} from '../components/joycon'
 import {noteOptions,leftOperations,defaultHotkeys} from '../components/hotkey';
 export default {
     name: "start.vue",
-    inject: ['addInputCBK'],
+    inject: ['addInputCBK','refreshRootConfig'],
     data(){
         return {
             noteOptions,
@@ -331,6 +331,7 @@ export default {
             let me = this
             me.$utils.save2Storage(me.form)
             me.$notify("Save Succeed");
+            me.refreshRootConfig()
         }
     }
 }

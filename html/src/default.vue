@@ -52,10 +52,15 @@ export default {
         return {
             connect: this.connect,
             addInputCBK:this.addInputCBK,
-            addInputDetailCBK:this.addInputDetailCBK
+            addInputDetailCBK:this.addInputDetailCBK,
+            refreshRootConfig:this.refreshRootConfig
         }
     },
     methods:{
+        refreshRootConfig(){
+            let me = this
+            me.hotkeys = readConfig()
+        },
         getFrequency (note) {
             var notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'],
                 octave,
