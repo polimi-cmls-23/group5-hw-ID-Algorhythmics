@@ -21,7 +21,7 @@ n = NetAddr.new("127.0.0.1", 57120);
 	var status = msg[1];
 	var freq = msg[2];
 	var name = msg[3];
-	~control_vibFre.postln;
+		// name.postln;
 	if( status == 'on',{
 		var synth = Synth.new(\waveguideFlute,[
 			\freq, freq,
@@ -41,10 +41,19 @@ n = NetAddr.new("127.0.0.1", 57120);
 	})
 }, '/play/recorder');
 
+~demo = OSCFunc({ |msg, time, addr, recvPort|
+		Pdef(\demo, Pbind(
+			\instrument, \waveguideFlute,
+			// \dur, 4,
+			\dur, Pseq([Pn(Pseq([ 3,3,3, 2,  2, 1, 2, 4/3,4/3,4/3, 2,  1,  2,  2,  1,  1,  3]), 2)]/6.5),
+			\midinote, Pseq([Pn(Pseq([62, 57, 54, 59, 61, 60, 59, 57, 66, 69, 71, 67, 69, 66, 62, 64, 61]), 2)])
+		)).play;
+}, '/play/demo');
+
 ~control = OSCFunc({ |msg, time, addr, recvPort|
 	var operation = msg[1];
 	var value = msg[2];
-		operation.postln;
+		// operation.postln;
 
 	defer {
 	if((operation=='upAmplitude')||(operation=='downAmplitude'),{
@@ -91,13 +100,24 @@ n = NetAddr.new("127.0.0.1", 57120);
 		~revPreKnob.valueAction_(temp.linlin(0.001, 3, 0, 1));
 		~revPreBox.value_(temp);
 	});
-	}
+	};
+	~synthDict.keysValuesDo.do {
+			|key, value|
+			key.set(
+			\atk,~control_att,
+			\rel, ~control_release,
+			\vdep,~control_vibDep,
+			\vfr,~control_vibFre,
+			\amp,~control_volume,
+			);
+
+	};
 
 }, '/control');
 
 
 SynthDef("waveguideFlute", {
-	arg scl = 0.2, freq = 440, bend = 0, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 2, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
+	arg scl = 0.2, freq = 440, bend = 0, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 1, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
 	var kenv1, kenv2, kenvibr, kvibr, sr, cr, block;
 	var poly, signalOut, ifqc;
 	var aflow1, asum1, asum2, afqc, atemp1, ax, apoly, asum3, avalue, atemp2, aflute1;
@@ -124,7 +144,7 @@ SynthDef("waveguideFlute", {
 	fdbckArray = [ aflute1 ];
 	LocalOut.ar( fdbckArray );
 	signalOut = avalue;
-	OffsetOut.ar(out, [ signalOut * kenv2, signalOut * kenv2 ] );
+	OffsetOut.ar(out, [ signalOut * kenv2, signalOut * kenv2 ]*amp );
 }).add;
 
 // reverb synthDef
