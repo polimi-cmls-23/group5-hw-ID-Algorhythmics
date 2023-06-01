@@ -83,3 +83,9 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 <div>
 <img width="500px" src="./readme-image/sc.png">
 <div>
+
+## Group: Algorhythmics
++ Alice Sironi
++ Cecilia Raho
++ Stefano Ravasi
++ Yan Zhuang
