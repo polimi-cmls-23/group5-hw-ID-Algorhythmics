@@ -60,7 +60,7 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
    the jumping action is triggered only through the correct Joy-Con button that the user has
    previously mapped in the Hotkey Page
 <div>
-<img width="400px" src="./readme-image/dino-instruction.png">
+<img width="500px" src="./readme-image/dino-instruction.png">
 <div>
 
 <div>
