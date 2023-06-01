@@ -31,7 +31,17 @@ node /server/index.js
 3. Open the files in /supercollider in SuperCollider and run relative codes.
 4. Follow the instructions on website and enjoy.
 
-## Detailed Description
+## Overall Structure
+The system tracks interaction with Joy-Con controllers and use them as
+input. The web system acts as the center interface, providing users with an intuitive and interactive
+to set up and customize their performance experience. SuperCollider serves as the sound synthesis
+engine, generating the sounds according to the commands from web system via the Open Sound
+Control (OSC) protocol. Finally, the sound can be captured by web system to show the visual effect.
+<div>
+<img width="400px" src="./readme-image/overall.png">
+<div>
+
+## Website Introduction
 + Welcome to our home page! On this page, you'll find three links to different functions.
 + Additionally, a special feature linked to the logo, <b>clicking on the logo</b> allows you to connect your controllers to the web system.
 + Or you can connect via <b>game-pad icon</b> on the top-left in different function pages.
@@ -39,7 +49,8 @@ node /server/index.js
 <img width="400px" src="./readme-image/home.png">
 <div>
 
-+ The hotkey page: it serves as an interface for users to personalize their recorder experience. Through this page, users can customize their Joy-Con controller buttons to map to different recorder sounds. 
++ The hotkey page: it serves as an interface for users to personalize their recorder experience. Through this page, users can customize their Joy-Con controller buttons to map to different recorder sounds and operations.
++ In particular, the left controller is responsible for adjusting params of recorder in SuperCollider. And the right controller is working for playing notes. 
 <div>
 <img width="400px" src="./readme-image/hotkey.png">
 <div>
@@ -67,3 +78,8 @@ node /server/index.js
 <img width="400px" src="./readme-image/stft.png">
 <div>
 
+## SuperCollider introduction
++ The recorder sound is handled by SuperCollider, offering a couple of params parameters for customization.
+<div>
+<img width="400px" src="./readme-image/sc.png">
+<div>
