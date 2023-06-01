@@ -46,7 +46,7 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 + Additionally, a special feature linked to the logo, <b>clicking on the logo</b> allows you to connect your controllers to the web system.
 + Or you can connect via <b>game-pad icon</b> on the top-left in different function pages.
 <div>
-<img width="500px" src="./readme-image/home2.png">
+<img width="300px" src="./readme-image/home2.png">
 <div>
 
 + The hotkey page: it serves as an interface for users to personalize their recorder experience. Through this page, users can customize their Joy-Con controller buttons to map to different recorder sounds and operations.
