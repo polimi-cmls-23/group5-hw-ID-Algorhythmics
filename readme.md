@@ -51,8 +51,9 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 
 + The hotkey page: it serves as an interface for users to personalize their recorder experience. Through this page, users can customize their Joy-Con controller buttons to map to different recorder sounds and operations.
 + In particular, the left controller is responsible for adjusting params of recorder in SuperCollider. And the right controller is working for playing notes. 
++ Additionally, every motion of the Joy-Con controller can be captured and be shown in the middle of page. In this way, you can test the working condition of your controllers. 
 <div>
-<img width="500px" src="./readme-image/hotkey.png">
+<img width="500px" src="./readme-image/hotkey2.png">
 <div>
 
 + The game page: it serves as an interactive training tool designed to <b>help users
