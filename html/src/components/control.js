@@ -137,7 +137,7 @@ const rightControls = [
         read_value: (packet) => {
             const vmin = -0.7;
             const vmax = 1.4;
-            if(packet.analogStickRight.horizontal<=-1){
+            if(packet.analogStickRight.horizontal<=-0.9){
                 return true
             }else{
                 return false
@@ -152,7 +152,7 @@ const rightControls = [
         read_value: (packet) => {
             const vmin = -0.7;
             const vmax = 1.4;
-            if(packet.analogStickRight.horizontal>=1.4){
+            if(packet.analogStickRight.horizontal>=1.3){
                 return true
             }else{
                 return false
