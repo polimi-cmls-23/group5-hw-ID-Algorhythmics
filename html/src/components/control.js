@@ -61,9 +61,11 @@ const rightControls = [
         read_value: (packet) => packet.buttonStatus.sl,
         generate_midi: buttonCCForControl(0x09),
     },
-    {
+    {// right click
         name: 'r-stick',
-        read_value: (packet) => packet.buttonStatus.rightStick,
+        read_value: (packet) => {
+            return packet.buttonStatus.rightStick
+        },
         generate_midi: buttonCCForControl(0x0a),
     },
 
@@ -101,24 +103,65 @@ const rightControls = [
     //     generate_midi: analogCCForControl(0x11),
     //     threshold: 0.02,
     // },
-    // {
-    //     name: 'r-analog-vertical',
-    //     read_value: (packet) => {
-    //         const vmin = -0.7;
-    //         const vmax = 1.4;
-    //         // console.log('r-analog-vertical')
-    //         return (
-    //             (Math.max(
-    //                     vmin,
-    //                     Math.min(Number(packet.analogStickRight.vertical), vmax)
-    //                 ) -
-    //                 vmin) /
-    //             (vmax - vmin)
-    //         );
-    //     },
-    //     generate_midi: analogCCForControl(0x12),
-    //     threshold: 0.02,
-    // },
+    {
+        name: 'LStickTop',
+        read_value: (packet) => {
+            const vmin = -0.7;
+            const vmax = 1.4;
+            if(packet.analogStickRight.vertical<=-0.2){
+                return true
+            }else{
+                return false
+            }
+            // return packet.analogStickRight.vertical
+        },
+        generate_midi: analogCCForControl(0x12),
+        threshold: 0.5,
+    },
+    {
+        name: 'LStickDown',
+        read_value: (packet) => {
+            const vmin = -0.7;
+            const vmax = 1.4;
+            if(packet.analogStickRight.vertical>=1.4){
+                return true
+            }else{
+                return false
+            }
+        },
+        generate_midi: analogCCForControl(0x12),
+        threshold: 0.5,
+    },
+    {
+        name: 'LStickLeft',
+        read_value: (packet) => {
+            const vmin = -0.7;
+            const vmax = 1.4;
+            if(packet.analogStickRight.horizontal<=-1){
+                return true
+            }else{
+                return false
+            }
+            return packet.analogStickRight.horizontal;
+        },
+        generate_midi: analogCCForControl(0x12),
+        threshold: 0.5,
+    },
+    {
+        name: 'LStickRight',
+        read_value: (packet) => {
+            const vmin = -0.7;
+            const vmax = 1.4;
+            if(packet.analogStickRight.horizontal>=1.4){
+                return true
+            }else{
+                return false
+            }
+            // return packet.analogStickRight.horizontal;
+        },
+        generate_midi: analogCCForControl(0x12),
+        threshold: 0.5,
+    },
 ];
 
 const leftControls = [
@@ -164,7 +207,12 @@ const leftControls = [
             if (!accelerometer || !accelerometer.x) {
                 return 0
             }
-            return Math.abs(accelerometer.x);
+            if(accelerometer.x<=-0.07){
+                return true
+            }else{
+                return false
+            }
+            // return Math.abs(accelerometer.x);
         },
         generate_midi: analogCCForControl(0x12),
         threshold: 0.05,
@@ -235,39 +283,40 @@ const leftControls = [
         generate_midi: analogCCForControl(0x0c),
         threshold: 70 / 180.0,
     },
-    {
-        name: 'l-analog-horizontal',
-        read_value: (packet) => {
-            const hmin = -1.2;
-            const hmax = 1.4;
-            return (
-                (Math.max(
-                        hmin,
-                        Math.min(Number(packet.analogStickLeft.horizontal), hmax)
-                    ) -
-                    hmin) /
-                (hmax - hmin)
-            );
-        },
-        generate_midi: analogCCForControl(0x0d),
-        threshold: 0.02,
-    },
-    {
-        name: 'l-analog-vertical',
-        read_value: (packet) => {
-            const vmin = -0.7;
-            const vmax = 0.9;
-            return (
-                (Math.max(
-                        vmin,
-                        Math.min(Number(packet.analogStickLeft.vertical), vmax)
-                    ) -
-                    vmin) /
-                (vmax - vmin)
-            );
-        },
-        generate_midi: analogCCForControl(0x0e),
-        threshold: 0.02,
-    },
+    // {
+    //     name: 'l-analog-horizontal',
+    //     read_value: (packet) => {
+    //         const hmin = -1.2;
+    //         const hmax = 1.4;
+    //         return (
+    //             (Math.max(
+    //                     hmin,
+    //                     Math.min(Number(packet.analogStickLeft.horizontal), hmax)
+    //                 ) -
+    //                 hmin) /
+    //             (hmax - hmin)
+    //         );
+    //     },
+    //     generate_midi: analogCCForControl(0x0d),
+    //     threshold: 0.02,
+    // },
+
+    // {
+    //     name: 'l-analog-vertical',
+    //     read_value: (packet) => {
+    //         const vmin = -0.7;
+    //         const vmax = 0.9;
+    //         return (
+    //             (Math.max(
+    //                     vmin,
+    //                     Math.min(Number(packet.analogStickLeft.vertical), vmax)
+    //                 ) -
+    //                 vmin) /
+    //             (vmax - vmin)
+    //         );
+    //     },
+    //     generate_midi: analogCCForControl(0x0e),
+    //     threshold: 0.02,
+    // },
 ];
 export {leftControls,rightControls}

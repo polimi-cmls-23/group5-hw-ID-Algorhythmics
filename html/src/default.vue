@@ -145,6 +145,7 @@ export default {
                 //     }else{
                 //     }
                 // }
+                console.log('n',control.name,newValue)
                 me.sendOSC(control,status,side)
                 me.inputDetailCBKS.forEach((func)=>{
                     // bind value to

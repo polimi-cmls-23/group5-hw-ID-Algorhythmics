@@ -49,12 +49,6 @@
                             </select>
                         </div>
                         <div class="pure-control-group">
-                            <label for="aligned-name">Twist</label>
-                            <select class="custom-select select" v-model="form.LeftTwist">
-                                <option v-for="item in leftOperations">{{item}}</option>
-                            </select>
-                        </div>
-                        <div class="pure-control-group">
                             <label for="aligned-name">Shake</label>
                             <select class="custom-select select" v-model="form.LeftShake">
                                 <option v-for="item in leftOperations">{{item}}</option>
@@ -151,6 +145,30 @@
                         <div class="pure-control-group">
                             <label for="aligned-name">SL</label>
                             <select class="custom-select select" v-model="form.slButton">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Stick Top</label>
+                            <select class="custom-select select" v-model="form.LStickTop">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Stick Down</label>
+                            <select class="custom-select select" v-model="form.LStickDown">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Stick Left</label>
+                            <select class="custom-select select" v-model="form.LStickLeft">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Stick Right</label>
+                            <select class="custom-select select" v-model="form.LStickRight">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>
