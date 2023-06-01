@@ -31,6 +31,10 @@ let defaultHotkeys = {
         PlusButton:'',
         SRButton:'',
         slButton:'',
+        LStickTop:'',
+        LStickDown:'',
+        LStickLeft:'',
+        LStickRight:'',
         // left
     // 'Kick','Snare','Hi-hat'
         Up:leftOperationsMap.upAmplitude,
@@ -39,7 +43,7 @@ let defaultHotkeys = {
         Right:leftOperationsMap.downRelease,
         L:'',
         ZL:'',
-        LeftTwist:'',
+        // LeftTwist:'',
         LeftShake:'',
 }
 export {defaultHotkeys,noteOptions,leftOperations,leftOperationsMap}
