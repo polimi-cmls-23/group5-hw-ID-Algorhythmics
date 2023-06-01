@@ -32,7 +32,7 @@ n = NetAddr.new("127.0.0.1", 57120);
 			\vdep, ~control_vibDep / 100,
 			\vfr, ~control_vibFre,
 			\amp, ~control_volume,
-			\out, ~reverbSynth
+			\out, ~reverbBus
 		]);
 		~synthDict.put(name, synth);
 	},{
