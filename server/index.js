@@ -70,6 +70,9 @@ wss.on("connection", function (socket) {
                 },{
                     type:'f',
                     value:obj.frequency
+                },{
+                    type:'s',
+                    value:obj.name
                 }]
             });
         }else {

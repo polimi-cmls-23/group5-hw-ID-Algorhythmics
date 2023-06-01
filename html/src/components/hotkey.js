@@ -27,8 +27,10 @@ let defaultHotkeys = {
         Y:'F4',
         R:'G4',
         ZR:'A4',
-        RightTwist:'B4',
-        RightShake:'C5',
+        HomeButton:'',
+        PlusButton:'',
+        SRButton:'',
+        slButton:'',
         // left
     // 'Kick','Snare','Hi-hat'
         Up:leftOperationsMap.upAmplitude,

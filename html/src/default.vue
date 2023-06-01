@@ -35,7 +35,11 @@ export default {
     data(){
         return {
             inputCBKS:[],
-            inputDetailCBKS:[]
+            inputDetailCBKS:[],
+            actionStatus:{
+                RightShake:noteOff,
+                LeftShake:noteOff,
+            }
         }
     },
     mounted() {
@@ -111,19 +115,30 @@ export default {
                 control.last_value = control.init_value;
             }
             const newValue = control.read_value(packet);
+            // for action
+            // for normal buttons
             // console.log(newValue);
             if (Math.abs(newValue - control.last_value) > control.threshold) {
-                // const msg = control.generate_midi(newValue);
-                // if (msg !== undefined) {
-                // sendMidi(msg, control.name);
-                // }
-
-                // if(!!newValue){
-                //     // press
-                // }else{
-                //     // cancel
-                // }
                 let status = !!newValue?noteOn:noteOff;
+                // the first action => note on
+                // or else close the sound(note off)
+                // if(me.actionStatus[control.name]){
+                //     let oldStatus = me.actionStatus[control.name]
+                //     // todo
+                //     if(oldStatus===noteOff){
+                //         // note off => on
+                //         status = noteOn
+                //         me.actionStatus[control.name] = status
+                //         let counterKey = control.name+'counter'
+                //         me.actionStatus[counterKey]= setTimeout(()=>{
+                //             //send note off
+                //             me.sendOSC(control,noteOff,side)
+                //             // me.actionStatus[control.name] = noteOff
+                //             delete me.actionStatus[counterKey]
+                //         },1000)
+                //     }else{
+                //     }
+                // }
                 me.sendOSC(control,status,side)
                 me.inputDetailCBKS.forEach((func)=>{
                     // bind value to
@@ -146,7 +161,8 @@ export default {
             let str = {
                 instrument:'recorder',
                 frequency:frequency,
-                status
+                status,
+                name:control.name
             }
             oscPort.send({
                 address: "/message",
@@ -157,7 +173,7 @@ export default {
                     }
                 ]
             });
-            console.log("send OSC",name,frequency)
+            console.log("send OSC",name,status,frequency)
         },
         leftControlOSC(control,status){
             if(status===noteOff){

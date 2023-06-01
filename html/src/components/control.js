@@ -41,34 +41,23 @@ const rightControls = [
         generate_midi: noteOnOff(0x31),
     },
     {
-        name: 'home-button-as-note',
+        // home
+        name: 'HomeButton',
         read_value: (packet) => packet.buttonStatus.home,
         generate_midi: noteOnOff(0x32),
     },
     {
-        name: 'plus-button-as-note',
+        name: 'PlusButton',
         read_value: (packet) => packet.buttonStatus.plus,
         generate_midi: noteOnOff(0x33),
     },
-
-    // Control (CC) buttons
     {
-        name: 'plus-button-as-cc',
-        read_value: (packet) => packet.buttonStatus.plus,
-        generate_midi: buttonCCForControl(0x06),
-    },
-    {
-        name: 'home-button-as-cc',
-        read_value: (packet) => packet.buttonStatus.home,
-        generate_midi: buttonCCForControl(0x07),
-    },
-    {
-        name: 'sr-button',
+        name: 'SRButton',
         read_value: (packet) => packet.buttonStatus.sr,
         generate_midi: buttonCCForControl(0x08),
     },
     {
-        name: 'sl-button',
+        name: 'slButton',
         read_value: (packet) => packet.buttonStatus.sl,
         generate_midi: buttonCCForControl(0x09),
     },
@@ -79,53 +68,69 @@ const rightControls = [
     },
 
     // Analog controls (CC)
+    //
+    // {
+    //     name: 'orientation.beta',
+    //     read_value: (packet) =>
+    //         (Number(packet.actualOrientation.beta) + 90.0) / 180.0,
+    //     generate_midi: analogCCForControl(0x0f),
+    //     threshold: 3 / 180.0,
+    // },
+    // {
+    //     name: 'orientation.gamma',
+    //     read_value: (packet) =>
+    //         (Number(packet.actualOrientation.gamma) + 90.0) / 180.0,
+    //     generate_midi: analogCCForControl(0x10),
+    //     threshold: 3 / 180.0,
+    // },
+    // {
+    //     name: 'r-analog-horizontal',
+    //     read_value: (packet) => {
+    //         const hmin = -1.2;
+    //         const hmax = 1.4;
+    //         // console.log('r-analog-horizontal')
+    //         return (
+    //             (Math.max(
+    //                     hmin,
+    //                     Math.min(Number(packet.analogStickRight.horizontal), hmax)
+    //                 ) -
+    //                 hmin) /
+    //             (hmax - hmin)
+    //         );
+    //     },
+    //     generate_midi: analogCCForControl(0x11),
+    //     threshold: 0.02,
+    // },
+    // {
+    //     name: 'r-analog-vertical',
+    //     read_value: (packet) => {
+    //         const vmin = -0.7;
+    //         const vmax = 1.4;
+    //         // console.log('r-analog-vertical')
+    //         return (
+    //             (Math.max(
+    //                     vmin,
+    //                     Math.min(Number(packet.analogStickRight.vertical), vmax)
+    //                 ) -
+    //                 vmin) /
+    //             (vmax - vmin)
+    //         );
+    //     },
+    //     generate_midi: analogCCForControl(0x12),
+    //     threshold: 0.02,
+    // },
     {
-        name: 'orientation.beta',
-        read_value: (packet) =>
-            (Number(packet.actualOrientation.beta) + 90.0) / 180.0,
-        generate_midi: analogCCForControl(0x0f),
-        threshold: 3 / 180.0,
-    },
-    {
-        name: 'orientation.gamma',
-        read_value: (packet) =>
-            (Number(packet.actualOrientation.gamma) + 90.0) / 180.0,
-        generate_midi: analogCCForControl(0x10),
-        threshold: 3 / 180.0,
-    },
-    {
-        name: 'r-analog-horizontal',
+        name: 'RightShake',
+        // packet = event.detail
         read_value: (packet) => {
-            const hmin = -1.2;
-            const hmax = 1.4;
-            return (
-                (Math.max(
-                        hmin,
-                        Math.min(Number(packet.analogStickRight.horizontal), hmax)
-                    ) -
-                    hmin) /
-                (hmax - hmin)
-            );
-        },
-        generate_midi: analogCCForControl(0x11),
-        threshold: 0.02,
-    },
-    {
-        name: 'r-analog-vertical',
-        read_value: (packet) => {
-            const vmin = -0.7;
-            const vmax = 1.4;
-            return (
-                (Math.max(
-                        vmin,
-                        Math.min(Number(packet.analogStickRight.vertical), vmax)
-                    ) -
-                    vmin) /
-                (vmax - vmin)
-            );
+            let accelerometer = packet.actualAccelerometer;
+            if (!accelerometer || !accelerometer.x) {
+                return 0
+            }
+            return Math.abs(accelerometer.x);
         },
         generate_midi: analogCCForControl(0x12),
-        threshold: 0.02,
+        threshold: 0.05,
     },
 ];
 
@@ -208,14 +213,14 @@ const leftControls = [
         read_value: (packet) =>
             (Number(packet.actualOrientation.beta) + 90.0) / 180.0,
         generate_midi: analogCCForControl(0x0b),
-        threshold: 3 / 180.0,
+        threshold: 70 / 180.0,
     },
     {
         name: 'l-orientation.gamma',
         read_value: (packet) =>
             (Number(packet.actualOrientation.gamma) + 90.0) / 180.0,
         generate_midi: analogCCForControl(0x0c),
-        threshold: 3 / 180.0,
+        threshold: 70 / 180.0,
     },
     {
         name: 'l-analog-horizontal',

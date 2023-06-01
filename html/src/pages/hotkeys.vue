@@ -131,14 +131,26 @@
                             </select>
                         </div>
                         <div class="pure-control-group">
-                            <label for="aligned-name">Twist</label>
-                            <select class="custom-select select" v-model="form.RightTwist">
+                            <label for="aligned-name">Home</label>
+                            <select class="custom-select select" v-model="form.HomeButton">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>
                         <div class="pure-control-group">
-                            <label for="aligned-name">Shake</label>
-                            <select class="custom-select select" v-model="form.RightShake">
+                            <label for="aligned-name">Plus</label>
+                            <select class="custom-select select" v-model="form.PlusButton">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">SR</label>
+                            <select class="custom-select select" v-model="form.SRButton">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">SL</label>
+                            <select class="custom-select select" v-model="form.slButton">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>

@@ -20,10 +20,8 @@ n = NetAddr.new("127.0.0.1", 57120);
 ~on = OSCFunc({ |msg, time, addr, recvPort|
 	var status = msg[1];
 	var freq = msg[2];
-	// ~volumeSlider.value.postln;
-	/*~control_release.postln;
-	~control_att.postln;*/
-	~control_att.postln;
+	var name = msg[3];
+	~control_vibFre.postln;
 	if( status == 'on',{
 		var synth = Synth.new(\waveguideFlute,[
 			\freq, freq,
@@ -33,11 +31,11 @@ n = NetAddr.new("127.0.0.1", 57120);
 			\vfr,~control_vibFre,
 			\amp,~control_volume,
 		]);
-		~synthDict.put(freq, synth);
+		~synthDict.put(name, synth);
 	},{
-		var synth = ~synthDict.at(freq);
+		var synth = ~synthDict.at(name);
 		synth.free;
-		~synthDict.removeAt(freq);
+		~synthDict.removeAt(name);
 		// freq.postln;
 
 	})
@@ -99,7 +97,7 @@ n = NetAddr.new("127.0.0.1", 57120);
 
 
 SynthDef("waveguideFlute", {
-	arg scl = 0.2, freq = 440, bend = 0, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 1, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
+	arg scl = 0.2, freq = 440, bend = 0, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 2, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
 	var kenv1, kenv2, kenvibr, kvibr, sr, cr, block;
 	var poly, signalOut, ifqc;
 	var aflow1, asum1, asum2, afqc, atemp1, ax, apoly, asum3, avalue, atemp2, aflute1;
@@ -109,8 +107,8 @@ SynthDef("waveguideFlute", {
 	block = cr.reciprocal;
 	ifqc = freq * bend.midiratio;
 	kenv1 = EnvGen.kr(Env.new([ 0.0, 1.1 * ipress, ipress, ipress, 0.0 ], [ 0.06, 0.2, dur - 0.46, 0.2 ], 'linear' ), gate);
-	kenv2 = EnvGen.kr(Env.new([ 0.0, amp, amp, 0.0 ], [ atk, dur - 0.02, rel ], 'linear' ), gate, doneAction: 2);
-	kenvibr = EnvGen.kr(Env.new( [ 0.0, 0.0, vdep, vdep, 0.0 ], [ 0.5, 0.5, dur - 1.5, 0.5 ], 'linear'), gate);
+	kenv2 = EnvGen.kr(Env.new([ 0.0, 1.0, 1.0, 0.0 ], [ atk, dur - 0.02, rel ], 'linear' ), gate, doneAction: 2);
+	kenvibr = EnvGen.kr(Env.new( [ 0.0, 0.0, 0.3, 0.3, 0.0 ], [ 0.5, 0.5, dur - 1.5, 0.5 ], 'linear'), gate);
 	aflow1 = LFClipNoise.ar( sr, kenv1 );
 	kvibr = SinOsc.ar( vfr, 0, 0.1 * kenvibr );
 	asum1 = ( ibreath * aflow1 ) + kenv1 + kvibr;
@@ -233,6 +231,7 @@ v.drawFunc = {
 ~vibFreKnob.action_({
 	arg obj;
 	var vfr = obj.value.linlin(0, 1, 0.1, 6);
+	~control_vibFre = obj.value.linlin(0, 1, 0.1, 6);
 	~vibFreBox.value_(obj.value.linlin(0, 1, 0.1, 6));
 });
 
@@ -251,6 +250,7 @@ v.drawFunc = {
 ~vibDepKnob.action_({
 	arg obj;
 	var vdep = obj.value.linlin(0, 1, 0, 100);
+	~control_vibDep = obj.value.linlin(0, 1, 0, 100);
 	~vibDepBox.value_(obj.value.linlin(0, 1, 0, 100));
 });
 
@@ -278,7 +278,7 @@ v.drawFunc = {
 		~reverbSynth.set(\revMix, revMix);
 	};
 });
-
+//todo
 ~revMixBox = NumberBox(b, Rect(55, 305, 80, 30)).clipLo_(0).clipHi_(100).decimals_(0).value_(60);
 ~revMixBox.action_({
 	arg obj;
