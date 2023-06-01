@@ -1,23 +1,84 @@
 (
 
-Window.closeAll;
-
 Server.killAll;
 
+Window.closeAll;
+
+// flute synthDef
+
+SynthDef(\waveguideFlute, {
+	arg scl = 0.2, freq = 440, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 1, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
+	var kenv1, kenv2, kenvibr, kvibr, sr, cr, block;
+	var poly, signalOut, ifqc;
+	var aflow1, asum1, asum2, afqc, atemp1, ax, apoly, asum3, avalue, atemp2, aflute1;
+	var fdbckArray;
+	sr = SampleRate.ir;
+	cr = ControlRate.ir;
+	block = cr.reciprocal;
+	ifqc = freq;
+	kenv1 = EnvGen.kr(Env.new([ 0.0, 1.1 * ipress, ipress, ipress, 0.0 ], [ 0.06, 0.2, dur - 0.46, 0.2 ], 'linear' ), gate);
+	kenv2 = EnvGen.kr(Env.new([ 0.0, 1.0, 1.0, 0.0 ], [ atk, dur - 0.02, rel ], 'linear' ), gate, doneAction: 2);
+	kenvibr = EnvGen.kr(Env.new( [ 0.0, 0.0, 1.0, 1.0, 0.0 ], [ 0.5, 0.5, dur - 1.5, 0.5 ], 'linear'), gate);
+	aflow1 = LFClipNoise.ar( sr, kenv1 );
+	kvibr = SinOsc.ar(vfr, 0, 0.1 * kenvibr * vdep );
+	asum1 = ( ibreath * aflow1 ) + kenv1 + kvibr;
+	afqc = ifqc.reciprocal - ( asum1/20000 ) - ( 9/sr ) + ( ifqc/12000000 ) - block;
+	fdbckArray = LocalIn.ar( 1 );
+	aflute1 = fdbckArray;
+	asum2 = asum1 + ( aflute1 * ifeedbk1 );
+	ax = DelayC.ar( asum2, ifqc.reciprocal - block * 0.5, afqc * 0.5 - ( asum1/ifqc/cr ) + 0.001 );
+	apoly = ax - ( ax.cubed );
+	asum3 = apoly + ( aflute1 * ifeedbk2 );
+	avalue = LPF.ar( asum3, 2000 );
+	aflute1 = DelayC.ar( avalue, ifqc.reciprocal - block, afqc );
+	fdbckArray = [ aflute1 ];
+	LocalOut.ar( fdbckArray );
+	signalOut = avalue;
+	OffsetOut.ar(out, [ signalOut * kenv2, signalOut * kenv2 ] * amp );
+}).add;
+
+// reverb synthDef
+
+SynthDef(\reverb, {
+	arg in, preDelay = 0.1, revTime = 0.3, revCut = 4500, revMix = 0.6, amp = 1, out = 0;
+	var dry, wet, temp, sig;
+	dry = In.ar(in, 2);
+	temp = In.ar(in, 2);
+	wet = 0;
+	temp = DelayN.ar(temp, 0, 2, preDelay);
+	16.do{
+		temp = AllpassN.ar(temp, 0.03, {Rand(0.001, 0.05)}!2, revTime);
+		temp = LPF.ar(temp, revCut);
+		wet = wet + temp;
+	};
+	sig = XFade2.ar(dry, wet, 0.02 * revMix - 1, amp);
+	Out.ar(out, sig);
+}).add;
+
 s.waitForBoot({
+
+// reverb setup
+
+~reverbBus = Bus.audio(s, 2);
+~reverbSynth = Synth.new(\reverb, [\in, ~reverbBus]).register;
+
 // retrieve the current IP and port
+
 ~on.free;
 ~control.free;
 
 n = NetAddr.new("127.0.0.1", 57120);
 
 // default params for OSC control
+
 ~control_volume = 0.5;
 ~control_att = 0.1;
 ~control_release = 0.2;
 ~control_vibFre = 5;
 ~control_vibDep = 30;
+
 // define osc
+
 ~synthDict = ();
 ~on = OSCFunc({ |msg, time, addr, recvPort|
 	var status = msg[1];
@@ -118,64 +179,6 @@ n = NetAddr.new("127.0.0.1", 57120);
 
 }, '/control');
 
-
-SynthDef("waveguideFlute", {
-	arg scl = 0.2, freq = 440, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 1, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
-	var kenv1, kenv2, kenvibr, kvibr, sr, cr, block;
-	var poly, signalOut, ifqc;
-	var aflow1, asum1, asum2, afqc, atemp1, ax, apoly, asum3, avalue, atemp2, aflute1;
-	var fdbckArray;
-	sr = SampleRate.ir;
-	cr = ControlRate.ir;
-	block = cr.reciprocal;
-	ifqc = freq;
-	kenv1 = EnvGen.kr(Env.new([ 0.0, 1.1 * ipress, ipress, ipress, 0.0 ], [ 0.06, 0.2, dur - 0.46, 0.2 ], 'linear' ), gate);
-	kenv2 = EnvGen.kr(Env.new([ 0.0, 1.0, 1.0, 0.0 ], [ atk, dur - 0.02, rel ], 'linear' ), gate, doneAction: 2);
-	kenvibr = EnvGen.kr(Env.new( [ 0.0, 0.0, 0.3, 0.3, 0.0 ], [ 0.5, 0.5, dur - 1.5, 0.5 ], 'linear'), gate);
-	aflow1 = LFClipNoise.ar( sr, kenv1 );
-	kvibr = SinOsc.ar( vfr, 0, 0.1 * kenvibr );
-	asum1 = ( ibreath * aflow1 ) + kenv1 + kvibr;
-	afqc = ifqc.reciprocal - ( asum1/20000 ) - ( 9/sr ) + ( ifqc/12000000 ) - block;
-	fdbckArray = LocalIn.ar( 1 );
-	aflute1 = fdbckArray;
-	asum2 = asum1 + ( aflute1 * ifeedbk1 );
-	ax = DelayC.ar( asum2, ifqc.reciprocal - block * 0.5, afqc * 0.5 - ( asum1/ifqc/cr ) + 0.001 );
-	apoly = ax - ( ax.cubed );
-	asum3 = apoly + ( aflute1 * ifeedbk2 );
-	avalue = LPF.ar( asum3, 2000 );
-	aflute1 = DelayC.ar( avalue, ifqc.reciprocal - block, afqc );
-	fdbckArray = [ aflute1 ];
-	LocalOut.ar( fdbckArray );
-	signalOut = avalue;
-	OffsetOut.ar(out, [ signalOut * kenv2, signalOut * kenv2 ]*amp );
-}).add;
-
-// reverb synthDef
-
-SynthDef(\reverb, {
-	arg in, preDelay = 0.1, revTime = 0.3, revCut = 4500, revMix = 0.6, amp = 1, out = 0;
-	var dry, wet, temp, sig, env;
-	dry = In.ar(in, 2);
-	temp = In.ar(in, 2);
-	wet = 0;
-	temp = DelayN.ar(temp, 0, 2, preDelay);
-	16.do{
-		temp = AllpassN.ar(temp, 0.03, {Rand(0.001, 0.05)}!2, revTime);
-		temp = LPF.ar(temp, revCut);
-		wet = wet + temp;
-	};
-	sig = XFade2.ar(dry, wet, 0.02 * revMix - 1, amp);
-	Out.ar(out, sig);
-}).add;
-
-// audio bus setup
-
-~audioBus = Bus.audio(s, 2);
-
-// reverb setup
-~reverbBus = Bus.audio(s, 2);
-~reverbSynth = Synth.new(\reverb, [\in, ~reverbBus]).register;
-
 // creates the window for the GUI
 
 w = Window("YASC", Rect(
@@ -184,11 +187,7 @@ w = Window("YASC", Rect(
 	550,
 	190));
 w.front.alwaysOnTop_(true).asView.fixedSize_(Size.new(500, 510));
-w.onClose_({
-		if(~reverbSynth.isPlaying) {
-			~reverbSynth.free;
-		};
-});
+
 v = UserView(w, Rect(0, 0, 800, 510));
 i = Image.open(thisProcess.nowExecutingPath.dirname +/+ "img/background.jpg");
 v.backgroundImage_(i);
