@@ -195,7 +195,7 @@ import {connectJoyCon, connectedJoyCons, JoyConLeft} from '../components/joycon'
 import {noteOptions,leftOperations,defaultHotkeys} from '../components/hotkey';
 export default {
     name: "start.vue",
-    inject: ['addInputCBK','refreshRootConfig'],
+    inject: ['clearAllRegisterEvents','addInputCBK','refreshRootConfig'],
     data(){
         return {
             noteOptions,
@@ -204,6 +204,10 @@ export default {
                 ...defaultHotkeys
             }
         }
+    },
+    unmounted() {
+        let me = this;
+        me.clearAllRegisterEvents()
     },
     mounted() {
         let me = this

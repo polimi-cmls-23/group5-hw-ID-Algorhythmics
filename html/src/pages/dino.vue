@@ -29,7 +29,7 @@ import {leftControls,rightControls} from "@/components/control"
 
 export default {
     name: "dino.vue",
-    inject: ['addInputDetailCBK'],
+    inject: ['addInputDetailCBK','clearAllRegisterEvents'],
     data(){
         return {
             hotkeys:{},
@@ -47,6 +47,10 @@ export default {
         me.hotkeys = readConfig()
         me.notes = me.getNotes(me.hotkeys)
         console.log(me.notes)
+    },
+    unmounted() {
+        let me = this;
+        me.clearAllRegisterEvents()
     },
     mounted() {
         let me = this;

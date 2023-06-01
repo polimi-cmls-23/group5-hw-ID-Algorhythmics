@@ -55,12 +55,18 @@ export default {
     provide() {
         return {
             connect: this.connect,
+            clearAllRegisterEvents:this.clearAllEventsOfSubComponents,
             addInputCBK:this.addInputCBK,
             addInputDetailCBK:this.addInputDetailCBK,
             refreshRootConfig:this.refreshRootConfig
         }
     },
     methods:{
+        clearAllEventsOfSubComponents(){
+            let me = this;
+            me.inputCBKS = []
+            me.inputDetailCBKS = []
+        },
         refreshRootConfig(){
             let me = this
             me.hotkeys = readConfig()
