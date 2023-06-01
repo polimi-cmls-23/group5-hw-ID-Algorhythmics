@@ -1,20 +1,28 @@
 # YASC
-
-This project is to to develop an interactive recorder performance tool, incorporating
-Joy-Con controllers, Node.js for data handling, and SuperCollider for sound synthesis.
+The goal of the project is to to develop an interactive recorder performance tool, incorporating
+Joy-Con controllers via a web interface for gesture-based inputs and SuperCollider for sound
+synthesis.
+<div>
+<img src="./readme-image/YASC.jpg">
+<div>
 
 ## Requirements
 + node.js>=v16
 + SuperCollider software
 
-## Installation
+## Dependency Installation
 
 ```bash
 cd /server
 npm install
 ```
+## Connect Joy-Con to your PC
++ Connect your Joy-Con controllers to PC via Bluetooth, click the button below util your PC find and connect it.
+<div>
+<img src="./readme-image/bluetooth.png">
+<div>
 
-## Usage
+##  and Run the whole system
 1. Run server first.
 ```bash
 node /server/index.js
@@ -24,4 +32,4 @@ node /server/index.js
 4. Follow the instructions on website and enjoy.
 
 ## Detailed Description
-todos
+
