@@ -119,19 +119,6 @@ const rightControls = [
     //     generate_midi: analogCCForControl(0x12),
     //     threshold: 0.02,
     // },
-    {
-        name: 'RightShake',
-        // packet = event.detail
-        read_value: (packet) => {
-            let accelerometer = packet.actualAccelerometer;
-            if (!accelerometer || !accelerometer.x) {
-                return 0
-            }
-            return Math.abs(accelerometer.x);
-        },
-        generate_midi: analogCCForControl(0x12),
-        threshold: 0.05,
-    },
 ];
 
 const leftControls = [
@@ -168,6 +155,32 @@ const leftControls = [
         name: 'ZL',
         read_value: (packet) => packet.buttonStatus.zl,
         generate_midi: noteOnOff(0x29),
+    },
+    {
+        name: 'LeftShake',
+        // packet = event.detail
+        read_value: (packet) => {
+            let accelerometer = packet.actualAccelerometer;
+            if (!accelerometer || !accelerometer.x) {
+                return 0
+            }
+            return Math.abs(accelerometer.x);
+        },
+        generate_midi: analogCCForControl(0x12),
+        threshold: 0.05,
+    },
+    {
+        name: 'LeftShake',
+        // packet = event.detail
+        read_value: (packet) => {
+            let accelerometer = packet.actualAccelerometer;
+            if (!accelerometer || !accelerometer.x) {
+                return 0
+            }
+            return Math.abs(accelerometer.x);
+        },
+        generate_midi: analogCCForControl(0x12),
+        threshold: 0.05,
     },
     {
         name: 'capture-button-as-note',

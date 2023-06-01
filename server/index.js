@@ -56,7 +56,7 @@ wss.on("connection", function (socket) {
         // console.log("ss", JSON.parse(str).frequency);
         let obj = JSON.parse(str)
         let instrument = obj.instrument
-        if(instrument){
+        if(instrument==='recorder'){
             let address = '/play'
             if(instrument===recorder){
                 address+=`/${recorder}`
@@ -75,7 +75,8 @@ wss.on("connection", function (socket) {
                     value:obj.name
                 }]
             });
-        }else {
+        }
+        if(instrument==='control') {
             let address = '/control'
             console.log('address send',address)
             udpPort.send({
@@ -89,6 +90,12 @@ wss.on("connection", function (socket) {
                 }]
             });
         }
-
+        if(instrument==='mario'){
+            let address = '/play/demo'
+            udpPort.send({
+                address: address,
+                args: []
+            });
+        }
     });
 });

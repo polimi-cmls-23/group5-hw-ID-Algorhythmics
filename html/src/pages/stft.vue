@@ -1,10 +1,12 @@
 <template>
     <div class="container">
-        <details class="controller instruction">
-            <summary>Instructions</summary>
+        <details class="controller instruction use-instruction">
+            <summary>Use Instruction</summary>
             <ol class="detail">
                 <li><button id="start" class="glow-on-hover" type="button">HOVER ME, THEN CLICK</button></li>
                 <li>Select the entire screen and share the system audio</li>
+                <li>No idea how to play? just play the demo below </li>
+                <li><button class="pure-button submit" @click="mario">Mario play</button></li>
             </ol>
         </details>
         <div id="showcase" class="col">
@@ -50,6 +52,21 @@ export default {
         me.bindEvent()
     },
     methods:{
+        mario(){
+            let str = {
+                instrument:'mario',
+            }
+            console.log('send mario')
+            oscPort.send({
+                address: "/message",
+                args: [
+                    {
+                        type: "s",
+                        value: JSON.stringify(str)
+                    }
+                ]
+            });
+        },
         bindEvent(){
             let me = this
             let button = document.getElementById('start');
@@ -434,10 +451,11 @@ img {
 .container {
     background: black;
 }
-
+.use-instruction{
+    top:10px;
+}
 .instruction {
     position: absolute;
-    top:10px;
     left:50%;
     transform:translate(-50%,0);
     cursor: pointer;
@@ -445,10 +463,10 @@ img {
     text-align: center;
     ol {
         margin:0 auto;
-        max-width: 50ch;
+        max-width: 80ch;
     }
     li {
-        margin:0 auto;
+        margin:15px auto;
         list-style-type: decimal;
     }
     .detail{

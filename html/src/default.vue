@@ -17,7 +17,7 @@ import osc from "osc/dist/osc-browser.min.js";
 import {readConfig} from "@/components/utils";
 import {leftOperationsMap} from "@/components/hotkey";
 
-let oscPort = new osc.WebSocketPort({
+window.oscPort = new osc.WebSocketPort({
     url: "ws://localhost:8081",
     metadata: true
 });
@@ -213,8 +213,10 @@ export default {
                 return
             }
             let str = {
+                instrument:'control',
                 operation,
-                value:operationValue
+                value:operationValue,
+                name:name
             }
             oscPort.send({
                 address: "/message",
