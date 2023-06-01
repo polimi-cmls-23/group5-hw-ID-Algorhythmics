@@ -38,7 +38,7 @@ to set up and customize their performance experience. SuperCollider serves as th
 engine, generating the sounds according to the commands from web system via the Open Sound
 Control (OSC) protocol. Finally, the sound can be captured by web system to show the visual effect.
 <div>
-<img width="400px" src="./readme-image/overall.png">
+<img width="600px" src="./readme-image/overall.png">
 <div>
 
 ## Website Introduction
@@ -46,13 +46,13 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 + Additionally, a special feature linked to the logo, <b>clicking on the logo</b> allows you to connect your controllers to the web system.
 + Or you can connect via <b>game-pad icon</b> on the top-left in different function pages.
 <div>
-<img width="400px" src="./readme-image/home.png">
+<img width="500px" src="./readme-image/home.png">
 <div>
 
 + The hotkey page: it serves as an interface for users to personalize their recorder experience. Through this page, users can customize their Joy-Con controller buttons to map to different recorder sounds and operations.
 + In particular, the left controller is responsible for adjusting params of recorder in SuperCollider. And the right controller is working for playing notes. 
 <div>
-<img width="400px" src="./readme-image/hotkey.png">
+<img width="500px" src="./readme-image/hotkey.png">
 <div>
 
 + The game page: it serves as an interactive training tool designed to <b>help users
@@ -64,7 +64,7 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 <div>
 
 <div>
-<img width="400px" src="./readme-image/dino-2.png">
+<img width="500px" src="./readme-image/dino-2.png">
 <div>
 
 + The Spectrum Page: it provides an immersive audio-visual experience by representing
@@ -72,14 +72,14 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 + Following the instructions, click the button and share the entire screen and system audio.
 + Additionally, we prepare a short mario audio for beginners to follow.
 <div>
-<img width="400px" src="./readme-image/stft-instruction.png">
+<img width="500px" src="./readme-image/stft-instruction.png">
 <div>
 <div>
-<img width="400px" src="./readme-image/stft.png">
+<img width="500px" src="./readme-image/stft.png">
 <div>
 
 ## SuperCollider introduction
 + The recorder sound is handled by SuperCollider, offering a couple of params parameters for customization.
 <div>
-<img width="400px" src="./readme-image/sc.png">
+<img width="500px" src="./readme-image/sc.png">
 <div>
