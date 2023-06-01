@@ -1,5 +1,7 @@
 (
 
+Window.closeAll;
+
 Server.killAll;
 
 s.waitForBoot({
@@ -30,6 +32,7 @@ n = NetAddr.new("127.0.0.1", 57120);
 			\vdep, ~control_vibDep / 100,
 			\vfr, ~control_vibFre,
 			\amp, ~control_volume,
+			\out, ~reverbSynth
 		]);
 		~synthDict.put(name, synth);
 	},{
@@ -117,7 +120,7 @@ n = NetAddr.new("127.0.0.1", 57120);
 
 
 SynthDef("waveguideFlute", {
-	arg scl = 0.2, freq = 440, bend = 0, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 1, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
+	arg scl = 0.2, freq = 440, ipress = 0.9, ibreath = 0.09, ifeedbk1 = 0.4, ifeedbk2 = 0.4, dur = 20000, gate = 1, amp = 1, out = 0, atk = 0.1, rel = 0.2, vdep = 0.3, vfr = 5;
 	var kenv1, kenv2, kenvibr, kvibr, sr, cr, block;
 	var poly, signalOut, ifqc;
 	var aflow1, asum1, asum2, afqc, atemp1, ax, apoly, asum3, avalue, atemp2, aflute1;
@@ -125,7 +128,7 @@ SynthDef("waveguideFlute", {
 	sr = SampleRate.ir;
 	cr = ControlRate.ir;
 	block = cr.reciprocal;
-	ifqc = freq * bend.midiratio;
+	ifqc = freq;
 	kenv1 = EnvGen.kr(Env.new([ 0.0, 1.1 * ipress, ipress, ipress, 0.0 ], [ 0.06, 0.2, dur - 0.46, 0.2 ], 'linear' ), gate);
 	kenv2 = EnvGen.kr(Env.new([ 0.0, 1.0, 1.0, 0.0 ], [ atk, dur - 0.02, rel ], 'linear' ), gate, doneAction: 2);
 	kenvibr = EnvGen.kr(Env.new( [ 0.0, 0.0, 0.3, 0.3, 0.0 ], [ 0.5, 0.5, dur - 1.5, 0.5 ], 'linear'), gate);
@@ -172,8 +175,6 @@ SynthDef(\reverb, {
 // reverb setup
 ~reverbBus = Bus.audio(s, 2);
 ~reverbSynth = Synth.new(\reverb, [\in, ~reverbBus]).register;
-
-Window.closeAll;
 
 // creates the window for the GUI
 
