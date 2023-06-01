@@ -1,6 +1,6 @@
 (
 
-s.freeAll;
+Server.killAll;
 
 s.waitForBoot({
 // retrieve the current IP and port
@@ -25,11 +25,11 @@ n = NetAddr.new("127.0.0.1", 57120);
 	if( status == 'on',{
 		var synth = Synth.new(\waveguideFlute,[
 			\freq, freq,
-			\atk,~control_att,
+			\atk, ~control_att,
 			\rel, ~control_release,
-			\vdep,~control_vibDep,
-			\vfr,~control_vibFre,
-			\amp,~control_volume,
+			\vdep, ~control_vibDep / 100,
+			\vfr, ~control_vibFre,
+			\amp, ~control_volume,
 		]);
 		~synthDict.put(name, synth);
 	},{
@@ -171,8 +171,7 @@ SynthDef(\reverb, {
 
 // reverb setup
 ~reverbBus = Bus.audio(s, 2);
-~reverbSynth = Synth.new(\reverb, [\in, ~reverbBus]);
-~reverbSynth.register;
+~reverbSynth = Synth.new(\reverb, [\in, ~reverbBus]).register;
 
 Window.closeAll;
 
@@ -185,7 +184,9 @@ w = Window("YASC", Rect(
 	190));
 w.front.alwaysOnTop_(true).asView.fixedSize_(Size.new(500, 510));
 w.onClose_({
-	s.freeAll;
+		if(~reverbSynth.isPlaying) {
+			~reverbSynth.free;
+		};
 });
 v = UserView(w, Rect(0, 0, 800, 510));
 i = Image.open(thisProcess.nowExecutingPath.dirname +/+ "img/background.jpg");
