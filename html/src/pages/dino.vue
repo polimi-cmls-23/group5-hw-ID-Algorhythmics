@@ -6,8 +6,8 @@
             <summary>Instructions</summary>
             <ol>
                 <li>Pair up Joy-Con controllers.</li>
-                <li>Press any button to start the game.</li>
-                <li>Jump whenever an obstacle appears by pressing the relative hotkey.</li>
+                <li>Press space to start the game.</li>
+                <li>Jump whenever an obstacle appears by pressing the corresponding button.</li>
             </ol>
         </details>
         <div id="offline-resources">
