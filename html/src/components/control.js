@@ -217,19 +217,19 @@ const leftControls = [
         generate_midi: analogCCForControl(0x12),
         threshold: 0.05,
     },
-    {
-        name: 'LeftShake',
-        // packet = event.detail
-        read_value: (packet) => {
-            let accelerometer = packet.actualAccelerometer;
-            if (!accelerometer || !accelerometer.x) {
-                return 0
-            }
-            return Math.abs(accelerometer.x);
-        },
-        generate_midi: analogCCForControl(0x12),
-        threshold: 0.05,
-    },
+    // {
+    //     name: 'LeftShake',
+    //     // packet = event.detail
+    //     read_value: (packet) => {
+    //         let accelerometer = packet.actualAccelerometer;
+    //         if (!accelerometer || !accelerometer.x) {
+    //             return 0
+    //         }
+    //         return Math.abs(accelerometer.x);
+    //     },
+    //     generate_midi: analogCCForControl(0x12),
+    //     threshold: 0.05,
+    // },
     {
         name: 'capture-button-as-note',
         read_value: (packet) => packet.buttonStatus.capture,
@@ -267,21 +267,35 @@ const leftControls = [
         read_value: (packet) => packet.buttonStatus.leftStick,
         generate_midi: buttonCCForControl(0x05),
     },
-
     // Analog controls (CC)
     {
-        name: 'l-orientation.beta',
-        read_value: (packet) =>
-            (Number(packet.actualOrientation.beta) + 90.0) / 180.0,
+        name: 'lOrientationBeta',
+        read_value: (packet) =>{
+            return ((Number(packet.actualOrientation.beta) + 90.0) / 180.0)
+            // return packet.actualOrientation.beta
+        },
         generate_midi: analogCCForControl(0x0b),
-        threshold: 70 / 180.0,
+        threshold: 10 / 180.0,
     },
     {
-        name: 'l-orientation.gamma',
-        read_value: (packet) =>
-            (Number(packet.actualOrientation.gamma) + 90.0) / 180.0,
+        name: 'lOrientationGamma',
+        read_value: (packet) =>{
+            return ((Number(packet.actualOrientation.gamma) + 90.0) / 180.0)
+            // return packet.actualOrientation.gamma;
+            // return (Number(packet.actualOrientation.gamma) + 90.0) / 180.0
+        },
         generate_midi: analogCCForControl(0x0c),
-        threshold: 70 / 180.0,
+        threshold: 10 / 180.0,
+    },
+    {
+        name: 'lOrientationBetaAlpha',
+        read_value: (packet) =>{
+            return ((Number(packet.actualOrientation.alpha) + 90.0) / 180.0)
+            // return packet.actualOrientation.alpha;
+            // (Number(packet.actualOrientation.gamma) + 90.0) / 180.0,
+        },
+        generate_midi: analogCCForControl(0x0c),
+        threshold: 10 / 180.0,
     },
     // {
     //     name: 'l-analog-horizontal',

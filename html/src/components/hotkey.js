@@ -17,7 +17,7 @@ let leftOperationsMap ={
         upPreDelay:'↑pre-delay of reverb',
         downPreDelay:'↓pre-daly of reverb'
 }
-let leftOperations = Object.values(leftOperationsMap)
+let leftOperations = Object.values(leftOperationsMap).concat([""])
 
 let defaultHotkeys = {
         // right
@@ -45,5 +45,8 @@ let defaultHotkeys = {
         ZL:'',
         // LeftTwist:'',
         LeftShake:'',
+        lOrientationBeta:'',
+        lOrientationGamma:'',
+        lOrientationBetaAlpha:''
 }
 export {defaultHotkeys,noteOptions,leftOperations,leftOperationsMap}

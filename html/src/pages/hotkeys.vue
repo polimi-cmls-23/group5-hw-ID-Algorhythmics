@@ -54,6 +54,24 @@
                                 <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Orientation Beta</label>
+                            <select class="custom-select select" v-model="form.lOrientationBeta">
+                                <option v-for="item in leftOperations">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Orientation Gamma</label>
+                            <select class="custom-select select" v-model="form.lOrientationGamma">
+                                <option v-for="item in leftOperations">{{item}}</option>
+                            </select>
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Orientation Alpha</label>
+                            <select class="custom-select select" v-model="form.lOrientationBetaAlpha">
+                                <option v-for="item in leftOperations">{{item}}</option>
+                            </select>
+                        </div>
                     </fieldset>
                 </form>
             </div>
@@ -390,7 +408,7 @@ export default {
 }
 .sub-container{
     /*display: inline-block;*/
-    width: 900px;
+    width: 950px;
     padding: 30px;
     margin:30px auto;
     border:1px solid white;
@@ -433,6 +451,9 @@ input{
 }
 .left-container{
     display: inline-block;
+    .pure-form-aligned .pure-control-group label{
+        width: 6em;
+    }
     .select{
         width: 300px;
     }
@@ -450,9 +471,12 @@ input{
 .txt-right{
     text-align: right;
 }
-.pure-form-aligned .pure-control-group label{
-    width: 3em;
-}
+.right-container{
+     .pure-form-aligned .pure-control-group label{
+         width: 3em;
+     }
+ }
+
 .submit{
     display: block;
     width: 90px;
