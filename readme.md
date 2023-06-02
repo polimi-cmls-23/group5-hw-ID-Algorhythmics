@@ -23,7 +23,7 @@ Connect your Joy-Con controllers to PC via Bluetooth, click the button below unt
 <div>
 
 ## Introduction of Joy-Con controllers
-The Joy-Con controllers(fig. \ref{fig:joycon}) consist of two individual units, each containing an analog stick and an array of buttons. In the project, the left controller are used to control the parameters in super collider and the right one is responsible to play notes.
+The Joy-Con controllers consist of two individual units, each containing an analog stick and an array of buttons. In the project, the left controller are used to control the parameters in super collider and the right one is responsible to play notes.
 <div>
 <img width="400px" src="./readme-image/joy-con-map.png">
 <div>
