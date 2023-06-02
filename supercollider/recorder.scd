@@ -357,7 +357,7 @@ t = ( l / 6 ) - 40;
 
 // VOLUME
 
-~volumeSlider = Slider.new(b, Rect(50, 523, 30, 183)).orientation_(\vertical).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5)).value_(0.5);
+~volumeSlider = Slider.new(b, Rect(55, 523, 30, 183)).orientation_(\vertical).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5)).value_(0.5);
 
 ServerMeterView.new(s, b, 100@500, 0, 2).fontColor_(Color.white);
 
