@@ -164,17 +164,17 @@ n = NetAddr.new("127.0.0.1", 57120);
 		~revPreKnob.valueAction_(temp.linlin(0.001, 3, 0, 1));
 		~revPreBox.value_(temp);
 	});
-	};
 	~synthDict.keysValuesDo.do {
-			|key, value|
-			key.set(
+		|key, value|
+		key.set(
 			\atk,~control_att,
 			\rel, ~control_release,
-			\vdep,~control_vibDep,
+			\vdep,~control_vibDep/100,
 			\vfr,~control_vibFre,
 			\amp,~control_volume,
-			);
+		);
 
+	};
 	};
 
 }, '/control');
