@@ -1,4 +1,4 @@
-let noteOptions = ["D4","A3","F#3","B3","C#4","C4","F#4","A4","B4","G4","E4","F4","C5","D5","E5"].sort()
+let noteOptions = ["D4","A3","F#3","B3","C#4","C4","F#4","A4","B4","G4","E4","F4","C5","D5","E5",""].sort()
 let leftOperationsMap ={
         upAmplitude : '↑amplitude',
         downAmplitude:'↓amplitude',
@@ -15,8 +15,10 @@ let leftOperationsMap ={
         upReverbTime:'↑time of reverb',
         downReverbTime:'↓time of reverb',
         upPreDelay:'↑pre-delay of reverb',
-        downPreDelay:'↓pre-daly of reverb'
+        downPreDelay:'↓pre-daly of reverb',
+        amplitude:'amplitude',
 }
+
 let leftOperations = Object.values(leftOperationsMap).concat([""])
 
 let defaultHotkeys = {
@@ -44,9 +46,10 @@ let defaultHotkeys = {
         L:'',
         ZL:'',
         // LeftTwist:'',
-        LeftShake:'',
+        LVerticalMove:'',
         lOrientationBeta:'',
         lOrientationGamma:'',
-        lOrientationBetaAlpha:''
+        lOrientationBetaAlpha:'',
+        RVerticalMove:''
 }
 export {defaultHotkeys,noteOptions,leftOperations,leftOperationsMap}

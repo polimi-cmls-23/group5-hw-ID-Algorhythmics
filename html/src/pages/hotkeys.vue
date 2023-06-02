@@ -49,29 +49,29 @@
                             </select>
                         </div>
                         <div class="pure-control-group">
-                            <label for="aligned-name">Shake</label>
-                            <select class="custom-select select" v-model="form.LeftShake">
+                            <label for="aligned-name">Vertical Move</label>
+                            <select class="custom-select select" v-model="form.LVerticalMove">
                                 <option v-for="item in leftOperations">{{item}}</option>
                             </select>
                         </div>
-                        <div class="pure-control-group">
-                            <label for="aligned-name">Orientation Beta</label>
-                            <select class="custom-select select" v-model="form.lOrientationBeta">
-                                <option v-for="item in leftOperations">{{item}}</option>
-                            </select>
-                        </div>
-                        <div class="pure-control-group">
-                            <label for="aligned-name">Orientation Gamma</label>
-                            <select class="custom-select select" v-model="form.lOrientationGamma">
-                                <option v-for="item in leftOperations">{{item}}</option>
-                            </select>
-                        </div>
-                        <div class="pure-control-group">
-                            <label for="aligned-name">Orientation Alpha</label>
-                            <select class="custom-select select" v-model="form.lOrientationBetaAlpha">
-                                <option v-for="item in leftOperations">{{item}}</option>
-                            </select>
-                        </div>
+<!--                        <div class="pure-control-group">-->
+<!--                            <label for="aligned-name">Orientation Beta</label>-->
+<!--                            <select class="custom-select select" v-model="form.lOrientationBeta">-->
+<!--                                <option v-for="item in leftOperations">{{item}}</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <div class="pure-control-group">-->
+<!--                            <label for="aligned-name">Orientation Gamma</label>-->
+<!--                            <select class="custom-select select" v-model="form.lOrientationGamma">-->
+<!--                                <option v-for="item in leftOperations">{{item}}</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <div class="pure-control-group">-->
+<!--                            <label for="aligned-name">Orientation Alpha</label>-->
+<!--                            <select class="custom-select select" v-model="form.lOrientationBetaAlpha">-->
+<!--                                <option v-for="item in leftOperations">{{item}}</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
                     </fieldset>
                 </form>
             </div>
@@ -187,6 +187,13 @@
                         <div class="pure-control-group">
                             <label for="aligned-name">Stick Right</label>
                             <select class="custom-select select" v-model="form.LStickRight">
+                                <option v-for="item in noteOptions">{{item}}</option>
+                            </select>
+                        </div>
+
+                        <div class="pure-control-group">
+                            <label for="aligned-name">Vertical Move</label>
+                            <select class="custom-select select" v-model="form.RVerticalMove">
                                 <option v-for="item in noteOptions">{{item}}</option>
                             </select>
                         </div>

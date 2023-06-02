@@ -86,7 +86,13 @@ n = NetAddr.new("127.0.0.1", 57120);
 	var name = msg[3];
 		// name.postln;
 	if( status == 'on',{
-		var synth = Synth.new(\waveguideFlute,[
+		var synthTest = ~synthDict.at(name);
+		var synth;
+		if(synthTest.notNil) {
+			synthTest.free;
+			~synthDict.removeAt(name);
+		};
+		synth = Synth.new(\waveguideFlute,[
 			\freq, freq,
 			\atk, ~control_att,
 			\rel, ~control_release,
@@ -98,9 +104,10 @@ n = NetAddr.new("127.0.0.1", 57120);
 		~synthDict.put(name, synth);
 	},{
 		var synth = ~synthDict.at(name);
-		synth.free;
-		~synthDict.removeAt(name);
-		// freq.postln;
+		if(synth.notNil) {
+			synth.free;
+			~synthDict.removeAt(name);
+		};
 
 	})
 }, '/play/recorder');
@@ -122,6 +129,12 @@ n = NetAddr.new("127.0.0.1", 57120);
 	defer {
 	if((operation=='upAmplitude')||(operation=='downAmplitude'),{
 		var temp = ~volumeSlider.value+value;
+		~volumeSlider.value_(temp);
+		~control_volume = temp;
+	});
+	if((operation=='amplitude'),{
+		var temp = value;
+				temp.postln;
 		~volumeSlider.value_(temp);
 		~control_volume = temp;
 	});
@@ -368,3 +381,9 @@ ServerMeterView.new(s, b, 100@500, 0, 2);
 })
 
 )
+(
+~synth = Synth.new(\waveguideFlute,[
+			\freq, 400,
+		]);
+)
+~synth.free

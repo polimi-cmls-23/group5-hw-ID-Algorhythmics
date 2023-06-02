@@ -126,27 +126,10 @@ export default {
             // console.log(newValue);
             if (Math.abs(newValue - control.last_value) > control.threshold) {
                 let status = !!newValue?noteOn:noteOff;
-                // the first action => note on
-                // or else close the sound(note off)
-                // if(me.actionStatus[control.name]){
-                //     let oldStatus = me.actionStatus[control.name]
-                //     // todo
-                //     if(oldStatus===noteOff){
-                //         // note off => on
-                //         status = noteOn
-                //         me.actionStatus[control.name] = status
-                //         let counterKey = control.name+'counter'
-                //         me.actionStatus[counterKey]= setTimeout(()=>{
-                //             //send note off
-                //             me.sendOSC(control,noteOff,side)
-                //             // me.actionStatus[control.name] = noteOff
-                //             delete me.actionStatus[counterKey]
-                //         },1000)
-                //     }else{
-                //     }
-                // }
-                console.log('n',control.name,newValue)
-                me.sendOSC(control,status,side)
+                if(control.name==='LVerticalMove'){
+                    console.log('n',control.name,control.computePercent(newValue))
+                }
+                me.sendOSC(control,status,side,newValue)
                 me.inputDetailCBKS.forEach((func)=>{
                     // bind value to
                     func && func(control,status)
@@ -155,16 +138,21 @@ export default {
                 control.last_value = newValue;
             }
         },
-        rightControlOSC(control, status){
+        rightControlOSC(control, status,newValue){
             let me = this
             let name = control.name
             let note = me.hotkeys[name]
-
+            let frequency;
+            if(control.name==='RVerticalMove' && note!==''){
+                frequency = control.computePercent(newValue)*500
+            }
             if(!note){
                 // console.log("the note doesn't exist")
                 return
             }
-            let frequency = me.getFrequency(note)
+            if(!frequency){
+                frequency = me.getFrequency(note)
+            }
             let str = {
                 instrument:'recorder',
                 frequency:frequency,
@@ -182,7 +170,7 @@ export default {
             });
             console.log("send OSC",name,status,frequency)
         },
-        leftControlOSC(control,status){
+        leftControlOSC(control,status,newValue){
             if(status===noteOff){
                 return
             }
@@ -202,7 +190,8 @@ export default {
                 upReverbTime : {name:'upMix',value:+0.1},
                 downReverbTime : {name:'downReverbTime',value:-0.1},
                 upPreDelay : {name:'upPreDelay',value:+0.1},
-                downPreDelay : {name:'downPreDelay',value:-0.1}
+                downPreDelay : {name:'downPreDelay',value:-0.1},
+                amplitude:{name:'amplitude',value:(v)=>{return control.computePercent(v)}}
             }
             let me = this
             let name = control.name
@@ -213,7 +202,11 @@ export default {
             for (const k in operationMap) {
                 if(leftOperationsMap[k]===controlName){
                     operation=operationMap[k].name
-                    operationValue = operationMap[k].value
+                    let value = operationMap[k].value
+                    if(typeof value === 'function'){
+                        value = value(newValue)
+                    }
+                    operationValue = value
                 }
             }
             if(!operation){
@@ -235,7 +228,7 @@ export default {
                 ]
             });
         },
-        sendOSC(control,status,side){
+        sendOSC(control,status,side,newValue){
             let me = this
             // get frequency
             // know the action of press
@@ -244,10 +237,10 @@ export default {
             // left => operations
             // right => notes
             if(side===leftControl){
-                me.leftControlOSC(control,status)
+                me.leftControlOSC(control,status,newValue)
             }
             if(side===rightControl){
-                me.rightControlOSC(control,status)
+                me.rightControlOSC(control,status,newValue)
             }
 
             // oscPort.close()
