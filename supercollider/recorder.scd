@@ -181,33 +181,41 @@ n = NetAddr.new("127.0.0.1", 57120);
 
 // creates the window for the GUI
 
-w = Window("YASC", Rect(
-	( Window.screenBounds.width - 85 ) / 2,
-	( Window.screenBounds.height - 510 ) / 2,
-	550,
-	190));
-w.front.alwaysOnTop_(true).asView.fixedSize_(Size.new(500, 510));
+l = Window.screenBounds.width;
+h = Window.screenBounds.height;
 
-v = UserView(w, Rect(0, 0, 800, 510));
+w = Window("YASC", Rect(
+	5 * l / 6,
+	0,
+	l / 6,
+	h - 30 ));
+w.front.alwaysOnTop_(true).asView.fixedSize_(Size.new(l / 6, h - 30));
+
+v = UserView(w, Rect(0, 0, l/6, h));
 i = Image.open(thisProcess.nowExecutingPath.dirname +/+ "img/background.jpg");
 v.backgroundImage_(i);
 
 // creates a composite view
 
-~fluteLabel = StaticText(w, Rect(90, 20, 290, 60)).string_("YASC").align_(\center).stringColor_(Color.white).font_(Font("Monaco",50));
+p = 80;
 
-b = CompositeView(w, Rect(30, 110, 410, 365));
+~fluteLabel = StaticText(w, Rect(( l / 12 ) - 75, 10, 150, 60)).string_("YASC").align_(\center).stringColor_(Color.white).font_(Font("Monaco",50));
+
+b = CompositeView(w, Rect(20, p, ( l / 6 ) - 40, h - p - 50));
 v.drawFunc = {
 	Pen.strokeColor_(Color.fromHexString("#E6E7F2").alpha_(0.5));
 	Pen.width_(3);
-	Pen.strokeRect(Rect(30, 110, 435, 365));
+	Pen.strokeRect(Rect(20, p, ( l / 6 ) - 40, h - p - 50));
 	Pen.fillStroke;
 };
-~envLabel = StaticText(b, Rect(20, 25, 260, 20)).string_("AMPLITUDE ENVELOPE").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
+
+~envLabel = StaticText(b, Rect(0, 20, ( l / 6 ) - 40, 20)).string_("AMPLITUDE ENVELOPE").align_(\center).stringColor_(Color.white).font_(Font("Monaco",13));
+
+t = ( l / 6 ) - 40;
 
 // creates the knob, the numerical box and the label for amplitude envelope attack
 
-~attAmpKnob = Knob(b, Rect(20, 65, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
+~attAmpKnob = Knob(b, Rect(( t / 2 ) - 57.5, 60, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
 ~attAmpKnob.action_({
 	arg obj;
 	var atk = obj.value.linexp(0, 1, 0.001, 10);
@@ -215,18 +223,18 @@ v.drawFunc = {
 	~attAmpBox.value_(obj.value.linexp(0, 1, 0.001, 10));
 });
 
-~attAmpBox = NumberBox(b, Rect(55, 65, 80, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
+~attAmpBox = NumberBox(b, Rect(( t / 2 ) - 22.5, 60, 80, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.1);
 ~attAmpBox.action_({
 	arg obj;
 	~control_att = obj.value;
 	~attAmpKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
 });
 
-~attAmpLabel = StaticText(b, Rect(55, 45, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~attAmpLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 40, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
 // creates the knob, the numerical box and the label for amplitude envelope release
 
-~relAmpKnob = Knob(b, Rect(155, 65, 30, 30)).value_(0.2.explin(0.001, 10, 0, 1));
+~relAmpKnob = Knob(b, Rect(( t / 2 ) - 57.5, 115, 30, 30)).value_(0.2.explin(0.001, 10, 0, 1));
 ~relAmpKnob.action_({
 	arg obj;
 	var rel = obj.value.linexp(0, 1, 0.001, 10);
@@ -234,21 +242,20 @@ v.drawFunc = {
 	~relAmpBox.value_(obj.value.linexp(0, 1, 0.001, 10));
 });
 
-~relAmpBox = NumberBox(b, Rect(190, 65, 80, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.2);
+~relAmpBox = NumberBox(b, Rect(( t / 2 ) - 22.5, 115, 80, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.2);
 ~relAmpBox.action_({
 	arg obj;
 	~control_release = obj.value;
 	~relAmpKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
 });
 
-~relAmpLabel = StaticText(b, Rect(190, 45, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~relAmpLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 95, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
-// creates a composite view for the vibrato depth control and the relative label
-~envLabel = StaticText(b, Rect(20, 140, 260, 30)).string_("VIBRATO CONTROLS").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
+~vibLabel = StaticText(b, Rect(0, 165, ( l / 6 ) - 40, 20)).string_("VIBRATO CONTROLS").align_(\center).stringColor_(Color.white).font_(Font("Monaco",13));
 
 // creates the knob, the numerical box and the label for vibrato frequency
 
-~vibFreKnob = Knob(b, Rect(20, 185, 30, 30)).value_(5.linlin(0.1, 6, 0, 1));
+~vibFreKnob = Knob(b, Rect(( t / 2 ) - 57.5, 205, 30, 30)).value_(5.linlin(0.1, 6, 0, 1));
 ~vibFreKnob.action_({
 	arg obj;
 	var vfr = obj.value.linlin(0, 1, 0.1, 6);
@@ -256,18 +263,18 @@ v.drawFunc = {
 	~vibFreBox.value_(obj.value.linlin(0, 1, 0.1, 6));
 });
 
-~vibFreBox = NumberBox(b, Rect(55, 185, 80, 30)).clipLo_(0.1).clipHi_(6).decimals_(1).value_(5);
+~vibFreBox = NumberBox(b, Rect(( t / 2 ) - 22.5, 205, 80, 30)).clipLo_(0.1).clipHi_(6).decimals_(1).value_(5);
 ~vibFreBox.action_({
 	arg obj;
 	~control_vibFre = obj.value;
 	~vibFreKnob.valueAction_(obj.value.linlin(0.1, 6, 0, 1));
 });
 
-~vibFreLabel = StaticText(b, Rect(55,165 , 80, 20)).string_("Frequency (Hz)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~vibFreLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 185, 80, 20)).string_("Frequency (Hz)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
 // creates the knob, the numerical box and the label for vibrato depth
 
-~vibDepKnob = Knob(b, Rect(155, 185, 30, 30)).value_(30.linlin(0, 100, 0, 1));
+~vibDepKnob = Knob(b, Rect(( t / 2 ) - 57.5, 260, 30, 30)).value_(30.linlin(0, 100, 0, 1));
 ~vibDepKnob.action_({
 	arg obj;
 	var vdep = obj.value.linlin(0, 1, 0, 100);
@@ -275,22 +282,22 @@ v.drawFunc = {
 	~vibDepBox.value_(obj.value.linlin(0, 1, 0, 100));
 });
 
-~vibDepBox = NumberBox(b, Rect(190, 185, 80, 30)).clipLo_(0).clipHi_(100).decimals_(0).value_(30);
+~vibDepBox = NumberBox(b, Rect(( t / 2 ) - 22.5, 260, 80, 30)).clipLo_(0).clipHi_(100).decimals_(0).value_(30);
 ~vibDepBox.action_({
 	arg obj;
 	~control_vibDep = obj.value;
 	~vibDepKnob.valueAction_(obj.value.linlin(0, 100, 0, 1));
 });
 
-~vibDepLabel = StaticText(b, Rect(190, 165, 80, 20)).string_("Depth (%)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~vibDepLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 240, 80, 20)).string_("Depth (%)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
 // creates a composite view for the reverb controls
 
-~revLabel = StaticText(b, Rect(20, 265, 410, 20)).string_("REVERB CONTROLS").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
+~revLabel = StaticText(b, Rect(0, 310, ( l / 6 ) - 40, 20)).string_("REVERB CONTROLS").align_(\center).stringColor_(Color.white).font_(Font("Monaco",13));
 
 // creates the knob, the numerical box and the label for reverb mix
 
-~revMixKnob = Knob(b, Rect(20, 305, 30, 30)).value_(60.linlin(0, 100, 0, 1));
+~revMixKnob = Knob(b, Rect(( t / 2 ) - 57.5, 350, 30, 30)).value_(60.linlin(0, 100, 0, 1));
 ~revMixKnob.action_({
 	arg obj;
 	var revMix = obj.value.linlin(0, 1, 0, 100);
@@ -299,18 +306,18 @@ v.drawFunc = {
 		~reverbSynth.set(\revMix, revMix);
 	};
 });
-//todo
-~revMixBox = NumberBox(b, Rect(55, 305, 80, 30)).clipLo_(0).clipHi_(100).decimals_(0).value_(60);
+
+~revMixBox = NumberBox(b, Rect(( t / 2 ) - 22.5, 350, 80, 30)).clipLo_(0).clipHi_(100).decimals_(0).value_(60);
 ~revMixBox.action_({
 	arg obj;
 	~revMixKnob.valueAction_(obj.value.linlin(0, 100, 0, 1));
 });
 
-~revMixLabel = StaticText(b, Rect(55, 285, 80, 20)).string_("Mix D/W (%)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~revMixLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 330, 80, 20)).string_("Mix D/W (%)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
 // creates the knob, the numerical box and the label for reverb time
 
-~revTimeKnob = Knob(b, Rect(155, 305, 30, 30)).value_(0.3.explin(0.001, 10, 0, 1));
+~revTimeKnob = Knob(b, Rect(( t / 2 ) - 57.5, 405, 30, 30)).value_(0.3.explin(0.001, 10, 0, 1));
 ~revTimeKnob.action_({
 	arg obj;
 	var revTime = obj.value.linexp(0, 1, 0.001, 10);
@@ -320,17 +327,17 @@ v.drawFunc = {
 	};
 });
 
-~revTimeBox = NumberBox(b, Rect(190, 305, 80, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.3);
+~revTimeBox = NumberBox(b, Rect(( t / 2 ) - 22.5, 405, 80, 30)).clipLo_(0.001).clipHi_(10).decimals_(3).value_(0.3);
 ~revTimeBox.action_({
 	arg obj;
 	~revTimeKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
 });
 
-~revTimeLabel = StaticText(b, Rect(190, 285, 80, 20)).string_("Time (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~revTimeLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 385, 80, 20)).string_("Time (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
 // creates the knob, the numerical box and the label for reverb pre-delay
 
-~revPreKnob = Knob(b, Rect(280, 305, 30, 30)).value_(0.1.explin(0.001, 3, 0, 1));
+~revPreKnob = Knob(b, Rect(( t / 2 ) - 57.5, 460, 30, 30)).value_(0.1.explin(0.001, 3, 0, 1));
 ~revPreKnob.action_({
 	arg obj;
 	var preDelay = obj.value.linexp(0, 1, 0.001, 3);
@@ -340,21 +347,19 @@ v.drawFunc = {
 	};
 });
 
-~revPreBox = NumberBox(b, Rect(315, 305, 80, 30)).clipLo_(0).clipHi_(3).decimals_(3).value_(0.1);
+~revPreBox = NumberBox(b, Rect(( t / 2 ) - 22.5, 460, 80, 30)).clipLo_(0).clipHi_(3).decimals_(3).value_(0.1);
 ~revPreBox.action_({
 	arg obj;
 	~revPreKnob.valueAction_(obj.value.explin(0.001, 3, 0, 1));
 });
 
-~revPreLabel = StaticText(b, Rect(315, 285, 80, 20)).string_("Pre-Delay (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~revPreLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 440, 80, 20)).string_("Pre-Delay (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
 
 // VOLUME
 
-~volumeLabel= StaticText(b, Rect(335, 230, 290, 23)).string_("VOLUME").align_(\left).stringColor_(Color.white).font_(Font("Monaco",13));
+~volumeSlider = Slider.new(b, Rect(50, 523, 30, 183)).orientation_(\vertical).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5)).value_(0.5);
 
-~volumeSlider = Slider.new(b, Rect(315, 25, 30, 200)).orientation_(\vertical).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5)).value_(0.5);
-
-ServerMeterView.new(s, b, 350@10, 0, 2);
+ServerMeterView.new(s, b, 100@500, 0, 2);
 
 ~volumeSlider.action_({
 	arg obj;
