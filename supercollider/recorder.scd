@@ -192,14 +192,14 @@ w = Window("YASC", Rect(
 w.front.alwaysOnTop_(true).asView.fixedSize_(Size.new(l / 6, h - 30));
 
 v = UserView(w, Rect(0, 0, l/6, h));
-i = Image.open(thisProcess.nowExecutingPath.dirname +/+ "img/background.jpg");
-v.backgroundImage_(i);
+v.background = Color.black;
+
 
 // creates a composite view
 
 p = 80;
 
-~fluteLabel = StaticText(w, Rect(( l / 12 ) - 75, 10, 150, 60)).string_("YASC").align_(\center).stringColor_(Color.white).font_(Font("Monaco",50));
+~fluteLabel = StaticText(w, Rect(( l / 12 ) - 75, 10, 150, 60)).string_("YASC").align_(\center).stringColor_(Color.white).font_(Font("Roboto",50));
 
 b = CompositeView(w, Rect(20, p, ( l / 6 ) - 40, h - p - 50));
 v.drawFunc = {
@@ -209,7 +209,7 @@ v.drawFunc = {
 	Pen.fillStroke;
 };
 
-~envLabel = StaticText(b, Rect(0, 20, ( l / 6 ) - 40, 20)).string_("AMPLITUDE ENVELOPE").align_(\center).stringColor_(Color.white).font_(Font("Monaco",13));
+~envLabel = StaticText(b, Rect(0, 20, ( l / 6 ) - 40, 20)).string_("AMPLITUDE ENVELOPE").align_(\center).stringColor_(Color.white).font_(Font("Roboto",13));
 
 t = ( l / 6 ) - 40;
 
@@ -230,7 +230,7 @@ t = ( l / 6 ) - 40;
 	~attAmpKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
 });
 
-~attAmpLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 40, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~attAmpLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 40, 80, 20)).string_("Attack (s)").align_(\left).stringColor_(Color.white).font_(Font("Roboto",11));
 
 // creates the knob, the numerical box and the label for amplitude envelope release
 
@@ -249,9 +249,9 @@ t = ( l / 6 ) - 40;
 	~relAmpKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
 });
 
-~relAmpLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 95, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+	~relAmpLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 95, 80, 20)).string_("Release (s)").align_(\left).stringColor_(Color.white).font_(Font("Roboto",11));
 
-~vibLabel = StaticText(b, Rect(0, 165, ( l / 6 ) - 40, 20)).string_("VIBRATO CONTROLS").align_(\center).stringColor_(Color.white).font_(Font("Monaco",13));
+~vibLabel = StaticText(b, Rect(0, 165, ( l / 6 ) - 40, 20)).string_("VIBRATO CONTROLS").align_(\center).stringColor_(Color.white).font_(Font("Roboto",13));
 
 // creates the knob, the numerical box and the label for vibrato frequency
 
@@ -270,7 +270,7 @@ t = ( l / 6 ) - 40;
 	~vibFreKnob.valueAction_(obj.value.linlin(0.1, 6, 0, 1));
 });
 
-~vibFreLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 185, 80, 20)).string_("Frequency (Hz)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~vibFreLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 185, 80, 20)).string_("Frequency (Hz)").align_(\left).stringColor_(Color.white).font_(Font("Roboto",11));
 
 // creates the knob, the numerical box and the label for vibrato depth
 
@@ -289,11 +289,11 @@ t = ( l / 6 ) - 40;
 	~vibDepKnob.valueAction_(obj.value.linlin(0, 100, 0, 1));
 });
 
-~vibDepLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 240, 80, 20)).string_("Depth (%)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~vibDepLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 240, 80, 20)).string_("Depth (%)").align_(\left).stringColor_(Color.white).font_(Font("Roboto",11));
 
 // creates a composite view for the reverb controls
 
-~revLabel = StaticText(b, Rect(0, 310, ( l / 6 ) - 40, 20)).string_("REVERB CONTROLS").align_(\center).stringColor_(Color.white).font_(Font("Monaco",13));
+~revLabel = StaticText(b, Rect(0, 310, ( l / 6 ) - 40, 20)).string_("REVERB CONTROLS").align_(\center).stringColor_(Color.white).font_(Font("Roboto",13));
 
 // creates the knob, the numerical box and the label for reverb mix
 
@@ -313,7 +313,7 @@ t = ( l / 6 ) - 40;
 	~revMixKnob.valueAction_(obj.value.linlin(0, 100, 0, 1));
 });
 
-~revMixLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 330, 80, 20)).string_("Mix D/W (%)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~revMixLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 330, 80, 20)).string_("Mix D/W (%)").align_(\left).stringColor_(Color.white).font_(Font("Roboto",11));
 
 // creates the knob, the numerical box and the label for reverb time
 
@@ -333,7 +333,7 @@ t = ( l / 6 ) - 40;
 	~revTimeKnob.valueAction_(obj.value.explin(0.001, 10, 0, 1));
 });
 
-~revTimeLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 385, 80, 20)).string_("Time (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~revTimeLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 385, 80, 20)).string_("Time (s)").align_(\left).stringColor_(Color.white).font_(Font("Roboto",11));
 
 // creates the knob, the numerical box and the label for reverb pre-delay
 
@@ -353,13 +353,15 @@ t = ( l / 6 ) - 40;
 	~revPreKnob.valueAction_(obj.value.explin(0.001, 3, 0, 1));
 });
 
-~revPreLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 440, 80, 20)).string_("Pre-Delay (s)").align_(\left).stringColor_(Color.white).font_(Font("Monaco",11));
+~revPreLabel = StaticText(b, Rect(( t / 2 ) - 22.5, 440, 80, 20)).string_("Pre-Delay (s)").align_(\left).stringColor_(Color.white).font_(Font("Roboto",11));
 
 // VOLUME
 
 ~volumeSlider = Slider.new(b, Rect(50, 523, 30, 183)).orientation_(\vertical).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5)).value_(0.5);
 
-ServerMeterView.new(s, b, 100@500, 0, 2);
+ServerMeterView.new(s, b, 100@500, 0, 2).fontColor_(Color.white);
+
+
 
 ~volumeSlider.action_({
 	arg obj;
