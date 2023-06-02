@@ -17,9 +17,15 @@ cd /server
 npm install
 ```
 ## Connect Joy-Con controllers
-+ Connect your Joy-Con controllers to PC via Bluetooth, click the button below until your PC find and connect it.
+Connect your Joy-Con controllers to PC via Bluetooth, click the button below until your PC find and connect it.
 <div>
 <img width="250px" src="./readme-image/bluetooth.png">
+<div>
+
+## Introduction of Joy-Con controllers
+The Joy-Con controllers(fig. \ref{fig:joycon}) consist of two individual units, each containing an analog stick and an array of buttons. In the project, the left controller are used to control the parameters in super collider and the right one is responsible to play notes.
+<div>
+<img width="400px" src="./readme-image/joy-con-map.png">
 <div>
 
 ## Run the website and SuperCollider
@@ -59,7 +65,7 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 + The game page: it serves as an interactive training tool designed to <b>help users
    familiarize themselves with their custom hotkeys.</b> The key point in our implementation is that
    the jumping action is triggered only through the correct Joy-Con button that the user has
-   previously mapped in the Hotkey Page
+   previously mapped in the Hotkey Page. Please note that as the game progresses, the speed increases, making it more challenging.
 <div>
 <img width="500px" src="./readme-image/dino-instruction.png">
 <div>
@@ -68,8 +74,7 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 <img width="500px" src="./readme-image/dino-2.png">
 <div>
 
-+ The Spectrum Page: it provides an immersive audio-visual experience by representing
-  sounds as visual spectra.
++ The Spectrum Page: it provides an immersive audio-visual experience by representing sounds as visual spectra.
 + Following the instructions, click the button and share the entire screen and system audio.
 + Additionally, we prepare a short mario audio for beginners to follow.
 <div>
