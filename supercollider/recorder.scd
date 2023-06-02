@@ -215,7 +215,7 @@ t = ( l / 6 ) - 40;
 
 // creates the knob, the numerical box and the label for amplitude envelope attack
 
-~attAmpKnob = Knob(b, Rect(( t / 2 ) - 57.5, 60, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1));
+~attAmpKnob = Knob(b, Rect(( t / 2 ) - 57.5, 60, 30, 30)).value_(0.1.explin(0.001, 10, 0, 1)).color_([Color.white, Color.cyan, Color.red, Color.black]);
 ~attAmpKnob.action_({
 	arg obj;
 	var atk = obj.value.linexp(0, 1, 0.001, 10);
@@ -234,7 +234,7 @@ t = ( l / 6 ) - 40;
 
 // creates the knob, the numerical box and the label for amplitude envelope release
 
-~relAmpKnob = Knob(b, Rect(( t / 2 ) - 57.5, 115, 30, 30)).value_(0.2.explin(0.001, 10, 0, 1));
+~relAmpKnob = Knob(b, Rect(( t / 2 ) - 57.5, 115, 30, 30)).value_(0.2.explin(0.001, 10, 0, 1)).color_([Color.white, Color.cyan, Color.red, Color.black]);
 ~relAmpKnob.action_({
 	arg obj;
 	var rel = obj.value.linexp(0, 1, 0.001, 10);
@@ -255,7 +255,7 @@ t = ( l / 6 ) - 40;
 
 // creates the knob, the numerical box and the label for vibrato frequency
 
-~vibFreKnob = Knob(b, Rect(( t / 2 ) - 57.5, 205, 30, 30)).value_(5.linlin(0.1, 6, 0, 1));
+~vibFreKnob = Knob(b, Rect(( t / 2 ) - 57.5, 205, 30, 30)).value_(5.linlin(0.1, 6, 0, 1)).color_([Color.white, Color.cyan, Color.red, Color.black]);
 ~vibFreKnob.action_({
 	arg obj;
 	var vfr = obj.value.linlin(0, 1, 0.1, 6);
@@ -274,7 +274,7 @@ t = ( l / 6 ) - 40;
 
 // creates the knob, the numerical box and the label for vibrato depth
 
-~vibDepKnob = Knob(b, Rect(( t / 2 ) - 57.5, 260, 30, 30)).value_(30.linlin(0, 100, 0, 1));
+~vibDepKnob = Knob(b, Rect(( t / 2 ) - 57.5, 260, 30, 30)).value_(30.linlin(0, 100, 0, 1)).color_([Color.white, Color.cyan, Color.red, Color.black]);
 ~vibDepKnob.action_({
 	arg obj;
 	var vdep = obj.value.linlin(0, 1, 0, 100);
@@ -297,7 +297,7 @@ t = ( l / 6 ) - 40;
 
 // creates the knob, the numerical box and the label for reverb mix
 
-~revMixKnob = Knob(b, Rect(( t / 2 ) - 57.5, 350, 30, 30)).value_(60.linlin(0, 100, 0, 1));
+~revMixKnob = Knob(b, Rect(( t / 2 ) - 57.5, 350, 30, 30)).value_(60.linlin(0, 100, 0, 1)).color_([Color.white, Color.cyan, Color.red, Color.black]);
 ~revMixKnob.action_({
 	arg obj;
 	var revMix = obj.value.linlin(0, 1, 0, 100);
@@ -317,7 +317,7 @@ t = ( l / 6 ) - 40;
 
 // creates the knob, the numerical box and the label for reverb time
 
-~revTimeKnob = Knob(b, Rect(( t / 2 ) - 57.5, 405, 30, 30)).value_(0.3.explin(0.001, 10, 0, 1));
+~revTimeKnob = Knob(b, Rect(( t / 2 ) - 57.5, 405, 30, 30)).value_(0.3.explin(0.001, 10, 0, 1)).color_([Color.white, Color.cyan, Color.red, Color.black]);
 ~revTimeKnob.action_({
 	arg obj;
 	var revTime = obj.value.linexp(0, 1, 0.001, 10);
@@ -337,7 +337,7 @@ t = ( l / 6 ) - 40;
 
 // creates the knob, the numerical box and the label for reverb pre-delay
 
-~revPreKnob = Knob(b, Rect(( t / 2 ) - 57.5, 460, 30, 30)).value_(0.1.explin(0.001, 3, 0, 1));
+~revPreKnob = Knob(b, Rect(( t / 2 ) - 57.5, 460, 30, 30)).value_(0.1.explin(0.001, 3, 0, 1)).color_([Color.white, Color.cyan, Color.red, Color.black]);
 ~revPreKnob.action_({
 	arg obj;
 	var preDelay = obj.value.linexp(0, 1, 0.001, 3);
@@ -359,9 +359,7 @@ t = ( l / 6 ) - 40;
 
 ~volumeSlider = Slider.new(b, Rect(55, 523, 30, 183)).orientation_(\vertical).background_(Color.fromHexString("#E6E7F2")).focusColor_(Color.blue(alpha:0.5)).value_(0.5);
 
-ServerMeterView.new(s, b, 100@500, 0, 2).fontColor_(Color.white);
-
-
+ServerMeterView.new(s, b, 100@500, 0, 2);
 
 ~volumeSlider.action_({
 	arg obj;
