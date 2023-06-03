@@ -161,6 +161,7 @@ n = NetAddr.new("127.0.0.1", 57120);
 		Pdef(\demo, Pbind(
 			\instrument, \waveguideFlute,
 			// \dur, 4,
+			\amp,1,
 			\dur, Pseq([Pn(Pseq([ 3,3,3, 2,  2, 1, 2, 4/3,4/3,4/3, 2,  1,  2,  2,  1,  1,  3]), 2)]/6.5),
 			\midinote, Pseq([Pn(Pseq([62, 57, 54, 59, 61, 60, 59, 57, 66, 69, 71, 67, 69, 66, 62, 64, 61]), 2)])
 		)).play;
