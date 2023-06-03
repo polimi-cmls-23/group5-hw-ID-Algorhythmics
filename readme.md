@@ -95,3 +95,7 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 + Cecilia Raho
 + Stefano Ravasi
 + Yan Zhuang
+
+## Special thanks 
++ to Wenjia for video support
++ to my cat for inspiration
