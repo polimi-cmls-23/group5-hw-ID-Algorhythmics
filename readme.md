@@ -6,9 +6,13 @@ synthesis.
 <img style="width: 500px" src="./readme-image/YASC.jpg">
 <div>
 
+## Video Introduction
+https://youtu.be/8TOCC7nVZ_Q
+
 ## Requirements
-+ node.js>=v16
++ Node.js>=v16
 + SuperCollider software
++ Latest Edge(fully tested)
 
 ## Dependency Installation
 
