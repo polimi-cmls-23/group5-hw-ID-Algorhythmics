@@ -129,7 +129,7 @@ export default {
                 if(control.name==='LVerticalMove'){
                     console.log('n',control.name,control.computePercent(newValue))
                 }
-                me.sendOSC(control,status,side,newValue)
+                me.sendOSC(control,status,side,newValue,packet)
                 me.inputDetailCBKS.forEach((func)=>{
                     // bind value to
                     func && func(control,status)
@@ -138,13 +138,20 @@ export default {
                 control.last_value = newValue;
             }
         },
-        rightControlOSC(control, status,newValue){
+        isFreestyle(control){
+            let me = this
+            let note = me.hotkeys[name]
+            if(control.name==='RVerticalMove' && note!==''){
+                return true
+            }
+        },
+        rightControlOSC(control, status,newValue,packet){
             let me = this
             let name = control.name
             let note = me.hotkeys[name]
             let frequency;
-            if(control.name==='RVerticalMove' && note!==''){
-                frequency = control.computePercent(newValue)*500
+            if(me.isFreestyle(control)){
+                frequency = control.computeFrequency(newValue,packet)
             }
             if(!note){
                 // console.log("the note doesn't exist")
@@ -228,7 +235,7 @@ export default {
                 ]
             });
         },
-        sendOSC(control,status,side,newValue){
+        sendOSC(control,status,side,newValue,packet){
             let me = this
             // get frequency
             // know the action of press
@@ -240,7 +247,7 @@ export default {
                 me.leftControlOSC(control,status,newValue)
             }
             if(side===rightControl){
-                me.rightControlOSC(control,status,newValue)
+                me.rightControlOSC(control,status,newValue,packet)
             }
 
             // oscPort.close()

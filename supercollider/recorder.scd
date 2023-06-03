@@ -1,7 +1,9 @@
 (
 
 Server.killAll;
-
+s.clear;
+s.freeAll;
+Pdef.all.stop;
 Window.closeAll;
 
 // flute synthDef
@@ -66,6 +68,7 @@ s.waitForBoot({
 
 ~on.free;
 ~control.free;
+~freestyle.free;
 
 n = NetAddr.new("127.0.0.1", 57120);
 
@@ -80,6 +83,31 @@ n = NetAddr.new("127.0.0.1", 57120);
 // define osc
 
 ~synthDict = ();
+~freestyleSynthsssss=nil;
+~freq = 400;
+~freestyle = OSCFunc({ |msg, time, addr, recvPort|
+	var status = msg[1];
+	var name = msg[3];
+	var synth;
+	var freq = msg[2];
+	~freestyleSynthsssss.isNil.postln;
+		if( ~freestyleSynthsssss.isNil,{
+			~freestyleSynthsssss = Synth.new(\waveguideFlute,[
+			\freq, freq,
+			\atk, ~control_att,
+			\rel, ~control_release,
+			\vdep, ~control_vibDep / 100,
+			\vfr, ~control_vibFre,
+			\amp, ~control_volume,
+			\out, ~reverbBus
+		]);
+
+		},{
+			// freq.postln;
+			~freestyleSynthsssss.set(\freq, freq)
+		})
+
+}, '/play/freestyle');
 ~on = OSCFunc({ |msg, time, addr, recvPort|
 	var status = msg[1];
 	var freq = msg[2];
@@ -189,6 +217,8 @@ n = NetAddr.new("127.0.0.1", 57120);
 
 	};
 	};
+
+
 
 }, '/control');
 
@@ -381,9 +411,3 @@ ServerMeterView.new(s, b, 100@500, 0, 2);
 })
 
 )
-(
-~synth = Synth.new(\waveguideFlute,[
-			\freq, 400,
-		]);
-)
-~synth.free

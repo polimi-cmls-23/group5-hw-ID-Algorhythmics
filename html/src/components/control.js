@@ -160,7 +160,17 @@ const rightControls = [
                 return 1
             }
             return ((v-min)/(max-min)).toFixed(2);
-        }
+        },
+        computeFrequency(v,packet){
+            let me = this;
+            let basic = me.computePercent(v)*700
+            let offsetGamma = Number(packet.actualOrientation.gamma)
+            let offsetBeta =Number(packet.actualOrientation.beta)
+            let offsetAlpha = Number(packet.actualOrientation.alpha)
+            let yOffset = packet.actualAccelerometer.y * 50;
+            // console.log(basic + offsetGamma + yOffset+offsetAlpha+offsetBeta)
+            return basic + offsetGamma + yOffset
+        },
     },
 ];
 

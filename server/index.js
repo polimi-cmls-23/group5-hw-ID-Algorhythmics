@@ -56,11 +56,28 @@ wss.on("connection", function (socket) {
         // console.log("ss", JSON.parse(str).frequency);
         let obj = JSON.parse(str)
         let instrument = obj.instrument
-        if(instrument==='recorder'){
+        if(instrument==='recorder'&&obj.name!=='RVerticalMove'){
             let address = '/play'
             if(instrument===recorder){
                 address+=`/${recorder}`
             }
+            console.log('address send',address)
+            udpPort.send({
+                address: address,
+                args: [{
+                    type:'s',
+                    value:obj.status
+                },{
+                    type:'f',
+                    value:obj.frequency
+                },{
+                    type:'s',
+                    value:obj.name
+                }]
+            });
+        }
+        if(instrument==='recorder'&&obj.name==='RVerticalMove'){
+            let address = '/play/freestyle'
             console.log('address send',address)
             udpPort.send({
                 address: address,
