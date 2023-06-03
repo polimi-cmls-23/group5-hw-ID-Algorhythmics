@@ -83,16 +83,32 @@ n = NetAddr.new("127.0.0.1", 57120);
 // define osc
 
 ~synthDict = ();
-~freestyleSynthsssss=nil;
+~freestyleSynth=nil;
+~freestyleSwitch= false;
 ~freq = 400;
+~closeSound = OSCFunc({ |msg, time, addr, recvPort|
+	var status = msg[1];
+	var name = msg[3];
+	if( ~freestyleSwitch==false,{
+	~freestyleSwitch = true;
+	},{
+	~freestyleSwitch = false;
+	~freestyleSynth.free;
+	~freestyleSynth=nil;
+	})
+}, '/freestyle/switch');
 ~freestyle = OSCFunc({ |msg, time, addr, recvPort|
 	var status = msg[1];
 	var name = msg[3];
 	var synth;
 	var freq = msg[2];
-	~freestyleSynthsssss.isNil.postln;
-		if( ~freestyleSynthsssss.isNil,{
-			~freestyleSynthsssss = Synth.new(\waveguideFlute,[
+		// ~freestyleSynthsss.isNil.postln;
+		// ~freestyleSwitch.postln;
+		// ~freestyleSynth.isNil.postln;
+		if( (~freestyleSwitch==true),{
+			if( (~freestyleSynth.isNil),{
+			~freestyleSynth = Synth.new(\waveguideFlute,[
+				// \ibreath,0.005,
 			\freq, freq,
 			\atk, ~control_att,
 			\rel, ~control_release,
@@ -101,11 +117,12 @@ n = NetAddr.new("127.0.0.1", 57120);
 			\amp, ~control_volume,
 			\out, ~reverbBus
 		]);
-
+			// ~synthDict.put(name, synth);
 		},{
-			// freq.postln;
-			~freestyleSynthsssss.set(\freq, freq)
+			~freestyleSynth.set(\freq,freq)
 		})
+		});
+
 
 }, '/play/freestyle');
 ~on = OSCFunc({ |msg, time, addr, recvPort|
@@ -166,6 +183,11 @@ n = NetAddr.new("127.0.0.1", 57120);
 		~volumeSlider.value_(temp);
 		~control_volume = temp;
 	});
+	/*if((operation=='closeFreestyle'),{
+		var temp = value;
+		~volumeSlider.value_(temp);
+		~control_volume = temp;
+	});*/
 	if((operation=='upAttack')||(operation=='downAttack'),{
 		var temp = ~attAmpBox.value+value;
 		~attAmpKnob.valueAction_(temp.explin(0.001, 10, 0, 1));
@@ -216,6 +238,13 @@ n = NetAddr.new("127.0.0.1", 57120);
 		);
 
 	};
+	~freestyleSynth.set(
+			\atk,~control_att,
+			\rel, ~control_release,
+			\vdep,~control_vibDep/100,
+			\vfr,~control_vibFre,
+			\amp,~control_volume,
+		);
 	};
 
 

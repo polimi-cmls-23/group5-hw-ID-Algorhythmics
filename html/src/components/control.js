@@ -163,13 +163,17 @@ const rightControls = [
         },
         computeFrequency(v,packet){
             let me = this;
-            let basic = me.computePercent(v)*700
-            let offsetGamma = Number(packet.actualOrientation.gamma)
-            let offsetBeta =Number(packet.actualOrientation.beta)
-            let offsetAlpha = Number(packet.actualOrientation.alpha)
-            let yOffset = packet.actualAccelerometer.y * 50;
-            // console.log(basic + offsetGamma + yOffset+offsetAlpha+offsetBeta)
-            return basic + offsetGamma + yOffset
+            let basic = me.computePercent(v)*200
+            let offsetGamma = Math.abs(Number(packet.actualOrientation.gamma))*2
+            let offsetBeta =Math.abs(Number(packet.actualOrientation.beta))*2
+            let offsetAlpha = Math.abs(Number(packet.actualOrientation.alpha))*2
+            let gyroscope= packet.actualGyroscope.dps;
+            let gyroscopeX = Math.abs(Number(gyroscope.x *10))
+            let gyroscopeY = Math.abs(Number(gyroscope.y *15))
+            let gyroscopeZ = Math.abs(Number(gyroscope.z *10))
+            let yOffset = packet.actualAccelerometer.y * 1;
+            console.log(gyroscopeX)
+            return basic + offsetGamma + yOffset+offsetAlpha+offsetBeta+gyroscopeX+gyroscopeY+gyroscopeZ
         },
     },
 ];

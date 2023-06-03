@@ -7,6 +7,7 @@
                 <li>Select the entire screen and share the system audio</li>
                 <li>No idea how to play? just play the demo below </li>
                 <li><button class="pure-button submit" @click="mario">Mario play</button></li>
+                <li><button class="pure-button submit" @click="freestyle">Freestyle mode</button></li>
             </ol>
         </details>
         <div id="showcase" class="col">
@@ -52,6 +53,20 @@ export default {
         me.bindEvent()
     },
     methods:{
+        freestyle(){
+            let str = {
+                instrument:'freestyle',
+            }
+            oscPort.send({
+                address: "/message",
+                args: [
+                    {
+                        type: "s",
+                        value: JSON.stringify(str)
+                    }
+                ]
+            });
+        },
         mario(){
             let str = {
                 instrument:'mario',

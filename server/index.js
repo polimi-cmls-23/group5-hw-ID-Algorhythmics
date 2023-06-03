@@ -114,5 +114,13 @@ wss.on("connection", function (socket) {
                 args: []
             });
         }
+        if(instrument==='freestyle'){
+            let address = '/freestyle/switch'
+            console.log('switch')
+            udpPort.send({
+                address: address,
+                args: []
+            });
+        }
     });
 });

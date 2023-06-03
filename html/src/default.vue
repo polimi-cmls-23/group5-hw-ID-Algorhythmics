@@ -184,6 +184,7 @@ export default {
             let operationMap = {
                 upAmplitude : {name:'upAmplitude',value:+0.1},
                 downAmplitude : {name:'downAmplitude',value:-0.1},
+                closeSound:{name:'closeFreestyle',value:0},
                 upAttack : {name:'upAttack',value:+0.1},
                 downAttack : {name:'downAttack',value:-0.1},
                 upRelease : {name:'upRelease',value:+0.1},

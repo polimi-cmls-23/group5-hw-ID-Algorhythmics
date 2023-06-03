@@ -1,4 +1,4 @@
-let noteOptions = ["D4","A3","F#3","B3","C#4","C4","F#4","A4","B4","G4","E4","F4","C5","D5","E5",""].sort()
+let noteOptions = ["D4","A3","F#3","B3","C#4","C4","F#4","A4","B4","G4","E4","F4","C5","D5","E5","","freestyle"].sort()
 let leftOperationsMap ={
         upAmplitude : '↑amplitude',
         downAmplitude:'↓amplitude',
@@ -17,6 +17,7 @@ let leftOperationsMap ={
         upPreDelay:'↑pre-delay of reverb',
         downPreDelay:'↓pre-daly of reverb',
         amplitude:'amplitude',
+        closeFreestyle:'Close freestyle sound '
 }
 
 let leftOperations = Object.values(leftOperationsMap).concat([""])
