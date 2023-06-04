@@ -12,7 +12,7 @@ https://youtu.be/8TOCC7nVZ_Q
 ## Requirements
 + Node.js>=v16
 + SuperCollider software
-+ Latest Edge(fully tested)
++ Latest Edge (fully tested)
 
 ## Dependency Installation
 
@@ -21,13 +21,13 @@ cd /server
 npm install
 ```
 ## Connect Joy-Con controllers
-Connect your Joy-Con controllers to PC via Bluetooth, click the button below until your PC find and connect it.
+Connect your Joy-Con controllers to PC via Bluetooth: click the button below until your PC detects and connects them.
 <div>
 <img width="250px" src="./readme-image/bluetooth.png">
 <div>
 
 ## Introduction of Joy-Con controllers
-The Joy-Con controllers consist of two individual units, each containing an analog stick and an array of buttons. In the project, the left controller are used to control the parameters in super collider and the right one is responsible to play notes.
+Joy-Con controllers consist of two individual units, each containing an analog stick, an array of buttons, a gyroscope and motion sensors (accelerometers). In this project, the left controller is used to control synthesis parameters and the right one is responsible for playing notes.
 <div>
 <img width="300px" src="./readme-image/joy-con-map.png">
 <div>
