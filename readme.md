@@ -29,7 +29,7 @@ Connect your Joy-Con controllers to PC via Bluetooth, click the button below unt
 ## Introduction of Joy-Con controllers
 The Joy-Con controllers consist of two individual units, each containing an analog stick and an array of buttons. In the project, the left controller are used to control the parameters in super collider and the right one is responsible to play notes.
 <div>
-<img width="400px" src="./readme-image/joy-con-map.png">
+<img width="300px" src="./readme-image/joy-con-map.png">
 <div>
 
 ## Run the website and SuperCollider
@@ -86,6 +86,9 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 <div>
 <div>
 <img width="500px" src="./readme-image/stft.png">
+<div>
+<div>
+<img width="500px" src="./readme-image/actual-playing.png">
 <div>
 
 ## SuperCollider introduction
