@@ -100,4 +100,3 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 + Stefano Ravasi
 + Yan Zhuang
 
-## Special thanks to my cat
