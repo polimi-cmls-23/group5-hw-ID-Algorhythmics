@@ -38,7 +38,7 @@ Joy-Con controllers consist of two individual units, each containing an analog s
 node /server/index.js
 ```
 2. Open the address shown in console. http://127.0.0.1:8081/
-3. Open the files in /supercollider in SuperCollider and run relative codes.
+3. Open the files in /supercollider in SuperCollider and run the relative code.
 4. Follow the instructions on website and enjoy.
 
 ## Overall Structure
@@ -50,8 +50,8 @@ users with an intuitive and interactive tool to set up and customize their perfo
 
 ## Website Introduction
 + Welcome to our home page! On this page, you'll find three links to different functions.
-+ Additionally, a special feature linked to the logo, <b>clicking on the logo</b> allows you to connect your controllers to the web system.
-+ Or you can connect via <b>game-pad icon</b> on the top-left in different function pages.
++ <b>Clicking on the logo</b> allows you to connect your controllers to the web system.
++ You can also connect via <b>game-pad icon</b> on the top-left in "different function" page.
 <div>
 <img width="500px" src="./readme-image/home.png">
 <div>
