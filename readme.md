@@ -56,9 +56,9 @@ users with an intuitive and interactive tool to set up and customize their perfo
 <img width="500px" src="./readme-image/home.png">
 <div>
 
-+ The hotkey page: it serves as an interface for users to personalize their recorder experience. Through this page, users can customize their Joy-Con controller buttons to map to different recorder sounds and operations.
-+ In particular, the left controller is responsible for adjusting params of recorder in SuperCollider. And the right controller is working for playing notes. 
-+ Additionally, every motion of the Joy-Con controller can be captured and be shown in the middle of page. In this way, you can test the working condition of your controllers. 
++ Hotkey page: an interface to personalize your recorder experience. Through this page, Joy-Con controller buttons can be mapped to different functions.
++ The left controller is responsible for adjusting synthesis parameters in SuperCollider while the right controller is dedicated to play notes. 
++ Additionally, each motion of the Joy-Con controller can be captured and shown in the middle of the page: in this way, you can visually test the working condition of your devices. 
 <div>
 <img width="500px" src="./readme-image/hotkey3.png">
 <div>
