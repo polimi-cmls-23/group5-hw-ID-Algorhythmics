@@ -63,7 +63,8 @@ users with an intuitive and interactive tool to set up and customize their perfo
 <img width="500px" src="./readme-image/hotkey3.png">
 <div>
 
-+ dino game page: an interactive training tool designed to <b>help you familiarize with custom hotkeys</b>: the jumping action is triggered by the correct Joy-Con button (previously mapped in Hotkey Page). Note that, as the game progresses, the speed increases to raise the challenge level.
++ Dino game page: an interactive training tool designed to <b>help you familiarize with custom hotkeys</b>: the jumping action is triggered by the correct Joy-Con button (previously mapped in Hotkey Page). 
++ As the game progresses, the speed increases to raise the challenge level.
 <div>
 <img width="500px" src="./readme-image/dino-instruction.png">
 <div>
