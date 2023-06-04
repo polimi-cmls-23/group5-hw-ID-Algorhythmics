@@ -42,11 +42,8 @@ node /server/index.js
 4. Follow the instructions on website and enjoy.
 
 ## Overall Structure
-The system tracks interaction with Joy-Con controllers and use them as
-input. The web system acts as the center interface, providing users with an intuitive and interactive
-to set up and customize their performance experience. SuperCollider serves as the sound synthesis
-engine, generating the sounds according to the commands from web system via the Open Sound
-Control (OSC) protocol. Finally, the sound can be captured by web system to show the visual effect.
+The system tracks interaction with Joy-Con controllers and use their serial messages as input. The web system acts as the central interface, providing
+users with an intuitive and interactive tool to set up and customize their performance experience. SuperCollider serves as sound synthesis engine: it generates the sound according to the commands sent from web system via Open Sound Control (OSC) protocol. Finally, the audio output can be captured by web system to provide a visual feedback.      
 <div>
 <img width="600px" src="./readme-image/overall.png">
 <div>
