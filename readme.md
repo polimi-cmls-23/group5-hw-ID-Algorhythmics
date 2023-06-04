@@ -3,7 +3,7 @@ The goal of the project is to to develop an interactive recorder performance too
 Joy-Con controllers via a web interface for gesture-based inputs and SuperCollider for sound
 synthesis.
 <div>
-<img style="width: 500px" src="./readme-image/YASC.jpg">
+<img style="width: 500px" src="./readme-image/YASC.png">
 <div>
 
 ## Video Introduction
