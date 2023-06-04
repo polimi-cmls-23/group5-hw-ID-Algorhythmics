@@ -66,7 +66,7 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 <img width="500px" src="./readme-image/hotkey2.png">
 <div>
 
-+ The game page: it serves as an interactive training tool designed to <b>help users
++ The dino game page: it serves as an interactive training tool designed to <b>help users
    familiarize themselves with their custom hotkeys.</b> The key point in our implementation is that
    the jumping action is triggered only through the correct Joy-Con button that the user has
    previously mapped in the Hotkey Page. Please note that as the game progresses, the speed increases, making it more challenging.
@@ -78,7 +78,7 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 <img width="500px" src="./readme-image/dino-2.png">
 <div>
 
-+ The Spectrum Page: it provides an immersive audio-visual experience by representing sounds as visual spectra.
++ The performance page: it provides an immersive audio-visual experience by representing sounds as visual spectra.
 + Following the instructions, click the button and share the entire screen and system audio.
 + Additionally, we prepare a short mario audio for beginners to follow.
 <div>
