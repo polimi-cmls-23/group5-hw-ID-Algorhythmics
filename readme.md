@@ -51,7 +51,7 @@ users with an intuitive and interactive tool to set up and customize their perfo
 ## Website Introduction
 + Welcome to our home page! On this page, you'll find three links to different functions.
 + <b>Clicking on the logo</b> allows you to connect your controllers to the web system.
-+ You can also connect via <b>game-pad icon</b> on the top-left in "different function" page.
++ You can also connect via <b>game-pad icon</b> on the top-left of the page.
 <div>
 <img width="500px" src="./readme-image/home.png">
 <div>
@@ -72,9 +72,9 @@ users with an intuitive and interactive tool to set up and customize their perfo
 <img width="500px" src="./readme-image/dino-2.png">
 <div>
 
-+ The performance page: it provides an immersive audio-visual experience by representing sounds as visual spectra.
-+ Following the instructions, click the button and share the entire screen and system audio.
-+ Additionally, we prepare a short mario audio for beginners to follow.
++ Performance page: an immersive audio-visual experience tool which <b>represents the output sound spectrum</b>.
++ Following the instructions, <b>click the button and share the entire screen and system audio</b>.
++ Additionally, a short Mario audio audio sample is prepared for beginners to follow.
 <div>
 <img width="500px" src="./readme-image/stft-instruction.png">
 <div>
@@ -96,4 +96,3 @@ users with an intuitive and interactive tool to set up and customize their perfo
 + Cecilia Raho
 + Stefano Ravasi
 + Yan Zhuang
-
