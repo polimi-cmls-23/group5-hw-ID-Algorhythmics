@@ -56,17 +56,14 @@ users with an intuitive and interactive tool to set up and customize their perfo
 <img width="500px" src="./readme-image/home.png">
 <div>
 
-+ Hotkey page: an interface to personalize your recorder experience. Through this page, Joy-Con controller buttons can be mapped to different functions.
++ Hotkey page: an interface to personalize your recorder experience. Through this page, <b>Joy-Con controller buttons can be mapped to different functions</b>.
 + The left controller is responsible for adjusting synthesis parameters in SuperCollider while the right controller is dedicated to play notes. 
 + Additionally, each motion of the Joy-Con controller can be captured and shown in the middle of the page: in this way, you can visually test the working condition of your devices. 
 <div>
 <img width="500px" src="./readme-image/hotkey3.png">
 <div>
 
-+ The dino game page: it serves as an interactive training tool designed to <b>help users
-   familiarize themselves with their custom hotkeys.</b> The key point in our implementation is that
-   the jumping action is triggered only through the correct Joy-Con button that the user has
-   previously mapped in the Hotkey Page. Please note that as the game progresses, the speed increases, making it more challenging.
++ dino game page: an interactive training tool designed to <b>help you familiarize with custom hotkeys</b>: the jumping action is triggered by the correct Joy-Con button (previously mapped in Hotkey Page). Note that, as the game progresses, the speed increases to raise the challenge level.
 <div>
 <img width="500px" src="./readme-image/dino-instruction.png">
 <div>
