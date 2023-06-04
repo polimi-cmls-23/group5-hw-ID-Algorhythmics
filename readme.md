@@ -91,7 +91,7 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 ## SuperCollider introduction
 + The recorder sound is handled by SuperCollider, offering a couple of params parameters for customization.
 <div>
-<img width="200px" src="./readme-image/sc-gui.png">
+<img width="120px" src="./readme-image/gui.png">
 <div>
 
 ## Group: Algorhythmics
@@ -100,4 +100,3 @@ Control (OSC) protocol. Finally, the sound can be captured by web system to show
 + Stefano Ravasi
 + Yan Zhuang
 
-## Special thanks to my cat
